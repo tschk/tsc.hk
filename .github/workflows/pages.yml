@@ -34,7 +34,9 @@ jobs:
         run: cargo install crepuscularity-cli --git https://github.com/tschk/crepuscularity --no-default-features
 
       - name: Build site
-        run: crepus web build --site .
+        run: |
+          crepus web build --site .
+          cp CNAME dist/CNAME
 
       - name: Verify artifacts
         run: |
@@ -42,6 +44,7 @@ jobs:
           test -f dist/.nojekyll
           test -f dist/pkg/runtime_bg.wasm
           test -f dist/vendor/unocss.js
+          test -f dist/CNAME
           echo "✓ all artifacts present"
 
       - uses: actions/upload-pages-artifact@v3
