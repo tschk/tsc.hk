@@ -48,38 +48,50 @@ head_html = """
     return timer;
   }
 
+  var timers = new WeakMap();
+
   var check = setInterval(function() {
     var root = document.getElementById('crepus-root');
     if (!root || !root.children.length) return;
     clearInterval(check);
 
-    // Link hover animation
-    var links = root.querySelectorAll('a.proj, a.con');
-    for (var i = 0; i < links.length; i++) {
-      (function(link) {
-        var nameEl = link.querySelector('.name');
-        if (!nameEl) return;
-        var original = nameEl.textContent;
-        var timer = null, animating = false;
+    // Event delegation on root — survives hot-reload DOM replacement
+    root.addEventListener('mouseenter', function(e) {
+      var link = e.target.closest && e.target.closest('a.proj, a.con');
+      if (!link) return;
+      var nameEl = link.querySelector('.name');
+      if (!nameEl) return;
+      if (timers.has(link)) return;
+      var original = nameEl.textContent;
+      var timer = animateText(nameEl, original, 18, function() {
+        timers.delete(link);
+        link.style.textDecorationLine = 'underline';
+      });
+      timers.set(link, timer);
+    }, true);
 
-        link.addEventListener('mouseenter', function() {
-          if (animating) return;
-          animating = true;
-          timer = animateText(nameEl, original, 18, function() {
-            animating = false;
-            link.style.textDecorationLine = 'underline';
-          });
-        });
+    root.addEventListener('mouseleave', function(e) {
+      var link = e.target.closest && e.target.closest('a.proj, a.con');
+      if (!link) return;
+      var nameEl = link.querySelector('.name');
+      if (!nameEl) return;
+      if (timers.has(link)) {
+        clearInterval(timers.get(link));
+        timers.delete(link);
+      }
+      link.style.textDecorationLine = '';
+      nameEl.textContent = nameEl.getAttribute('data-original') || nameEl.textContent;
+    }, true);
 
-        link.addEventListener('mouseleave', function() {
-          if (timer) { clearInterval(timer); timer = null; }
-          link.style.textDecorationLine = '';
-          timer = animateText(nameEl, original, 18, function() {
-            animating = false;
-          });
-        });
-      })(links[i]);
-    }
+    // Store original text on each .name for clean reset
+    root.addEventListener('mouseenter', function(e) {
+      var link = e.target.closest && e.target.closest('a.proj, a.con');
+      if (!link) return;
+      var nameEl = link.querySelector('.name');
+      if (nameEl && !nameEl.hasAttribute('data-original')) {
+        nameEl.setAttribute('data-original', nameEl.textContent);
+      }
+    }, true);
   }, 100);
 })();
 </script>

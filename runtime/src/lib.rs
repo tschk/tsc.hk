@@ -26,6 +26,10 @@ fn window() -> web_sys::Window {
     web_sys::window().expect("no window")
 }
 
+fn document() -> web_sys::Document {
+    window().document().expect("document")
+}
+
 fn rand_glyph() -> char {
     let r = js_sys::Math::random();
     let idx = (r * GLYPHS.len() as f64).floor() as usize;
@@ -40,7 +44,7 @@ fn clear_timer(handle: &TimerHandle) {
     }
 }
 
-fn set_interval(closure: &Closure<dyn FnMut()>, ms: i32) -> i32 {
+fn set_interval_ms(closure: &Closure<dyn FnMut()>, ms: i32) -> i32 {
     window()
         .set_interval_with_callback_and_timeout_and_arguments_0(
             closure.as_ref().unchecked_ref(),
@@ -109,100 +113,131 @@ fn animate_text(
         }
     }) as Box<dyn FnMut()>);
 
-    let id = set_interval(&closure, speed);
+    let id = set_interval_ms(&closure, speed);
     *timer.borrow_mut() = Some(id);
     closure.forget();
     timer
 }
 
+/// State for the heading animation, stored globally so event delegation can access it.
+struct HeadingState {
+    timer: TimerHandle,
+    click_timer: TimerHandle,
+    animating: Rc<RefCell<bool>>,
+}
+
+thread_local! {
+    static HEADING_STATE: RefCell<Option<HeadingState>> = RefCell::new(None);
+}
+
 #[wasm_bindgen(start)]
 pub fn start() {
-    poll_for_heading(0, 100);
-}
+    // Set up document-level event delegation for #tsc-heading.
+    // This survives DOM replacement during hot-reload because the listener
+    // is on the document, not on the heading element itself.
+    HEADING_STATE.with(|state| {
+        *state.borrow_mut() = Some(HeadingState {
+            timer: Rc::new(RefCell::new(None)),
+            click_timer: Rc::new(RefCell::new(None)),
+            animating: Rc::new(RefCell::new(false)),
+        });
+    });
 
-fn poll_for_heading(delay_ms: i32, remaining: u32) {
-    let callback = Closure::<dyn FnMut()>::wrap(Box::new(move || {
-        let doc = window().document().expect("document");
-        if let Some(el) = doc.get_element_by_id("tsc-heading") {
-            bind_heading(el);
-        } else if remaining > 0 {
-            poll_for_heading(100, remaining - 1);
-        }
-    }));
-    let _ = window().set_timeout_with_callback_and_timeout_and_arguments_0(
-        callback.as_ref().unchecked_ref(),
-        delay_ms,
-    );
-    callback.forget();
-}
+    let doc = document();
 
-fn bind_heading(el: web_sys::Element) {
-    let h_timer: TimerHandle = Rc::new(RefCell::new(None));
-    let h_animating = Rc::new(RefCell::new(false));
-    let click_timer: TimerHandle = Rc::new(RefCell::new(None));
-
-    // mouseenter → scramble to SHORT
+    // mouseenter on #tsc-heading
     {
-        let el_inner = el.clone();
-        let timer = h_timer.clone();
-        let animating = h_animating.clone();
-        let closure = Closure::wrap(Box::new(move || {
-            if *animating.borrow() {
-                return;
-            }
-            *animating.borrow_mut() = true;
-            clear_timer(&timer);
-            let anim = animating.clone();
-            let done_cb = Closure::wrap(Box::new(move || {
-                *anim.borrow_mut() = false;
-            }) as Box<dyn FnMut()>);
-            let t = animate_text(&el_inner, SHORT, 20, Some(done_cb));
-            *timer.borrow_mut() = t.borrow_mut().take();
-        }) as Box<dyn FnMut()>);
-        el.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
+        let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+            let target = match event.target() {
+                Some(t) => t.unchecked_into::<web_sys::Element>(),
+                None => return,
+            };
+            let heading = match target.closest("#tsc-heading") {
+                Ok(Some(h)) => h,
+                _ => return,
+            };
+            HEADING_STATE.with(|state| {
+                let s = state.borrow();
+                let s = match s.as_ref() {
+                    Some(s) => s,
+                    None => return,
+                };
+                if *s.animating.borrow() {
+                    return;
+                }
+                *s.animating.borrow_mut() = true;
+                clear_timer(&s.timer);
+                let anim = s.animating.clone();
+                let done_cb = Closure::wrap(Box::new(move || {
+                    *anim.borrow_mut() = false;
+                }) as Box<dyn FnMut()>);
+                let t = animate_text(&heading, SHORT, 20, Some(done_cb));
+                *s.timer.borrow_mut() = t.borrow_mut().take();
+            });
+        }) as Box<dyn FnMut(web_sys::Event)>);
+        doc.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
 
-    // mouseleave → scramble back to FULL
+    // mouseleave on #tsc-heading
     {
-        let el_inner = el.clone();
-        let timer = h_timer.clone();
-        let animating = h_animating.clone();
-        let closure = Closure::wrap(Box::new(move || {
-            clear_timer(&timer);
-            let anim = animating.clone();
-            let done_cb = Closure::wrap(Box::new(move || {
-                *anim.borrow_mut() = false;
-            }) as Box<dyn FnMut()>);
-            let t = animate_text(&el_inner, FULL, 20, Some(done_cb));
-            *timer.borrow_mut() = t.borrow_mut().take();
-        }) as Box<dyn FnMut()>);
-        el.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
+        let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+            let target = match event.target() {
+                Some(t) => t.unchecked_into::<web_sys::Element>(),
+                None => return,
+            };
+            let heading = match target.closest("#tsc-heading") {
+                Ok(Some(h)) => h,
+                _ => return,
+            };
+            HEADING_STATE.with(|state| {
+                let s = state.borrow();
+                let s = match s.as_ref() {
+                    Some(s) => s,
+                    None => return,
+                };
+                clear_timer(&s.timer);
+                let anim = s.animating.clone();
+                let done_cb = Closure::wrap(Box::new(move || {
+                    *anim.borrow_mut() = false;
+                }) as Box<dyn FnMut()>);
+                let t = animate_text(&heading, FULL, 20, Some(done_cb));
+                *s.timer.borrow_mut() = t.borrow_mut().take();
+            });
+        }) as Box<dyn FnMut(web_sys::Event)>);
+        doc.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
 
-    // click → copy, then scroll " — copied!" to the right
+    // click on #tsc-heading
     {
-        let el_inner = el.clone();
-        let h_timer = h_timer.clone();
-        let h_animating = h_animating.clone();
-        let click_timer = click_timer.clone();
+        let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+            let target = match event.target() {
+                Some(t) => t.unchecked_into::<web_sys::Element>(),
+                None => return,
+            };
+            let heading = match target.closest("#tsc-heading") {
+                Ok(Some(h)) => h,
+                _ => return,
+            };
 
-        let closure = Closure::wrap(Box::new(move || {
             let promise = window().navigator().clipboard().write_text("tsc.hk");
+            let el = heading;
 
-            let el = el_inner.clone();
-            let h_timer = h_timer.clone();
-            let h_animating = h_animating.clone();
-            let click_timer = click_timer.clone();
+            HEADING_STATE.with(|state| {
+                let s = state.borrow();
+                let s = match s.as_ref() {
+                    Some(s) => s,
+                    None => return,
+                };
+                clear_timer(&s.timer);
+                clear_timer(&s.click_timer);
+                *s.animating.borrow_mut() = true;
+            });
 
             let on_write = Closure::wrap(Box::new(move |_val: JsValue| {
-                clear_timer(&h_timer);
-                clear_timer(&click_timer);
-                *h_animating.borrow_mut() = true;
-
                 el.set_text_content(Some(SHORT));
 
                 let suffix: Vec<char> = SUFFIX.chars().collect();
@@ -212,8 +247,6 @@ fn bind_heading(el: web_sys::Element) {
                 let pos = Rc::new(RefCell::new(0usize));
                 let phase = Rc::new(RefCell::new(0u8));
                 let el2 = el.clone();
-                let h_timer2 = h_timer.clone();
-                let h_animating2 = h_animating.clone();
 
                 let suffix_closure = Closure::wrap(Box::new(move || {
                     let mut p = pos.borrow_mut();
@@ -245,28 +278,38 @@ fn bind_heading(el: web_sys::Element) {
                         *p += 1;
                         if *p >= suffix_len {
                             el2.set_text_content(Some(&format!("{}{}", SHORT, SUFFIX)));
+                            // After showing copied, animate back to FULL
                             let el3 = el2.clone();
-                            let timer3 = h_timer2.clone();
-                            let animating3 = h_animating2.clone();
                             let back_done = Closure::wrap(Box::new(move || {
-                                *animating3.borrow_mut() = false;
+                                HEADING_STATE.with(|s| {
+                                    if let Some(ref st) = *s.borrow() {
+                                        *st.animating.borrow_mut() = false;
+                                    }
+                                });
                             }) as Box<dyn FnMut()>);
                             let t = animate_text(&el3, FULL, 20, Some(back_done));
-                            *timer3.borrow_mut() = t.borrow_mut().take();
+                            HEADING_STATE.with(|s| {
+                                if let Some(ref st) = *s.borrow() {
+                                    *st.timer.borrow_mut() = t.borrow_mut().take();
+                                }
+                            });
                         }
                     }
                 }) as Box<dyn FnMut()>);
 
-                let tid = set_interval(&suffix_closure, 25);
+                let tid = set_interval_ms(&suffix_closure, 25);
                 suffix_closure.forget();
-                *click_timer.borrow_mut() = Some(tid);
+                HEADING_STATE.with(|s| {
+                    if let Some(ref st) = *s.borrow() {
+                        *st.click_timer.borrow_mut() = Some(tid);
+                    }
+                });
             }) as Box<dyn FnMut(JsValue)>);
 
             let _ = promise.then(&on_write);
             on_write.forget();
-        }) as Box<dyn FnMut()>);
-
-        el.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
+        }) as Box<dyn FnMut(web_sys::Event)>);
+        doc.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
