@@ -104,17 +104,10 @@ fn set_timer_id(el: &web_sys::Element, id: i32) {
     el.set_attribute("data-timer", &id.to_string()).ok();
 }
 
-fn clear_timer(el: &web_sys::Element) {
+fn clear_timers(el: &web_sys::Element) {
     if let Some(id) = get_timer_id(el) {
         clear_interval_id(id);
         el.remove_attribute("data-timer").ok();
-    }
-}
-
-fn clear_children_timers(el: &web_sys::Element) {
-    clear_timer(el);
-    if let Ok(Some(name)) = el.query_selector(".name") {
-        clear_timer(&name);
     }
 }
 
@@ -192,7 +185,9 @@ fn watch_root() {
 
 fn bind_heading(doc: &web_sys::Document) {
     let Some(el) = doc.get_element_by_id("tsc-heading") else { return };
-    clear_children_timers(&el);
+    if el.get_attribute("data-bound").is_some() { return; }
+    el.set_attribute("data-bound", "1").ok();
+    clear_timers(&el);
     bind_heading_events(el);
 }
 
@@ -205,7 +200,7 @@ fn bind_heading_events(el: web_sys::Element) {
         let gen2 = gen.clone();
         let closure = Closure::wrap(Box::new(move || {
             gen2.set(gen2.get().wrapping_add(1));
-            clear_timer(&el2);
+            clear_timers(&el2);
             el2.set_attribute("data-animating", "true").ok();
             let g = gen2.get();
             let el3 = el2.clone();
@@ -227,7 +222,7 @@ fn bind_heading_events(el: web_sys::Element) {
         let gen2 = gen.clone();
         let closure = Closure::wrap(Box::new(move || {
             gen2.set(gen2.get().wrapping_add(1));
-            clear_timer(&el2);
+            clear_timers(&el2);
             el2.remove_attribute("data-animating").ok();
             let g = gen2.get();
             let el3 = el2.clone();
@@ -249,7 +244,7 @@ fn bind_heading_events(el: web_sys::Element) {
         let gen2 = gen.clone();
         let closure = Closure::wrap(Box::new(move || {
             gen2.set(gen2.get().wrapping_add(1));
-            clear_timer(&el2);
+            clear_timers(&el2);
             el2.set_attribute("data-animating", "true").ok();
             let promise = window().navigator().clipboard().write_text("tsc.hk");
 
@@ -259,8 +254,14 @@ fn bind_heading_events(el: web_sys::Element) {
                 el3.set_text_content(Some(SHORT));
                 suffix_animate(&el3, gen3.clone());
             }) as Box<dyn FnMut(JsValue)>);
-            let _ = promise.then(&on_write);
+
+            let el4 = el2.clone();
+            let on_fail = Closure::wrap(Box::new(move |_: JsValue| {
+                el4.remove_attribute("data-animating").ok();
+            }) as Box<dyn FnMut(JsValue)>);
+            let _ = promise.then(&on_write).catch(&on_fail);
             on_write.forget();
+            on_fail.forget();
         }) as Box<dyn FnMut()>);
         el.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref()).ok();
         closure.forget();
@@ -293,7 +294,7 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
             *p += 1;
             if *p >= len {
                 el2.set_text_content(Some(&format!("{}{}", SHORT, SUFFIX)));
-                clear_timer(&el2);
+                clear_timers(&el2);
                 // After showing copied, animate back to FULL
                 gen.set(gen.get().wrapping_add(1));
                 let g = gen.get();
@@ -345,7 +346,7 @@ fn bind_one_link(link: web_sys::Element) {
                 Ok(Some(n)) => n,
                 _ => return,
             };
-            clear_timer(&name_el);
+            clear_timers(&name_el);
             link2.set_attribute("data-animating", "true").ok();
             let original = name_el.text_content().unwrap_or_default();
             name_el.set_attribute("data-original", &original).ok();
@@ -373,7 +374,7 @@ fn bind_one_link(link: web_sys::Element) {
             link2.remove_attribute("data-animating").ok();
             link2.remove_attribute("style").ok();
             if let Ok(Some(name_el)) = link2.query_selector(".name") {
-                clear_timer(&name_el);
+                clear_timers(&name_el);
                 if let Some(orig) = name_el.get_attribute("data-original") {
                     name_el.set_text_content(Some(&orig));
                 }
