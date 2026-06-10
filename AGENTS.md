@@ -19,9 +19,9 @@ python3 -m http.server 4000 -d dist
 ```
 tsc-hk/
   index.crepus          # entry template (UnoCSS classes, indent-based)
-  crepus.toml           # target + SEO config + head_html (script injection)
+  crepus.toml           # target + SEO config
   runtime/              # Rust WASM crate
-    src/lib.rs          # wasm_bindgen: crepus_render(bundle_json)
+    src/lib.rs          # all interactivity lives here (web-sys + wasm-bindgen)
   dist/                 # build output
 ```
 
@@ -42,10 +42,6 @@ google-fonts "Chivo Mono"
 
 Loads Google Font via `<link>` and sets `font-family` on `<body>`. Placed at top of file (before any elements).
 
-### `<style>` blocks
-
-Raw HTML `<style>...</style>` tags at document level let you write CSS with `{ }` (which crepus would otherwise eat as expression interpolation). The docs-site uses this pattern.
-
 ### Group elements
 
 Define reusable class bundles at the bottom of the file:
@@ -65,34 +61,41 @@ a proj href="..."
   span desc " — description"
 ```
 
-### slot-rotate
-
-```
-slot-rotate interval={8000}
-  "first phrase"
-  "second phrase"
-```
-
-Cycles through phrases with a crossfade animation. Use `interval={ms}` to control timing.
-
-### head_html (crepus.toml)
-
-Inject raw HTML (scripts, styles, meta tags) into `<head>`:
-
-```toml
-[[targets]]
-head_html = """
-<script>...</script>
-"""
-```
-
-Use for interactive JavaScript that needs to run after the crepus WASM render. Poll for `#crepus-root` children before accessing rendered elements.
-
 ### UnoCSS
 
 UnoCSS runtime (`vendor/unocss.js`) extracts classes from rendered DOM. Standard preset-wind utilities work.
+
+## Interactivity — Rust only
+
+All interactive behavior (animations, event handling, DOM manipulation) must be
+implemented in Rust inside `runtime/src/lib.rs` using `web-sys`, `js-sys`, and
+`wasm-bindgen`. **Do not add JavaScript to `head_html` or anywhere else.**
+
+Use **document-level event delegation** (listeners on `document`, not on
+individual elements) so that handlers survive DOM replacement during hot-reload
+and re-renders. Use `#[wasm_bindgen(start)]` to set up listeners once on WASM
+load.
+
+Pattern:
+
+```rust
+#[wasm_bindgen(start)]
+pub fn start() {
+    let doc = document();
+    let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+        let Some(target) = find_target(&event, "#my-element") else { return };
+        // handle event
+    }) as Box<dyn FnMut(web_sys::Event)>);
+    doc.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref()).ok();
+    closure.forget();
+}
+```
+
+Use `thread_local!` statics for persistent state (timers, animation flags).
 
 ## Key crates
 
 - `crepuscularity-web` — HTML rendering, bundle parser
 - `crepuscularity-core` — parser, AST, context, eval
+- `web-sys` — DOM API bindings
+- `js-sys` — JS interop (Math.random, Promise, Function, etc.)
