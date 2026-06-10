@@ -6,7 +6,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
       div text-zinc-100 text-lg font-semibold tracking-wide id="tsc-heading"
         "the software company of hong kong"
     div text-zinc-400 leading-6
-      "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
+      "an independent R&D lab building systems software, runtimes, developer tools, application platforms, and experimental computing platforms."
     div
       div text-zinc-100 font-medium mt-4
         "PROJECTS"
