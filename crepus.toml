@@ -53,33 +53,6 @@ head_html = """
     if (!root || !root.children.length) return;
     clearInterval(check);
 
-    // Heading animation
-    var heading = document.getElementById('tsc-heading');
-    if (heading) {
-      var FULL = 'the software company of hong kong';
-      var SHORT = 'tsc.hk';
-      var hTimer = null, hAnimating = false, clickTimer = null;
-      heading.addEventListener('mouseenter', function() {
-        if (hAnimating) return;
-        hAnimating = true;
-        hTimer = animateText(heading, SHORT, 20, function() { hAnimating = false; });
-      });
-      heading.addEventListener('mouseleave', function() {
-        if (hTimer) { clearInterval(hTimer); hTimer = null; }
-        hTimer = animateText(heading, FULL, 20, function() { hAnimating = false; });
-      });
-      heading.addEventListener('click', function() {
-        navigator.clipboard.writeText('tsc.hk').then(function() {
-          if (hTimer) { clearInterval(hTimer); hTimer = null; }
-          heading.textContent = SHORT;
-          clearTimeout(clickTimer);
-          clickTimer = setTimeout(function() {
-            hTimer = animateText(heading, FULL, 20, function() { hAnimating = false; });
-          }, 1200);
-        });
-      });
-    }
-
     // Link hover animation
     var links = root.querySelectorAll('a.proj, a.con');
     for (var i = 0; i < links.length; i++) {
