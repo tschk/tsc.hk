@@ -35,14 +35,16 @@ jobs:
 
       - name: Install crepus (precompiled)
         run: |
-          URL="https://github.com/tschk/crepuscularity/releases/download/${CREPUS_VERSION}/crepus-x86_64-linux"
+          BASE="https://github.com/tschk/crepuscularity/releases/download/${CREPUS_VERSION}"
           for attempt in $(seq 1 5); do
-            if curl -fsSL -o crepus "$URL"; then
+            if curl -fsSL -o crepus "${BASE}/crepus-x86_64-linux" \
+              && curl -fsSL -o SHA256SUMS.txt "${BASE}/SHA256SUMS.txt"; then
+              grep "crepus-x86_64-linux" SHA256SUMS.txt | sha256sum -c -
               chmod +x crepus
               echo "$PWD" >> "$GITHUB_PATH"
               exit 0
             fi
-            echo "Attempt ${attempt}: waiting for ${CREPUS_VERSION} binary..."
+            echo "Attempt ${attempt}: waiting for ${CREPUS_VERSION} release assets..."
             sleep 10
           done
           echo "Precompiled binary unavailable, building crepuscularity-cli from crates.io"
