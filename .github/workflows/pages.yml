@@ -1,0 +1,58 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-bindgen-cli
+        run: |
+          VERSION=$(grep -A2 'name = "wasm-bindgen"' runtime/Cargo.lock | grep '^version' | head -1 | sed 's/version = "\(.*\)"/\1/')
+          echo "wasm-bindgen $VERSION"
+          cargo install wasm-bindgen-cli --version "$VERSION" --locked
+
+      - name: Install crepuscularity-cli
+        run: cargo install crepuscularity-cli --no-default-features --locked
+
+      - name: Build site
+        run: crepus web build --site .
+
+      - name: Verify artifacts
+        run: |
+          test -f dist/index.html
+          test -f dist/.nojekyll
+          test -f dist/pkg/runtime_bg.wasm
+          echo "✓ all artifacts present"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
