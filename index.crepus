@@ -77,12 +77,10 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             "Email"
           span desc
             " — hello@tsc.hk"
+    div text-zinc-600 text-xs mt-12
+      "site built with crepuscularity"
 
-.proj
-  no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-300
-.con
-  no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-400
-.name
-  text-zinc-100 group-hover:text-white transition-colors duration-200
-.desc
-  text-zinc-500 group-hover:text-zinc-400 transition-colors duration-200
+.proj no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-300
+.con no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-400
+.name text-zinc-100 group-hover:text-white transition-colors duration-200
+.desc text-zinc-500 group-hover:text-zinc-400 transition-colors duration-200
