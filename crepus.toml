@@ -7,87 +7,106 @@ entry = "index.crepus"
 name = "The Software Company of Hong Kong"
 head_html = """
 <style>
+  a, a:link, a:visited { color: inherit; text-decoration: none; }
   #tsc-heading { cursor: pointer; font-variant-ligatures: none; }
+  .name { font-variant-ligatures: none; }
 </style>
 <script>
 (function() {
+  var GLYPHS = '\u2500\u2502\u250C\u2510\u2514\u2518\u251C\u2524\u252C\u2534\u253C\u256D\u256E\u256F\u2570\u2571\u2572\u2573\u25CB\u25CF\u25A0\u25A1\u25B2\u25B3\u25B6\u25BC\u25C6\u25C7\u25D8\u25D9\u25E6\u2605\u2606\u2660\u2663\u2665\u2666';
+
+  function randGlyph() {
+    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+  }
+
+  function animateText(el, target, speed, cb) {
+    var from = el.textContent;
+    var maxLen = Math.max(from.length, target.length);
+    var fromP = from, targetP = target;
+    while (fromP.length < maxLen) fromP += ' ';
+    while (targetP.length < maxLen) targetP += ' ';
+    var chars = fromP.split('');
+    var phase = 0, pos = 0;
+    var timer = setInterval(function() {
+      if (phase === 0) {
+        chars[pos] = randGlyph();
+        for (var j = pos + 1; j < maxLen; j++) chars[j] = randGlyph();
+        el.textContent = chars.join('');
+        pos++;
+        if (pos >= maxLen) { phase = 1; pos = 0; }
+      } else {
+        chars[pos] = targetP[pos];
+        el.textContent = chars.join('');
+        pos++;
+        if (pos >= maxLen) {
+          clearInterval(timer);
+          el.textContent = target;
+          if (cb) cb();
+        }
+      }
+    }, speed);
+    return timer;
+  }
+
   var check = setInterval(function() {
     var root = document.getElementById('crepus-root');
     if (!root || !root.children.length) return;
     clearInterval(check);
-    var el = document.getElementById('tsc-heading');
-    if (!el) return;
-    var FULL = 'the software company of hong kong';
-    var SHORT = 'tsc.hk';
-    var GLYPHS = '\u2591\u2592\u2593\u2588\u2571\u2572\u2573\u2580\u2584';
-    var timer = null;
-    var clickTimer = null;
-    var animating = false;
 
-    function randGlyph() {
-      return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-    }
-
-    function animateTo(target, cb) {
-      var from = el.textContent;
-      var maxLen = Math.max(from.length, target.length);
-      var fromPadded = from;
-      var targetPadded = target;
-      while (fromPadded.length < maxLen) fromPadded += ' ';
-      while (targetPadded.length < maxLen) targetPadded += ' ';
-
-      var phase = 0;
-      var pos = 0;
-      var chars = fromPadded.split('');
-      var total = maxLen;
-
-      timer = setInterval(function() {
-        if (phase === 0) {
-          chars[pos] = randGlyph();
-          for (var j = pos + 1; j < total; j++) {
-            chars[j] = randGlyph();
-          }
-          el.textContent = chars.join('');
-          pos++;
-          if (pos >= total) {
-            phase = 1;
-            pos = 0;
-          }
-        } else {
-          chars[pos] = targetPadded[pos];
-          el.textContent = chars.join('');
-          pos++;
-          if (pos >= total) {
-            clearInterval(timer);
-            timer = null;
-            el.textContent = target;
-            if (cb) cb();
-          }
-        }
-      }, 25);
-    }
-
-    el.addEventListener('mouseenter', function() {
-      if (animating) return;
-      animating = true;
-      animateTo(SHORT, function() { animating = false; });
-    });
-
-    el.addEventListener('mouseleave', function() {
-      if (timer) { clearInterval(timer); timer = null; }
-      animateTo(FULL, function() { animating = false; });
-    });
-
-    el.addEventListener('click', function() {
-      navigator.clipboard.writeText('tsc.hk').then(function() {
-        if (timer) { clearInterval(timer); timer = null; }
-        el.textContent = SHORT;
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(function() {
-          animateTo(FULL, function() { animating = false; });
-        }, 1200);
+    // Heading animation
+    var heading = document.getElementById('tsc-heading');
+    if (heading) {
+      var FULL = 'the software company of hong kong';
+      var SHORT = 'tsc.hk';
+      var hTimer = null, hAnimating = false, clickTimer = null;
+      heading.addEventListener('mouseenter', function() {
+        if (hAnimating) return;
+        hAnimating = true;
+        hTimer = animateText(heading, SHORT, 20, function() { hAnimating = false; });
       });
-    });
+      heading.addEventListener('mouseleave', function() {
+        if (hTimer) { clearInterval(hTimer); hTimer = null; }
+        hTimer = animateText(heading, FULL, 20, function() { hAnimating = false; });
+      });
+      heading.addEventListener('click', function() {
+        navigator.clipboard.writeText('tsc.hk').then(function() {
+          if (hTimer) { clearInterval(hTimer); hTimer = null; }
+          heading.textContent = SHORT;
+          clearTimeout(clickTimer);
+          clickTimer = setTimeout(function() {
+            hTimer = animateText(heading, FULL, 20, function() { hAnimating = false; });
+          }, 1200);
+        });
+      });
+    }
+
+    // Link hover animation
+    var links = root.querySelectorAll('a.proj, a.con');
+    for (var i = 0; i < links.length; i++) {
+      (function(link) {
+        var nameEl = link.querySelector('.name');
+        if (!nameEl) return;
+        var original = nameEl.textContent;
+        var timer = null, animating = false;
+
+        link.addEventListener('mouseenter', function() {
+          if (animating) return;
+          animating = true;
+          timer = animateText(nameEl, original, 18, function() {
+            animating = false;
+            link.style.textDecorationLine = 'underline';
+          });
+        });
+
+        link.addEventListener('mouseleave', function() {
+          if (timer) { clearInterval(timer); timer = null; }
+          link.style.textDecorationLine = '';
+          timer = animateText(nameEl, original, 18, function() {
+            animating = false;
+          });
+        });
+      })(links[i]);
+    }
   }, 100);
 })();
 </script>

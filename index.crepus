@@ -79,9 +79,9 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             " — hello@tsc.hk"
 
 .proj
-  no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 hover:underline decoration-zinc-700 underline-offset-4 visited:text-zinc-300
+  no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-300
 .con
-  no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 hover:underline decoration-zinc-700 underline-offset-4 visited:text-zinc-400
+  no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-400
 .name
   text-zinc-100 group-hover:text-white transition-colors duration-200
 .desc
