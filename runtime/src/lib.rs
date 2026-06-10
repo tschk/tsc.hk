@@ -251,13 +251,20 @@ fn bind_heading_events(el: web_sys::Element) {
             let el3 = el2.clone();
             let gen3 = gen2.clone();
             let on_write = Closure::wrap(Box::new(move |_: JsValue| {
+                gen3.set(gen3.get().wrapping_add(1));
+                clear_timers(&el3);
+                el3.set_attribute("data-animating", "true").ok();
                 el3.set_text_content(Some(SHORT));
                 suffix_animate(&el3, gen3.clone());
             }) as Box<dyn FnMut(JsValue)>);
 
             let el4 = el2.clone();
+            let gen4 = gen2.clone();
             let on_fail = Closure::wrap(Box::new(move |_: JsValue| {
+                gen4.set(gen4.get().wrapping_add(1));
+                clear_timers(&el4);
                 el4.remove_attribute("data-animating").ok();
+                el4.set_text_content(Some(FULL));
             }) as Box<dyn FnMut(JsValue)>);
             let _ = promise.then(&on_write).catch(&on_fail);
             on_write.forget();
