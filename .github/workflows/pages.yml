@@ -31,7 +31,7 @@ jobs:
           cargo install wasm-bindgen-cli --version "$VERSION" --locked
 
       - name: Install crepuscularity-cli
-        run: cargo install crepuscularity-cli --git https://github.com/tschk/crepuscularity --no-default-features
+        run: cargo install crepuscularity-cli --no-default-features --locked
 
       - name: Build site
         run: |
