@@ -54,7 +54,6 @@ fn set_interval_ms(closure: &Closure<dyn FnMut()>, ms: i32) -> i32 {
         .expect("set_interval")
 }
 
-/// Scramble all positions with random glyphs, then reveal `target` left-to-right.
 fn animate_text(
     el: &web_sys::Element,
     target: &str,
@@ -120,7 +119,7 @@ fn animate_text(
     timer
 }
 
-// ── Heading state ─────────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────
 
 struct HeadingState {
     timer: TimerHandle,
@@ -128,24 +127,18 @@ struct HeadingState {
     animating: Rc<RefCell<bool>>,
 }
 
-thread_local! {
-    static HEADING_STATE: RefCell<Option<HeadingState>> = RefCell::new(None);
-}
-
-// ── Link state ────────────────────────────────────────────────────────────
-
 struct LinkAnim {
     timer: TimerHandle,
     original: String,
 }
 
 thread_local! {
-    // Keyed by pointer identity of the <a> element (as JsValue ptr)
+    static HEADING_STATE: RefCell<Option<HeadingState>> = const { RefCell::new(None) };
     static LINK_STATE: RefCell<HashMap<usize, LinkAnim>> = RefCell::new(HashMap::new());
+    static HEADING_HOVERED: RefCell<bool> = const { RefCell::new(false) };
 }
 
 fn link_key(el: &web_sys::Element) -> usize {
-    // Use the JsValue pointer identity as a cheap key
     let val: &JsValue = el.as_ref();
     val as *const JsValue as usize
 }
@@ -167,7 +160,9 @@ fn inject_styles() {
          #tsc-heading { cursor: pointer; font-variant-ligatures: none; }\n\
          .name { font-variant-ligatures: none; }",
     ));
-    doc.head().expect("head").append_child(&style).ok();
+    if let Some(head) = doc.head() {
+        head.append_child(&style).ok();
+    }
 }
 
 // ── Heading ───────────────────────────────────────────────────────────────
@@ -183,10 +178,17 @@ fn init_heading() {
 
     let doc = document();
 
-    // mouseenter
+    // mouseover (bubbles) — enter #tsc-heading
     {
         let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
             let Some(heading) = find_target(&event, "#tsc-heading") else { return };
+            // Only trigger on actual enter (not moving between children)
+            let already_hovered = HEADING_HOVERED.with(|h| *h.borrow());
+            if already_hovered {
+                return;
+            }
+            HEADING_HOVERED.with(|h| *h.borrow_mut() = true);
+
             HEADING_STATE.with(|state| {
                 let s = state.borrow();
                 let s = match s.as_ref() {
@@ -206,15 +208,28 @@ fn init_heading() {
                 *s.timer.borrow_mut() = t.borrow_mut().take();
             });
         }) as Box<dyn FnMut(web_sys::Event)>);
-        doc.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
+        doc.add_event_listener_with_callback("mouseover", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
 
-    // mouseleave
+    // mouseout (bubbles) — leave #tsc-heading
     {
         let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+            // Check if we actually left the heading (not just moving to a child)
+            let related = event
+                .unchecked_ref::<web_sys::MouseEvent>()
+                .related_target()
+                .and_then(|t| t.dyn_into::<web_sys::Element>().ok());
             let Some(heading) = find_target(&event, "#tsc-heading") else { return };
+            // If related_target is still inside heading, we didn't leave
+            if let Some(ref related) = related {
+                if heading.contains(Some(related.as_ref())) {
+                    return;
+                }
+            }
+            HEADING_HOVERED.with(|h| *h.borrow_mut() = false);
+
             HEADING_STATE.with(|state| {
                 let s = state.borrow();
                 let s = match s.as_ref() {
@@ -230,7 +245,7 @@ fn init_heading() {
                 *s.timer.borrow_mut() = t.borrow_mut().take();
             });
         }) as Box<dyn FnMut(web_sys::Event)>);
-        doc.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
+        doc.add_event_listener_with_callback("mouseout", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
@@ -332,7 +347,7 @@ fn init_heading() {
 fn init_links() {
     let doc = document();
 
-    // mouseenter on a.proj / a.con → scramble .name then underline
+    // mouseover on a.proj / a.con → scramble .name then underline
     {
         let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
             let Some(link) = find_target(&event, "a.proj, a.con") else { return };
@@ -346,32 +361,38 @@ fn init_links() {
                     return;
                 }
                 let original = name_el.text_content().unwrap_or_default();
-                let link_for_done = link.clone();
+                let link_clone = link.clone();
                 let done_cb = Closure::wrap(Box::new(move || {
-                    link_for_done.set_attribute("style", "text-decoration-line: underline").ok();
+                    link_clone
+                        .set_attribute("style", "text-decoration-line: underline")
+                        .ok();
                     LINK_STATE.with(|s| {
                         s.borrow_mut().remove(&key);
                     });
                 }) as Box<dyn FnMut()>);
                 let timer = animate_text(&name_el, &original, 18, Some(done_cb));
-                state.borrow_mut().insert(
-                    key,
-                    LinkAnim {
-                        timer,
-                        original,
-                    },
-                );
+                state.borrow_mut().insert(key, LinkAnim { timer, original });
             });
         }) as Box<dyn FnMut(web_sys::Event)>);
-        doc.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
+        doc.add_event_listener_with_callback("mouseover", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
 
-    // mouseleave on a.proj / a.con → reset immediately, no animation
+    // mouseout on a.proj / a.con → reset immediately
     {
         let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
+            let related = event
+                .unchecked_ref::<web_sys::MouseEvent>()
+                .related_target()
+                .and_then(|t| t.dyn_into::<web_sys::Element>().ok());
             let Some(link) = find_target(&event, "a.proj, a.con") else { return };
+            // If related_target is still inside the link, we didn't leave
+            if let Some(ref related) = related {
+                if link.contains(Some(related.as_ref())) {
+                    return;
+                }
+            }
             let name_el = match link.query_selector(".name") {
                 Ok(Some(n)) => n,
                 _ => return,
@@ -385,7 +406,7 @@ fn init_links() {
             });
             link.remove_attribute("style").ok();
         }) as Box<dyn FnMut(web_sys::Event)>);
-        doc.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
+        doc.add_event_listener_with_callback("mouseout", closure.as_ref().unchecked_ref())
             .ok();
         closure.forget();
     }
