@@ -1,0 +1,105 @@
+[[targets]]
+type = "web"
+id = "site"
+site = "."
+out = "dist"
+entry = "index.crepus"
+name = "The Software Company of Hong Kong"
+head_html = """
+<style>
+  #tsc-heading { cursor: pointer; font-variant-ligatures: none; }
+</style>
+<script>
+(function() {
+  var check = setInterval(function() {
+    var root = document.getElementById('crepus-root');
+    if (!root || !root.children.length) return;
+    clearInterval(check);
+    var el = document.getElementById('tsc-heading');
+    if (!el) return;
+    var FULL = 'the software company of hong kong';
+    var SHORT = 'tsc.hk';
+    var GLYPHS = '\u2591\u2592\u2593\u2588\u2571\u2572\u2573\u2580\u2584';
+    var timer = null;
+    var clickTimer = null;
+    var animating = false;
+
+    function randGlyph() {
+      return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    }
+
+    function animateTo(target, cb) {
+      var from = el.textContent;
+      var maxLen = Math.max(from.length, target.length);
+      var fromPadded = from;
+      var targetPadded = target;
+      while (fromPadded.length < maxLen) fromPadded += ' ';
+      while (targetPadded.length < maxLen) targetPadded += ' ';
+
+      var phase = 0;
+      var pos = 0;
+      var chars = fromPadded.split('');
+      var total = maxLen;
+
+      timer = setInterval(function() {
+        if (phase === 0) {
+          chars[pos] = randGlyph();
+          for (var j = pos + 1; j < total; j++) {
+            chars[j] = randGlyph();
+          }
+          el.textContent = chars.join('');
+          pos++;
+          if (pos >= total) {
+            phase = 1;
+            pos = 0;
+          }
+        } else {
+          chars[pos] = targetPadded[pos];
+          el.textContent = chars.join('');
+          pos++;
+          if (pos >= total) {
+            clearInterval(timer);
+            timer = null;
+            el.textContent = target;
+            if (cb) cb();
+          }
+        }
+      }, 25);
+    }
+
+    el.addEventListener('mouseenter', function() {
+      if (animating) return;
+      animating = true;
+      animateTo(SHORT, function() { animating = false; });
+    });
+
+    el.addEventListener('mouseleave', function() {
+      if (timer) { clearInterval(timer); timer = null; }
+      animateTo(FULL, function() { animating = false; });
+    });
+
+    el.addEventListener('click', function() {
+      navigator.clipboard.writeText('tsc.hk').then(function() {
+        if (timer) { clearInterval(timer); timer = null; }
+        el.textContent = SHORT;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(function() {
+          animateTo(FULL, function() { animating = false; });
+        }, 1200);
+      });
+    });
+  }, 100);
+})();
+</script>
+"""
+description = "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
+
+[targets.seo]
+title = "The Software Company of Hong Kong — tsc.hk"
+description = "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
+robots = "index,follow"
+twitter_card = "summary"
+canonical = "https://tsc.hk"
+
+twitter_site = "@tsc_hk"
+twitter_creator = "@tsc_hk"

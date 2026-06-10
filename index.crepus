@@ -1,0 +1,88 @@
+google-fonts "Chivo Mono"
+
+div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
+  div max-w-2xl flex flex-col gap-8
+    div
+      div text-zinc-100 text-lg font-semibold tracking-wide id="tsc-heading"
+        "the software company of hong kong"
+    div text-zinc-400 leading-6
+      "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
+    div
+      div text-zinc-100 font-medium mt-4
+        "PROJECTS"
+      div flex flex-col gap-3 mt-2
+        a proj href="https://crepuscularity.tsc.hk"
+          div
+            span name
+              "crepuscularity"
+            span desc
+              " — write react for gpui, tui, embedded; write rust for web; write both for swiftui and mobile"
+        a proj href="https://github.com/tschk/aurorality"
+          div ml-4
+            span name
+              "aurorality"
+            span desc
+              " — code web + js/ts + tailwind, get swiftui"
+        a proj href="https://github.com/tschk/inauguration"
+          div
+            span name
+              "inauguration"
+            span desc
+              " — capability-aware compiler pipeline for deterministic execution and agent-native software"
+        a proj href="https://github.com/tschk/rv8"
+          div
+            span name
+              "rv8"
+            span desc
+              " — browser engine combining Servo rendering with V8 JavaScript"
+        a proj href="https://github.com/tschk/soliloquy"
+          div
+            span name
+              "soliloquy"
+            span desc
+              " — the immutable web-native ultraminimal operating system"
+        a proj href="https://github.com/tschk/equilibrium"
+          div
+            span name
+              "equilibrium"
+            span desc
+              " — cross-language interoperability without glue code"
+        a proj href="https://github.com/tschk/eqswift"
+          div
+            span name
+              "eqswift"
+            span desc
+              " — two lines to ffi rust to swift automagically"
+    div
+      div text-zinc-100 font-medium mt-4
+        "CONTACT"
+      div flex flex-col gap-1 mt-2
+        a con href="https://github.com/tschk"
+          span name
+            "GitHub"
+          span desc
+            " — https://github.com/tschk"
+        a con href="https://x.com/tsc_hk"
+          span name
+            "X"
+          span desc
+            " — @tsc_hk"
+        a con href="https://instagram.com/thesoftwarecompanyofhongkong"
+          span name
+            "Instagram"
+          span desc
+            " — @thesoftwarecompanyofhongkong"
+        a con href="mailto:hello@tsc.hk"
+          span name
+            "Email"
+          span desc
+            " — hello@tsc.hk"
+
+.proj
+  no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 hover:underline decoration-zinc-700 underline-offset-4 visited:text-zinc-300
+.con
+  no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 hover:underline decoration-zinc-700 underline-offset-4 visited:text-zinc-400
+.name
+  text-zinc-100 group-hover:text-white transition-colors duration-200
+.desc
+  text-zinc-500 group-hover:text-zinc-400 transition-colors duration-200
