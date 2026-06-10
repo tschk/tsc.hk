@@ -33,7 +33,13 @@ fn rand_glyph() -> char {
 
 fn clear_interval_id(id: i32) { window().clear_interval_with_handle(id); }
 
-/// Animate text with a generation counter. Returns (interval_id, generation).
+fn pad_chars(chars: &mut Vec<char>, len: usize) {
+    while chars.len() < len {
+        chars.push(' ');
+    }
+}
+
+/// Animate text with a generation counter. Returns interval_id.
 /// The done callback only fires if `gen` still matches `gen_cell` when the animation completes.
 fn animate_text(
     el: &web_sys::Element,
@@ -41,20 +47,18 @@ fn animate_text(
     speed: i32,
     gen_cell: Rc<Cell<u32>>,
     on_done: impl FnOnce() + 'static,
-) -> (i32, u32) {
+) -> i32 {
     let gen = gen_cell.get();
     let from = el.text_content().unwrap_or_default();
-    let max_len = from.len().max(target.len());
-    let mut from_padded = from;
-    let mut target_padded = target.to_string();
-    while from_padded.len() < max_len { from_padded.push(' '); }
-    while target_padded.len() < max_len { target_padded.push(' '); }
+    let mut from_chars: Vec<char> = from.chars().collect();
+    let mut target_chars: Vec<char> = target.chars().collect();
+    let total = from_chars.len().max(target_chars.len());
+    pad_chars(&mut from_chars, total);
+    pad_chars(&mut target_chars, total);
 
-    let chars: Rc<RefCell<Vec<char>>> = Rc::new(RefCell::new(from_padded.chars().collect()));
-    let target_chars: Vec<char> = target_padded.chars().collect();
+    let chars: Rc<RefCell<Vec<char>>> = Rc::new(RefCell::new(from_chars));
     let phase: Rc<RefCell<u8>> = Rc::new(RefCell::new(0));
     let pos: Rc<RefCell<usize>> = Rc::new(RefCell::new(0));
-    let total = max_len;
     let el = el.clone();
     let target_str = target.to_string();
     let gen_cell2 = gen_cell.clone();
@@ -62,23 +66,33 @@ fn animate_text(
     let done_fn = Rc::new(Cell::new(Some(on_done)));
 
     let closure = Closure::wrap(Box::new(move || {
-        if gen_cell2.get() != gen { return; }
+        if gen_cell2.get() != gen {
+            return;
+        }
         let mut c = chars.borrow_mut();
         let mut p = pos.borrow_mut();
         let mut ph = phase.borrow_mut();
         if *ph == 0 {
             c[*p] = rand_glyph();
-            for j in (*p + 1)..total { c[j] = rand_glyph(); }
+            for j in (*p + 1)..total {
+                c[j] = rand_glyph();
+            }
             el.set_text_content(Some(&c.iter().collect::<String>()));
             *p += 1;
-            if *p >= total { *ph = 1; *p = 0; }
+            if *p >= total {
+                *ph = 1;
+                *p = 0;
+            }
         } else {
             c[*p] = target_chars[*p];
             el.set_text_content(Some(&c.iter().collect::<String>()));
             *p += 1;
             if *p >= total {
                 el.set_text_content(Some(&target_str));
-                if let Some(f) = done_fn.take() { f(); }
+                clear_timers(&el);
+                if let Some(f) = done_fn.take() {
+                    f();
+                }
             }
         }
     }) as Box<dyn FnMut()>);
@@ -90,7 +104,7 @@ fn animate_text(
         )
         .expect("set_interval");
     closure.forget();
-    (id, gen)
+    id
 }
 
 // ── State stored as data-* attributes on elements ─────────────────────────
@@ -185,7 +199,7 @@ fn watch_root() {
 
 fn bind_heading(doc: &web_sys::Document) {
     let Some(el) = doc.get_element_by_id("tsc-heading") else { return };
-    if el.get_attribute("data-bound").is_some() { return; }
+    if el.get_attribute("data-bound").is_some() { return };
     el.set_attribute("data-bound", "1").ok();
     clear_timers(&el);
     bind_heading_events(el);
@@ -205,7 +219,7 @@ fn bind_heading_events(el: web_sys::Element) {
             let g = gen2.get();
             let el3 = el2.clone();
             let gen3 = gen2.clone();
-            let (id, _) = animate_text(&el2, SHORT, 20, gen2.clone(), move || {
+            let id = animate_text(&el2, SHORT, 20, gen2.clone(), move || {
                 if gen3.get() == g {
                     el3.remove_attribute("data-animating").ok();
                 }
@@ -227,7 +241,7 @@ fn bind_heading_events(el: web_sys::Element) {
             let g = gen2.get();
             let el3 = el2.clone();
             let gen3 = gen2.clone();
-            let (id, _) = animate_text(&el2, FULL, 20, gen2.clone(), move || {
+            let id = animate_text(&el2, FULL, 20, gen2.clone(), move || {
                 if gen3.get() == g {
                     el3.remove_attribute("data-animating").ok();
                 }
@@ -285,16 +299,23 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
     let gen_val = gen.get();
 
     let closure = Closure::wrap(Box::new(move || {
-        if gen.get() != gen_val { return; }
+        if gen.get() != gen_val {
+            return;
+        }
         let mut p = pos.borrow_mut();
         let mut ph = phase.borrow_mut();
         let mut sc = scrambled.borrow_mut();
         if *ph == 0 {
             sc[*p] = rand_glyph();
-            for j in (*p + 1)..len { sc[j] = rand_glyph(); }
+            for j in (*p + 1)..len {
+                sc[j] = rand_glyph();
+            }
             el2.set_text_content(Some(&format!("{}{}", SHORT, sc.iter().collect::<String>())));
             *p += 1;
-            if *p >= len { *ph = 1; *p = 0; }
+            if *p >= len {
+                *ph = 1;
+                *p = 0;
+            }
         } else {
             sc[*p] = suffix[*p];
             el2.set_text_content(Some(&format!("{}{}", SHORT, sc.iter().collect::<String>())));
@@ -302,12 +323,11 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
             if *p >= len {
                 el2.set_text_content(Some(&format!("{}{}", SHORT, SUFFIX)));
                 clear_timers(&el2);
-                // After showing copied, animate back to FULL
                 gen.set(gen.get().wrapping_add(1));
                 let g = gen.get();
                 let el3 = el2.clone();
                 let gen2 = gen.clone();
-                let (id, _) = animate_text(&el2, FULL, 20, gen2.clone(), move || {
+                let id = animate_text(&el2, FULL, 20, gen2.clone(), move || {
                     if gen2.get() == g {
                         el3.remove_attribute("data-animating").ok();
                     }
@@ -319,7 +339,8 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
 
     let id = window()
         .set_interval_with_callback_and_timeout_and_arguments_0(
-            closure.as_ref().unchecked_ref(), 25,
+            closure.as_ref().unchecked_ref(),
+            25,
         )
         .expect("set_interval");
     closure.forget();
@@ -360,7 +381,7 @@ fn bind_one_link(link: web_sys::Element) {
             let link3 = link2.clone();
             let g = gen2.get();
             let gen3 = gen2.clone();
-            let (id, _) = animate_text(&name_el, &original, 18, gen2.clone(), move || {
+            let id = animate_text(&name_el, &original, 18, gen2.clone(), move || {
                 if gen3.get() == g {
                     link3.set_attribute("style", "text-decoration-line: underline").ok();
                     link3.remove_attribute("data-animating").ok();

@@ -14,6 +14,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  CREPUS_VERSION: v0.8.0
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,8 +33,20 @@ jobs:
           echo "wasm-bindgen $VERSION"
           cargo install wasm-bindgen-cli --version "$VERSION" --locked
 
-      - name: Install crepuscularity-cli
-        run: cargo install crepuscularity-cli --no-default-features --locked
+      - name: Install crepus (precompiled)
+        run: |
+          URL="https://github.com/tschk/crepuscularity/releases/download/${CREPUS_VERSION}/crepus-x86_64-linux"
+          for attempt in $(seq 1 20); do
+            if curl -fsSL -o crepus "$URL"; then
+              chmod +x crepus
+              echo "$PWD" >> "$GITHUB_PATH"
+              exit 0
+            fi
+            echo "Attempt ${attempt}: waiting for ${CREPUS_VERSION} binary..."
+            sleep 30
+          done
+          echo "Failed to download precompiled crepus"
+          exit 1
 
       - name: Build site
         run: crepus web build --site .
