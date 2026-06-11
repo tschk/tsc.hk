@@ -5,13 +5,11 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
 const GLYPHS: &[char] = &[
-    '\u{2500}', '\u{2502}', '\u{250C}', '\u{2510}', '\u{2514}', '\u{2518}',
-    '\u{251C}', '\u{2524}', '\u{252C}', '\u{2534}', '\u{253C}', '\u{256D}',
-    '\u{256E}', '\u{256F}', '\u{2570}', '\u{2571}', '\u{2572}', '\u{2573}',
-    '\u{25CB}', '\u{25CF}', '\u{25A0}', '\u{25A1}', '\u{25B2}', '\u{25B3}',
-    '\u{25B6}', '\u{25BC}', '\u{25C6}', '\u{25C7}', '\u{25D8}', '\u{25D9}',
-    '\u{25E6}', '\u{2605}', '\u{2606}', '\u{2660}', '\u{2663}', '\u{2665}',
-    '\u{2666}',
+    '\u{2500}', '\u{2502}', '\u{250C}', '\u{2510}', '\u{2514}', '\u{2518}', '\u{251C}', '\u{2524}',
+    '\u{252C}', '\u{2534}', '\u{253C}', '\u{256D}', '\u{256E}', '\u{256F}', '\u{2570}', '\u{2571}',
+    '\u{2572}', '\u{2573}', '\u{25CB}', '\u{25CF}', '\u{25A0}', '\u{25A1}', '\u{25B2}', '\u{25B3}',
+    '\u{25B6}', '\u{25BC}', '\u{25C6}', '\u{25C7}', '\u{25D8}', '\u{25D9}', '\u{25E6}', '\u{2605}',
+    '\u{2606}', '\u{2660}', '\u{2663}', '\u{2665}', '\u{2666}',
 ];
 
 const FULL: &str = "the software company of hong kong";
@@ -23,15 +21,21 @@ pub fn crepus_render(bundle_json: &str) -> Result<String, JsValue> {
     crepuscularity_web::render_bundle(bundle_json).map_err(|e| JsValue::from_str(&e.to_string()))
 }
 
-fn window() -> web_sys::Window { web_sys::window().expect("no window") }
-fn document() -> web_sys::Document { window().document().expect("document") }
+fn window() -> web_sys::Window {
+    web_sys::window().expect("no window")
+}
+fn document() -> web_sys::Document {
+    window().document().expect("document")
+}
 
 fn rand_glyph() -> char {
     let r = js_sys::Math::random();
     GLYPHS[(r * GLYPHS.len() as f64) as usize % GLYPHS.len()]
 }
 
-fn clear_interval_id(id: i32) { window().clear_interval_with_handle(id); }
+fn clear_interval_id(id: i32) {
+    window().clear_interval_with_handle(id);
+}
 
 fn pad_chars(chars: &mut Vec<char>, len: usize) {
     while chars.len() < len {
@@ -145,7 +149,8 @@ fn poll_bind(delay_ms: i32, remaining: u32) {
         }
     }));
     let _ = window().set_timeout_with_callback_and_timeout_and_arguments_0(
-        callback.as_ref().unchecked_ref(), delay_ms,
+        callback.as_ref().unchecked_ref(),
+        delay_ms,
     );
     callback.forget();
 }
@@ -172,17 +177,20 @@ fn watch_root() {
         None => return,
     };
 
-    let callback = Closure::wrap(Box::new(move |_: js_sys::Array, _: web_sys::MutationObserver| {
-        let cb = Closure::<dyn FnMut()>::wrap(Box::new(move || {
-            let doc = document();
-            bind_heading(&doc);
-            bind_links(&doc);
-        }));
-        let _ = window().set_timeout_with_callback_and_timeout_and_arguments_0(
-            cb.as_ref().unchecked_ref(), 50,
-        );
-        cb.forget();
-    }) as Box<dyn FnMut(js_sys::Array, web_sys::MutationObserver)>);
+    let callback = Closure::wrap(
+        Box::new(move |_: js_sys::Array, _: web_sys::MutationObserver| {
+            let cb = Closure::<dyn FnMut()>::wrap(Box::new(move || {
+                let doc = document();
+                bind_heading(&doc);
+                bind_links(&doc);
+            }));
+            let _ = window().set_timeout_with_callback_and_timeout_and_arguments_0(
+                cb.as_ref().unchecked_ref(),
+                50,
+            );
+            cb.forget();
+        }) as Box<dyn FnMut(js_sys::Array, web_sys::MutationObserver)>,
+    );
 
     let opts = web_sys::MutationObserverInit::new();
     let opts_obj: &js_sys::Object = opts.unchecked_ref();
@@ -190,7 +198,9 @@ fn watch_root() {
 
     let observer = web_sys::MutationObserver::new(callback.as_ref().unchecked_ref())
         .expect("MutationObserver");
-    observer.observe_with_options(&root, &opts).expect("observe");
+    observer
+        .observe_with_options(&root, &opts)
+        .expect("observe");
     callback.forget();
     std::mem::forget(observer);
 }
@@ -198,8 +208,12 @@ fn watch_root() {
 // ── Heading ───────────────────────────────────────────────────────────────
 
 fn bind_heading(doc: &web_sys::Document) {
-    let Some(el) = doc.get_element_by_id("tsc-heading") else { return };
-    if el.get_attribute("data-bound").is_some() { return };
+    let Some(el) = doc.get_element_by_id("tsc-heading") else {
+        return;
+    };
+    if el.get_attribute("data-bound").is_some() {
+        return;
+    };
     el.set_attribute("data-bound", "1").ok();
     clear_timers(&el);
     bind_heading_events(el);
@@ -226,7 +240,8 @@ fn bind_heading_events(el: web_sys::Element) {
             });
             set_timer_id(&el2, id);
         }) as Box<dyn FnMut()>);
-        el.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref()).ok();
+        el.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
+            .ok();
         closure.forget();
     }
 
@@ -248,7 +263,8 @@ fn bind_heading_events(el: web_sys::Element) {
             });
             set_timer_id(&el2, id);
         }) as Box<dyn FnMut()>);
-        el.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref()).ok();
+        el.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
+            .ok();
         closure.forget();
     }
 
@@ -284,7 +300,8 @@ fn bind_heading_events(el: web_sys::Element) {
             on_write.forget();
             on_fail.forget();
         }) as Box<dyn FnMut()>);
-        el.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref()).ok();
+        el.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref())
+            .ok();
         closure.forget();
     }
 }
@@ -351,11 +368,17 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
 
 fn bind_links(doc: &web_sys::Document) {
     let Some(body) = doc.body() else { return };
-    let Ok(links) = body.query_selector_all("a.proj, a.con") else { return };
+    let Ok(links) = body.query_selector_all("a.proj, a.con") else {
+        return;
+    };
     for i in 0..links.length() {
         let Some(node) = links.item(i) else { continue };
-        let Ok(link) = node.dyn_into::<web_sys::Element>() else { continue };
-        if link.get_attribute("data-bound").is_some() { continue; }
+        let Ok(link) = node.dyn_into::<web_sys::Element>() else {
+            continue;
+        };
+        if link.get_attribute("data-bound").is_some() {
+            continue;
+        }
         link.set_attribute("data-bound", "true").ok();
         bind_one_link(link);
     }
@@ -383,13 +406,16 @@ fn bind_one_link(link: web_sys::Element) {
             let gen3 = gen2.clone();
             let id = animate_text(&name_el, &original, 18, gen2.clone(), move || {
                 if gen3.get() == g {
-                    link3.set_attribute("style", "text-decoration-line: underline").ok();
+                    link3
+                        .set_attribute("style", "text-decoration-line: underline")
+                        .ok();
                     link3.remove_attribute("data-animating").ok();
                 }
             });
             set_timer_id(&name_el, id);
         }) as Box<dyn FnMut()>);
-        link.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref()).ok();
+        link.add_event_listener_with_callback("mouseenter", closure.as_ref().unchecked_ref())
+            .ok();
         closure.forget();
     }
 
@@ -408,7 +434,8 @@ fn bind_one_link(link: web_sys::Element) {
                 }
             }
         }) as Box<dyn FnMut()>);
-        link.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref()).ok();
+        link.add_event_listener_with_callback("mouseleave", closure.as_ref().unchecked_ref())
+            .ok();
         closure.forget();
     }
 }
