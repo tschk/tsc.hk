@@ -43,6 +43,142 @@ fn pad_chars(chars: &mut Vec<char>, len: usize) {
     }
 }
 
+fn scatter_rank(index: usize, total: usize) -> f64 {
+    if total == 0 {
+        return 0.0;
+    }
+    (((index * 7) % total) as f64 + 1.0) / total as f64
+}
+
+fn transition_frame(
+    from: &str,
+    target: &str,
+    step: usize,
+    total_steps: usize,
+    glyph_for_index: impl Fn(usize) -> char,
+) -> String {
+    if total_steps == 0 || step >= total_steps {
+        return target.to_string();
+    }
+    if step == 0 {
+        return from.to_string();
+    }
+
+    let from_chars: Vec<char> = from.chars().collect();
+    let target_chars: Vec<char> = target.chars().collect();
+    let from_len = from_chars.len();
+    let target_len = target_chars.len();
+    let progress = step as f64 / total_steps as f64;
+    let len_float = from_len as f64 + (target_len as f64 - from_len as f64) * progress;
+    let visible_len = if from_len >= target_len {
+        len_float.round() as usize
+    } else {
+        len_float.ceil() as usize
+    }
+    .clamp(from_len.min(target_len), from_len.max(target_len));
+    let glyph_mix = (progress / 0.5).min(1.0);
+    let resolve_mix = if progress <= 0.48 {
+        0.0
+    } else {
+        ((progress - 0.48) / 0.52).min(1.0)
+    };
+
+    let mut out = String::new();
+    for i in 0..visible_len {
+        if i < target_len && scatter_rank(i, target_len) <= resolve_mix {
+            out.push(target_chars[i]);
+        } else if progress < 0.55 && i < from_len && scatter_rank(i, visible_len) > glyph_mix {
+            out.push(from_chars[i]);
+        } else {
+            out.push(glyph_for_index(i + step));
+        }
+    }
+    out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn glyph(_: usize) -> char {
+        '◇'
+    }
+
+    #[test]
+    fn heading_transition_reduces_length_before_resolving_target() {
+        let from = "the software company of hong kong";
+        let frame = transition_frame(from, "tsc.hk", 8, 24, glyph);
+
+        assert!(frame.chars().count() < from.chars().count());
+        assert!(frame.chars().count() > "tsc.hk".chars().count());
+        assert_ne!(frame, "tsc.hk");
+    }
+
+    #[test]
+    fn heading_transition_uses_unicode_before_end_text() {
+        let frame = transition_frame("the software company of hong kong", "tsc.hk", 10, 24, glyph);
+
+        assert!(frame.contains('◇'));
+    }
+
+    #[test]
+    fn heading_transition_finishes_exactly_on_target() {
+        let frame = transition_frame("the software company of hong kong", "tsc.hk", 24, 24, glyph);
+
+        assert_eq!(frame, "tsc.hk");
+    }
+}
+
+fn animate_heading_text(
+    el: &web_sys::Element,
+    target: &str,
+    speed: i32,
+    gen_cell: Rc<Cell<u32>>,
+    on_done: impl FnOnce() + 'static,
+) -> i32 {
+    let gen = gen_cell.get();
+    let from = el.text_content().unwrap_or_default();
+    let total_steps = from
+        .chars()
+        .count()
+        .max(target.chars().count())
+        .saturating_mul(2)
+        .max(1);
+    let step: Rc<RefCell<usize>> = Rc::new(RefCell::new(0));
+    let el = el.clone();
+    let target_str = target.to_string();
+    let gen_cell2 = gen_cell.clone();
+    let done_fn = Rc::new(Cell::new(Some(on_done)));
+
+    let closure = Closure::wrap(Box::new(move || {
+        if gen_cell2.get() != gen {
+            return;
+        }
+        let mut current_step = step.borrow_mut();
+        *current_step += 1;
+        let frame = transition_frame(&from, &target_str, *current_step, total_steps, |_| {
+            rand_glyph()
+        });
+        el.set_text_content(Some(&frame));
+        if *current_step >= total_steps {
+            el.set_text_content(Some(&target_str));
+            clear_timers(&el);
+            if let Some(f) = done_fn.take() {
+                f();
+            }
+        }
+    }) as Box<dyn FnMut()>);
+
+    let id = window()
+        .set_interval_with_callback_and_timeout_and_arguments_0(
+            closure.as_ref().unchecked_ref(),
+            speed,
+        )
+        .expect("set_interval");
+    closure.forget();
+    id
+}
+
 /// Animate text with a generation counter. Returns interval_id.
 /// The done callback only fires if `gen` still matches `gen_cell` when the animation completes.
 fn animate_text(
@@ -233,7 +369,7 @@ fn bind_heading_events(el: web_sys::Element) {
             let g = gen2.get();
             let el3 = el2.clone();
             let gen3 = gen2.clone();
-            let id = animate_text(&el2, SHORT, 20, gen2.clone(), move || {
+            let id = animate_heading_text(&el2, SHORT, 20, gen2.clone(), move || {
                 if gen3.get() == g {
                     el3.remove_attribute("data-animating").ok();
                 }
@@ -256,7 +392,7 @@ fn bind_heading_events(el: web_sys::Element) {
             let g = gen2.get();
             let el3 = el2.clone();
             let gen3 = gen2.clone();
-            let id = animate_text(&el2, FULL, 20, gen2.clone(), move || {
+            let id = animate_heading_text(&el2, FULL, 20, gen2.clone(), move || {
                 if gen3.get() == g {
                     el3.remove_attribute("data-animating").ok();
                 }
