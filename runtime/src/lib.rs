@@ -96,6 +96,10 @@ fn transition_frame(
     out
 }
 
+fn copied_heading_text() -> String {
+    format!("{}{}", SHORT, SUFFIX)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -126,6 +130,11 @@ mod tests {
         let frame = transition_frame("the software company of hong kong", "tsc.hk", 24, 24, glyph);
 
         assert_eq!(frame, "tsc.hk");
+    }
+
+    #[test]
+    fn copied_heading_text_keeps_short_name_and_suffix() {
+        assert_eq!(copied_heading_text(), "tsc.hk \u{2014} copied!");
     }
 }
 
@@ -296,6 +305,8 @@ fn inject_styles() {
     let style = doc.create_element("style").expect("create style");
     style.set_text_content(Some(
         "a, a:link, a:visited { color: inherit; text-decoration: none; }\n\
+         #crepus-root { opacity: 0; animation: tsc-page-fade-in 520ms ease forwards; }\n\
+         @keyframes tsc-page-fade-in { from { opacity: 0; } to { opacity: 1; } }\n\
          #tsc-heading { cursor: pointer; font-variant-ligatures: none; }\n\
          .name { font-variant-ligatures: none; }",
     ));
@@ -417,20 +428,13 @@ fn bind_heading_events(el: web_sys::Element) {
             let el3 = el2.clone();
             let gen3 = gen2.clone();
             let on_write = Closure::wrap(Box::new(move |_: JsValue| {
-                gen3.set(gen3.get().wrapping_add(1));
-                clear_timers(&el3);
-                el3.set_attribute("data-animating", "true").ok();
-                el3.set_text_content(Some(SHORT));
-                suffix_animate(&el3, gen3.clone());
+                start_copy_feedback(&el3, gen3.clone());
             }) as Box<dyn FnMut(JsValue)>);
 
             let el4 = el2.clone();
             let gen4 = gen2.clone();
             let on_fail = Closure::wrap(Box::new(move |_: JsValue| {
-                gen4.set(gen4.get().wrapping_add(1));
-                clear_timers(&el4);
-                el4.remove_attribute("data-animating").ok();
-                el4.set_text_content(Some(FULL));
+                start_copy_feedback(&el4, gen4.clone());
             }) as Box<dyn FnMut(JsValue)>);
             let _ = promise.then(&on_write).catch(&on_fail);
             on_write.forget();
@@ -440,6 +444,14 @@ fn bind_heading_events(el: web_sys::Element) {
             .ok();
         closure.forget();
     }
+}
+
+fn start_copy_feedback(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
+    gen.set(gen.get().wrapping_add(1));
+    clear_timers(el);
+    el.set_attribute("data-animating", "true").ok();
+    el.set_text_content(Some(SHORT));
+    suffix_animate(el, gen);
 }
 
 fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
@@ -474,18 +486,9 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
             el2.set_text_content(Some(&format!("{}{}", SHORT, sc.iter().collect::<String>())));
             *p += 1;
             if *p >= len {
-                el2.set_text_content(Some(&format!("{}{}", SHORT, SUFFIX)));
+                el2.set_text_content(Some(&copied_heading_text()));
                 clear_timers(&el2);
-                gen.set(gen.get().wrapping_add(1));
-                let g = gen.get();
-                let el3 = el2.clone();
-                let gen2 = gen.clone();
-                let id = animate_text(&el2, FULL, 20, gen2.clone(), move || {
-                    if gen2.get() == g {
-                        el3.remove_attribute("data-animating").ok();
-                    }
-                });
-                set_timer_id(&el2, id);
+                el2.remove_attribute("data-animating").ok();
             }
         }
     }) as Box<dyn FnMut()>);
