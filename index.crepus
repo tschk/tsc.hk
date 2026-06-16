@@ -16,19 +16,31 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "crepuscularity"
             span desc
-              " — write react for gpui, tui, embedded; write rust for web; write both for swiftui and mobile"
+              " — write react + rust for hardware accelerated mobile and desktop apps, websites and webextensions, terminal ui and embedded appliances"
         a proj href="https://github.com/tschk/aurorality"
           div ml-4
             span name
               "aurorality"
             span desc
-              " — code web + js/ts + tailwind, get swiftui"
+              " — compile crepuscularity to swiftui"
+        a proj href="https://crepuscularity.tsc.hk/docs/lite.html"
+          div ml-4
+            span name
+              "crepuscularity + aurora lite"
+            span desc
+              " — drop crepuscularity into any electron app or website to get native ui with the same javascript/typescript backend"
         a proj href="https://github.com/tschk/alpenglow"
           div
             span name
               "alpenglow"
             span desc
-              " — diskless, hardened, immutable Linux appliance"
+              " — Linux operating system that boots in under a second and is smaller than an average picture"
+        a proj href="https://github.com/tschk/soliloquy"
+          div ml-4
+            span name
+              "soliloquy"
+            span desc
+              " — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos"
         a proj href="https://github.com/tschk/inauguration"
           div
             span name
@@ -36,35 +48,29 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span desc
               " — capability-aware compiler pipeline for deterministic execution and agent-native software"
         a proj href="https://github.com/tschk/space"
-          div
+          div ml-4
             span name
               "space"
             span desc
-              " — component-based operating system"
-        a proj href="https://github.com/tschk/rv8"
-          div
-            span name
-              "rv8"
-            span desc
-              " — browser engine combining Servo rendering with V8 JavaScript"
-        a proj href="https://github.com/tschk/soliloquy"
-          div
-            span name
-              "soliloquy"
-            span desc
-              " — the immutable web-native ultraminimal operating system"
+              " — component-based compiler-centric ground-up non-posix operating system"
         a proj href="https://github.com/tschk/equilibrium"
           div
             span name
               "equilibrium"
             span desc
-              " — cross-language interoperability without glue code"
+              " — cross c compiling language interoperability with one call automagically"
         a proj href="https://github.com/tschk/eqswift"
-          div
+          div ml-4
             span name
               "eqswift"
             span desc
               " — two lines to ffi rust to swift automagically"
+        a proj href="https://github.com/tschk/rv8"
+            div
+              span name
+                "rv8"
+              span desc
+                " — browser engine combining Servo rendering with V8 JavaScript"
     div
       div text-zinc-100 font-medium mt-4
         "CONTACT"
