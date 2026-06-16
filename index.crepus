@@ -23,12 +23,24 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "aurorality"
             span desc
               " — code web + js/ts + tailwind, get swiftui"
+        a proj href="https://github.com/tschk/alpenglow"
+          div
+            span name
+              "alpenglow"
+            span desc
+              " — diskless, hardened, immutable Linux appliance"
         a proj href="https://github.com/tschk/inauguration"
           div
             span name
               "inauguration"
             span desc
               " — capability-aware compiler pipeline for deterministic execution and agent-native software"
+        a proj href="https://github.com/tschk/space"
+          div
+            span name
+              "space"
+            span desc
+              " — component-based operating system"
         a proj href="https://github.com/tschk/rv8"
           div
             span name
