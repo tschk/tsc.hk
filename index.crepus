@@ -28,7 +28,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "crepuscularity + aurora lite"
             span desc
-              " — drop crepuscularity into any electron app or website to get native ui with the same javascript/typescript backend"
+              " — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend"
         a proj href="https://github.com/tschk/alpenglow"
           div
             span name
