@@ -6,93 +6,63 @@ Static Crepus site. Agents should fetch the Markdown/text files below instead of
 
 ## Markdown
 
+- [Full bundle](https://tsc.hk/llms-full.txt): One request with the agent guide and readable site text.
 - [Agent guide](https://tsc.hk/agent.md): Fetch order and hosting notes.
-- [README](https://tsc.hk/README.md): Source README.
 
 ---
 
-# Agent guide
+# The Software Company of Hong Kong — agent guide
 
-Use direct static files. Do not scrape the HTML shell unless no Markdown file answers the task.
+> Use direct static files. Do not scrape the HTML shell unless no Markdown file answers the task.
 
-Best first request: `curl -sL https://tsc.hk/llms-full.txt`
+## Best first request
 
-Files:
+`curl -sL https://tsc.hk/llms-full.txt`
 
-- https://tsc.hk/llms.txt
-- https://tsc.hk/llms-full.txt
-- https://tsc.hk/agent.md
-- https://tsc.hk/README.md
+## Files
+
+- https://tsc.hk/llms.txt — compact index
+- https://tsc.hk/llms-full.txt — full bundle
+
 
 ---
 
-# Source README
+# Rendered site text
 
-# tsc.hk
+the software company of hong kong
 
-Static site for The Software Company of Hong Kong, built with `crepuscularity-web`, a Rust WASM runtime, and UnoCSS.
+an independent R&D lab building systems software, runtimes, developer tools, application platforms, and experimental computing platforms.
 
-## Quick Start
+PROJECTS
 
-```bash
-crepus web dev --port 4000
-```
+[crepuscularity — write react + rust for hardware accelerated mobile and desktop apps, websites and webextensions, terminal ui and embedded appliances](https://crepuscularity.tsc.hk)
 
-The development server watches `.crepus` files and rebuilds the Rust WASM runtime for local preview.
+[aurorality — compile crepuscularity to swiftui](https://github.com/tschk/aurorality)
 
-## Build
+[crepuscularity + aurora lite — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend](https://crepuscularity.tsc.hk/docs/lite.html)
 
-```bash
-crepus web build --site .
-```
+[alpenglow — Linux operating system that boots in under a second and is smaller than an average picture](https://github.com/tschk/alpenglow)
 
-The production site is emitted to `dist/`.
+[soliloquy — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos](https://github.com/tschk/soliloquy)
 
-To preview the built output:
+[inauguration — capability-aware compiler pipeline for deterministic execution and agent-native software](https://github.com/tschk/inauguration)
 
-```bash
-python3 -m http.server 4000 -d dist
-```
+[space — component-based compiler-centric ground-up non-posix operating system](https://github.com/tschk/space)
 
-## Project Structure
+[equilibrium — cross c compiling language interoperability with one call automagically](https://github.com/tschk/equilibrium)
 
-```text
-tsc-hk/
-  index.crepus
-  crepus.toml
-  runtime/
-    Cargo.toml
-    src/lib.rs
-  dist/
-```
+[eqswift — two lines to ffi rust to swift automagically](https://github.com/tschk/eqswift)
 
-## Template Files
+[rv8 — browser engine combining Servo rendering with V8 JavaScript](https://github.com/tschk/rv8)
 
-`index.crepus` is an indentation-based template:
+CONTACT
 
-- two spaces define nesting
-- the first word is the HTML tag
-- remaining words are UnoCSS classes
-- quoted strings become text nodes
-- attributes use `key="value"`
-- group elements at the bottom of the file define reusable class bundles
+[GitHub — https://github.com/tschk](https://github.com/tschk)
 
-The template loads `Chivo Mono` with the `google-fonts` directive and relies on the UnoCSS runtime in the generated site.
+[X — @tsc_hk](https://x.com/tsc_hk)
 
-## Runtime
+[Instagram — @thesoftwarecompanyofhongkong](https://instagram.com/thesoftwarecompanyofhongkong)
 
-All interactivity belongs in `runtime/src/lib.rs`.
+[Email — hello@tsc.hk](mailto:hello@tsc.hk)
 
-The runtime is Rust compiled to WASM with `wasm-bindgen`, `web-sys`, and `js-sys`. Event handlers should use document-level delegation so they survive hot reload and DOM replacement.
-
-Do not add JavaScript to `head_html` or directly to the template.
-
-## Quality Gates
-
-```bash
-cargo fmt --manifest-path runtime/Cargo.toml --check
-cargo check --manifest-path runtime/Cargo.toml
-crepus web build --site .
-```
-
-There is currently no separate automated test suite for this site.
+site built with crepuscularity

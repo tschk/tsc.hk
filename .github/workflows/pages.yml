@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  CREPUS_VERSION: v0.8.0
+  CREPUS_REV: 9bf290f453d70fe4d9e0744a412ac9a304673213
 
 jobs:
   build:
@@ -33,30 +33,20 @@ jobs:
           echo "wasm-bindgen $VERSION"
           cargo install wasm-bindgen-cli --version "$VERSION" --locked
 
-      - name: Install crepus (precompiled)
+      - name: Install crepus
         run: |
-          BASE="https://github.com/tschk/crepuscularity/releases/download/${CREPUS_VERSION}"
-          for attempt in $(seq 1 5); do
-            if curl -fsSL -o crepus-x86_64-linux "${BASE}/crepus-x86_64-linux" \
-              && curl -fsSL -o SHA256SUMS.txt "${BASE}/SHA256SUMS.txt"; then
-              grep "crepus-x86_64-linux" SHA256SUMS.txt | sha256sum -c -
-              mv crepus-x86_64-linux crepus
-              chmod +x crepus
-              echo "$PWD" >> "$GITHUB_PATH"
-              exit 0
-            fi
-            echo "Attempt ${attempt}: waiting for ${CREPUS_VERSION} release assets..."
-            sleep 10
-          done
-          echo "Precompiled binary unavailable, building crepuscularity-cli from crates.io"
-          cargo install crepuscularity-cli --version 0.8.0 --no-default-features --locked
+          cargo install --git https://github.com/tschk/crepuscularity --rev "$CREPUS_REV" crepuscularity-cli --no-default-features --locked
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
 
       - name: Build site
         run: crepus web build --site .
 
       - name: Copy agent-readable files
-        run: cp llms.txt llms-full.txt agent.md README.md robots.txt dist/
+        run: |
+          cp robots.txt dist/
+          if ! test -f dist/llms-full.txt; then
+            cp llms.txt llms-full.txt agent.md dist/
+          fi
 
       - name: Verify artifacts
         run: |
@@ -67,7 +57,6 @@ jobs:
           test -f dist/llms.txt
           test -f dist/llms-full.txt
           test -f dist/agent.md
-          test -f dist/README.md
           test -f dist/robots.txt
           echo "✓ all artifacts present"
 

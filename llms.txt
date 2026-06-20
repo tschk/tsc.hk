@@ -6,10 +6,5 @@ Static Crepus site. Agents should fetch the Markdown/text files below instead of
 
 ## Markdown
 
-- [Full bundle](https://tsc.hk/llms-full.txt): One request with the agent guide and source README.
+- [Full bundle](https://tsc.hk/llms-full.txt): One request with the agent guide and readable site text.
 - [Agent guide](https://tsc.hk/agent.md): Fetch order and hosting notes.
-- [README](https://tsc.hk/README.md): Source README.
-
-## Human site
-
-- [tsc.hk](https://tsc.hk/)
