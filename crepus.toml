@@ -6,6 +6,12 @@ out = "dist"
 entry = "index.crepus"
 name = "The Software Company of Hong Kong"
 description = "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
+head_html = """
+<link rel="alternate" type="text/plain" href="https://tsc.hk/llms.txt" title="LLM index">
+<link rel="alternate" type="text/plain" href="https://tsc.hk/llms-full.txt" title="Full LLM bundle">
+<link rel="alternate" type="text/markdown" href="https://tsc.hk/agent.md" title="Agent guide">
+<link rel="alternate" type="text/markdown" href="https://tsc.hk/README.md" title="README">
+"""
 
 [targets.seo]
 title = "The Software Company of Hong Kong — tsc.hk"

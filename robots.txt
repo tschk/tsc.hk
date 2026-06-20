@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# https://tsc.hk/llms.txt
+# https://tsc.hk/llms-full.txt

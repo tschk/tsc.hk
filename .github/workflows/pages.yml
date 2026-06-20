@@ -55,12 +55,20 @@ jobs:
       - name: Build site
         run: crepus web build --site .
 
+      - name: Copy agent-readable files
+        run: cp llms.txt llms-full.txt agent.md README.md robots.txt dist/
+
       - name: Verify artifacts
         run: |
           test -f dist/index.html
           test -f dist/.nojekyll
           test -f dist/pkg/runtime_bg.wasm
           test -f dist/vendor/unocss.js
+          test -f dist/llms.txt
+          test -f dist/llms-full.txt
+          test -f dist/agent.md
+          test -f dist/README.md
+          test -f dist/robots.txt
           echo "✓ all artifacts present"
 
       - uses: actions/upload-pages-artifact@v3

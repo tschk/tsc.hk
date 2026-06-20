@@ -1,0 +1,15 @@
+# The Software Company of Hong Kong
+
+> Independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.
+
+Static Crepus site. Agents should fetch the Markdown/text files below instead of scraping the rendered app shell.
+
+## Markdown
+
+- [Full bundle](https://tsc.hk/llms-full.txt): One request with the agent guide and source README.
+- [Agent guide](https://tsc.hk/agent.md): Fetch order and hosting notes.
+- [README](https://tsc.hk/README.md): Source README.
+
+## Human site
+
+- [tsc.hk](https://tsc.hk/)

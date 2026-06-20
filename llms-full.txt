@@ -1,3 +1,33 @@
+# The Software Company of Hong Kong
+
+> Independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.
+
+Static Crepus site. Agents should fetch the Markdown/text files below instead of scraping the rendered app shell.
+
+## Markdown
+
+- [Agent guide](https://tsc.hk/agent.md): Fetch order and hosting notes.
+- [README](https://tsc.hk/README.md): Source README.
+
+---
+
+# Agent guide
+
+Use direct static files. Do not scrape the HTML shell unless no Markdown file answers the task.
+
+Best first request: `curl -sL https://tsc.hk/llms-full.txt`
+
+Files:
+
+- https://tsc.hk/llms.txt
+- https://tsc.hk/llms-full.txt
+- https://tsc.hk/agent.md
+- https://tsc.hk/README.md
+
+---
+
+# Source README
+
 # tsc.hk
 
 Static site for The Software Company of Hong Kong, built with `crepuscularity-web`, a Rust WASM runtime, and UnoCSS.
@@ -23,8 +53,6 @@ To preview the built output:
 ```bash
 python3 -m http.server 4000 -d dist
 ```
-
-Agent-readable files are served at `/llms.txt`, `/llms-full.txt`, `/agent.md`, and `/README.md`.
 
 ## Project Structure
 
