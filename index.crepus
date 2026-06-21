@@ -22,7 +22,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "aurorality"
             span desc
-              " — compile crepuscularity to swiftui"
+              " — transpile crepuscularity to swiftui"
         a proj href="https://crepuscularity.tsc.hk/docs/lite.html"
           div ml-4
             span name
