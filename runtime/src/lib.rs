@@ -278,7 +278,15 @@ fn clear_timers(el: &web_sys::Element) {
 
 #[wasm_bindgen(start)]
 pub fn start() {
-    inject_styles();
+    // ponytail: skip fade-in style when SSR already rendered content in #crepus-root
+    let has_ssr = document()
+        .get_element_by_id("crepus-root")
+        .and_then(|r| r.query_selector("[data-crepus-root]").ok())
+        .flatten()
+        .is_some();
+    if !has_ssr {
+        inject_styles();
+    }
     poll_bind(0, 200);
 }
 
