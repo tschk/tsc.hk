@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  CREPUS_REV: 6a47f0a19f4323564310d96893c4c42ce615f52a
+  CREPUS_REV: d717755
 
 jobs:
   build:
