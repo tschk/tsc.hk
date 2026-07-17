@@ -2,6 +2,7 @@
 name = "tsc_hk_runtime"
 version = "0.1.0"
 edition = "2021"
+license = "ISC"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
