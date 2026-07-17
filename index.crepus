@@ -53,18 +53,6 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "space"
             span desc
               " — component-based compiler-centric ground-up non-posix operating system"
-        a proj href="https://github.com/tschk/rotary"
-          div
-            span name
-              "rotary"
-            span desc
-              " — pure Rust agent harness engine for hosts, tools, permissions, sessions, and control planes"
-        a proj href="https://nexnet.tsc.hk"
-          div
-            span name
-              "nexnet"
-            span desc
-              " — local-first peer-to-peer social chat with wallet identity and encrypted messaging"
         a proj href="https://github.com/tschk/equilibrium"
           div
             span name
@@ -83,6 +71,18 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
                 "rv8"
               span desc
                 " — browser engine combining Servo rendering with V8 JavaScript"
+        a proj href="https://github.com/tschk/rotary"
+          div ml-4
+            span name
+              "rotary"
+            span desc
+              " — pure Rust agent harness engine for hosts, tools, permissions, sessions, and control planes"
+        a proj href="https://nexnet.tsc.hk"
+          div ml-4
+            span name
+              "nexnet"
+            span desc
+              " — local-first peer-to-peer social chat with wallet identity and encrypted messaging"
     div
       div text-zinc-100 font-medium mt-4
         "CONTACT"
