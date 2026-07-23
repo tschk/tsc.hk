@@ -77,6 +77,13 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "rotary"
             span desc
               " — pure Rust agent harness engine for hosts, tools, permissions, sessions, and control planes"
+        a proj href="https://github.com/tschk/apollo"
+          div
+            span name
+              "apollo"
+            span desc
+              " — local-first rust ai agent runtime built on rotary and zkr, with telegram-first messaging"
+
         a proj href="https://nexnet.tsc.hk"
           div
             span name
