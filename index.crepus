@@ -29,6 +29,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "crepuscularity + aurora lite"
             span desc
               " — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend"
+        a proj href="https://github.com/tschk/dot"
+          div ml-4
+            span name
+              "dot"
+            span desc
+              " — minimal AI agent for your terminal"
         a proj href="https://alpenglow.tsc.hk"
           div
             span name
@@ -41,6 +47,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "soliloquy"
             span desc
               " — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos"
+        a proj href="https://github.com/tschk/subspace"
+          div ml-4
+            span name
+              "subspace"
+            span desc
+              " — statically composed capability-safe embedded operating system"
         a proj href="https://inauguration.tsc.hk"
           div
             span name
@@ -66,11 +78,11 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span desc
               " — two lines to ffi rust to swift automagically"
         a proj href="https://github.com/tschk/rv8"
-            div
-              span name
-                "rv8"
-              span desc
-                " — browser engine combining Servo rendering with V8 JavaScript"
+          div
+            span name
+              "rv8"
+            span desc
+              " — browser engine combining Servo rendering with V8 JavaScript"
         a proj href="https://github.com/tschk/rotary"
           div
             span name
@@ -83,7 +95,24 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "apollo"
             span desc
               " — local-first rust ai agent runtime built on rotary and zkr, with telegram-first messaging"
-
+        a proj href="https://github.com/tschk/zkr"
+          div
+            span name
+              "zkr"
+            span desc
+              " — evidence-backed temporal memory engine for personal agents"
+        a proj href="https://github.com/tschk/praefectus"
+          div
+            span name
+              "praefectus"
+            span desc
+              " — provider-neutral, verified computer-use execution for rust"
+        a proj href="https://github.com/tschk/wax"
+          div
+            span name
+              "wax"
+            span desc
+              " — fast homebrew-compatible package manager in rust. compiled, async, parallel installs"
         a proj href="https://nexnet.tsc.hk"
           div
             span name
