@@ -29,12 +29,6 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "crepuscularity + aurora lite"
             span desc
               " — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend"
-        a proj href="https://github.com/tschk/dot"
-          div ml-4
-            span name
-              "dot"
-            span desc
-              " — minimal AI agent for your terminal"
         a proj href="https://alpenglow.tsc.hk"
           div
             span name
@@ -47,12 +41,6 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "soliloquy"
             span desc
               " — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos"
-        a proj href="https://github.com/tschk/subspace"
-          div ml-4
-            span name
-              "subspace"
-            span desc
-              " — statically composed capability-safe embedded operating system"
         a proj href="https://inauguration.tsc.hk"
           div
             span name
@@ -65,6 +53,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "space"
             span desc
               " — component-based compiler-centric ground-up non-posix operating system"
+        a proj href="https://github.com/tschk/subspace"
+          div ml-4
+            span name
+              "subspace"
+            span desc
+              " — statically composed capability-safe embedded operating system"
         a proj href="https://github.com/tschk/equilibrium"
           div
             span name
