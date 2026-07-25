@@ -94,7 +94,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "moonshine"
             span desc
-              " — hyperminimal bun-first signal runtime for crepuscularity view ir, adapters for react, svelte, vue, solid, angular, next.js, waku"
+              " — hyperminimal bun-first ui runtime. signals core, import-what-you-need, host adapters for vite, waku, next, astro, remix, nuxt"
         a proj href="https://github.com/tschk/zkr"
           div
             span name
