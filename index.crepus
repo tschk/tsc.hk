@@ -94,7 +94,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "moonshine"
             span desc
-              " — hyperminimal bun-first ui runtime. signals core, import-what-you-need, host adapters for vite, waku, next, astro, remix, nuxt"
+              " — ground-up Bun-first hybrid web framework with a signal-only kernel and opt-in compiler, routing, rendering, server, and deployment layers"
         a proj href="https://github.com/tschk/zkr"
           div
             span name

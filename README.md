@@ -68,3 +68,9 @@ crepus web build --site .
 ```
 
 There is currently no separate automated test suite for this site.
+
+## Moonshine
+
+Moonshine is a ground-up, Bun-first web framework built from a hyperminimal signal kernel. Start with signals; add only the routing, rendering, server, compiler, and deployment layers your project needs.
+
+<https://github.com/tschk/moonshine>
