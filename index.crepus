@@ -94,7 +94,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             span name
               "moonshine"
             span desc
-              " — ground-up Bun-first hybrid web framework with a signal-only kernel and opt-in compiler, routing, rendering, server, and deployment layers"
+              " — ground-up Bun-first web framework with a signal-only kernel and opt-in compiler, routing, rendering, server, and deployment layers. renders .crepus templates through the real rust parser compiled to wasm"
         a proj href="https://github.com/tschk/zkr"
           div
             span name
@@ -144,7 +144,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
           span desc
             " — hello@tsc.hk"
     div text-zinc-600 text-xs mt-12
-      "site built with crepuscularity"
+      "site built with crepuscularity + moonshine"
 
 .proj no-underline transition-all duration-200 ease-in-out block group text-zinc-300 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-300
 .con no-underline transition-all duration-200 ease-in-out group text-zinc-400 hover:text-zinc-100 decoration-zinc-700 underline-offset-4 visited:text-zinc-400

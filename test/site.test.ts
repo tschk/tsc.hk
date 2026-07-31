@@ -64,7 +64,9 @@ describe("tsc.hk site", () => {
       expect(html).toContain("PROJECTS");
       expect(html).toContain("crepuscularity");
       expect(html).toContain("CONTACT");
-      expect(html).toContain("site built with crepuscularity-moonshine");
+      expect(html).toContain("site built with crepuscularity + moonshine");
+      expect(html).toContain('class="min-h-screen');
+      expect(html).not.toContain("style=");
       expect(html).toContain("The Software Company of Hong Kong — tsc.hk");
     } finally {
       await server.stop(true);
