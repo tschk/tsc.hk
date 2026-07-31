@@ -1,101 +1,55 @@
-# tsc.hk — crepus web site
+# tsc.hk — moonshine site
 
-Static site built with crepuscularity-web (Rust WASM renderer + UnoCSS).
+Static site built with crepuscularity-moonshine (Crepus IR renderer) on the Moonshine framework, served by Bun.
 
 ## Quick start
 
 ```bash
-# Dev server (hot-reload on .crepus changes)
-crepus web dev --port 4000
+bun install
 
-# Production build
-crepus web build --site .
-# Serve dist/ with any static file server:
-python3 -m http.server 4000 -d dist
+# Dev server (hot-reload via bun --watch)
+bun run dev
+
+# Production server
+bun run start
 ```
+
+The server listens on `process.env.PORT` or 4000.
 
 ## Project structure
 
 ```
 tsc-hk/
-  index.crepus          # entry template (UnoCSS classes, indent-based)
-  crepus.toml           # target + SEO config
-  runtime/              # Rust WASM crate
-    src/lib.rs          # all interactivity lives here (web-sys + wasm-bindgen)
-  dist/                 # build output
+  package.json          # deps + scripts
+  tsconfig.json         # strict, ESNext, jsx: react-jsx
+  src/
+    ir.ts               # page content as a CrepusIr document
+    head.ts             # HTML head metadata (title, meta, fonts)
+    server.ts           # createBunServer + createRequestHandler + crepusRenderer
+  public/               # static assets (llms.txt, llms-full.txt, agent.md, robots.txt, etc.)
+  test/
+    site.test.ts        # server integration tests
 ```
 
-## Template syntax (.crepus)
+## Architecture
 
-- Indentation = nesting (2 spaces)
-- First word = HTML tag
-- Remaining words = UnoCSS classes
-- `key="value"` = attributes (href, data-*, style)
-- `"quoted string"` = text content
-- `{expr}` = expression interpolation
+- `src/ir.ts` exports `pageIr` — a `CrepusIr` document using node kinds: stack, text, link, list, listItem, divider. Inline styles match the dark zinc aesthetic (bg #09090b, text zinc-300, monospace font).
+- `src/head.ts` exports `headHtml()` — returns the HTML head metadata string (title, description, meta tags, Google Font link for Chivo Mono).
+- `src/server.ts` wires `createBunServer` (from `@tschk/moonshine-deploy-bun`) with `createRequestHandler` (from `@tschk/moonshine-server`) and `crepusRenderer` (from `@tschk/crepus-moonshine`). A single route `/` with mode "static" serves the IR document. Static files are served from `public/`.
 
-### Top-level directives
+## Dependencies
 
-```
-google-fonts "Chivo Mono"
-```
+Moonshine packages are referenced via `file:../moonshine/packages/*` since tsc.hk is not a workspace monorepo. The `overrides` field ensures all transitive `@tschk/moonshine-*` dependencies resolve locally.
 
-Loads Google Font via `<link>` and sets `font-family` on `<body>`. Placed at top of file (before any elements).
+## Quality gates
 
-### Group elements
-
-Define reusable class bundles at the bottom of the file:
-
-```
-.proj
-  no-underline transition-all duration-200 block group text-zinc-300 hover:text-zinc-100
-.name
-  text-zinc-100 group-hover:text-white transition-colors duration-200
+```bash
+bun run typecheck
+bun test
 ```
 
-Then use them as tag names:
+## Moonshine
 
-```
-a proj href="..."
-  span name "crepuscularity"
-  span desc " — description"
-```
+Moonshine is a ground-up, Bun-first web framework built from a hyperminimal signal kernel. Start with signals; add only the routing, rendering, server, compiler, and deployment layers your project needs.
 
-### UnoCSS
-
-UnoCSS runtime (`vendor/unocss.js`) extracts classes from rendered DOM. Standard preset-wind utilities work.
-
-## Interactivity — Rust only
-
-All interactive behavior (animations, event handling, DOM manipulation) must be
-implemented in Rust inside `runtime/src/lib.rs` using `web-sys`, `js-sys`, and
-`wasm-bindgen`. **Do not add JavaScript to `head_html` or anywhere else.**
-
-Use **document-level event delegation** (listeners on `document`, not on
-individual elements) so that handlers survive DOM replacement during hot-reload
-and re-renders. Use `#[wasm_bindgen(start)]` to set up listeners once on WASM
-load.
-
-Pattern:
-
-```rust
-#[wasm_bindgen(start)]
-pub fn start() {
-    let doc = document();
-    let closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
-        let Some(target) = find_target(&event, "#my-element") else { return };
-        // handle event
-    }) as Box<dyn FnMut(web_sys::Event)>);
-    doc.add_event_listener_with_callback("click", closure.as_ref().unchecked_ref()).ok();
-    closure.forget();
-}
-```
-
-Use `thread_local!` statics for persistent state (timers, animation flags).
-
-## Key crates
-
-- `crepuscularity-web` — HTML rendering, bundle parser
-- `crepuscularity-core` — parser, AST, context, eval
-- `web-sys` — DOM API bindings
-- `js-sys` — JS interop (Math.random, Promise, Function, etc.)
+<https://github.com/tschk/moonshine>

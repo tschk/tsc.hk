@@ -1,0 +1,68 @@
+# The Software Company of Hong Kong
+
+> Independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.
+
+Static Crepus site. Agents should fetch the Markdown/text files below instead of scraping the rendered app shell.
+
+## Markdown
+
+- [Full bundle](https://tsc.hk/llms-full.txt): One request with the agent guide and readable site text.
+- [Agent guide](https://tsc.hk/agent.md): Fetch order and hosting notes.
+
+---
+
+# The Software Company of Hong Kong — agent guide
+
+> Use direct static files. Do not scrape the HTML shell unless no Markdown file answers the task.
+
+## Best first request
+
+`curl -sL https://tsc.hk/llms-full.txt`
+
+## Files
+
+- https://tsc.hk/llms.txt — compact index
+- https://tsc.hk/llms-full.txt — full bundle
+
+
+---
+
+# Rendered site text
+
+the software company of hong kong
+
+an independent R&D lab building systems software, runtimes, developer tools, application platforms, and experimental computing platforms.
+
+PROJECTS
+
+[crepuscularity — write react + rust for hardware accelerated mobile and desktop apps, websites and webextensions, terminal ui and embedded appliances](https://crepuscularity.tsc.hk)
+
+[aurorality — compile crepuscularity to swiftui](https://github.com/tschk/aurorality)
+
+[crepuscularity + aurora lite — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend](https://crepuscularity.tsc.hk/docs/lite.html)
+
+[alpenglow — Linux operating system that boots in under a second and is smaller than an average picture](https://github.com/tschk/alpenglow)
+
+[soliloquy — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos](https://github.com/tschk/soliloquy)
+
+[inauguration — capability-aware compiler pipeline for deterministic execution and agent-native software](https://github.com/tschk/inauguration)
+
+[space — component-based compiler-centric ground-up non-posix operating system](https://github.com/tschk/space)
+
+[equilibrium — cross c compiling language interoperability with one call automagically](https://github.com/tschk/equilibrium)
+
+[eqswift — two lines to ffi rust to swift automagically](https://github.com/tschk/eqswift)
+
+[rv8 — browser engine combining Servo rendering with V8 JavaScript](https://github.com/tschk/rv8)
+
+CONTACT
+
+[GitHub — https://github.com/tschk](https://github.com/tschk)
+
+[X — @tsc_hk](https://x.com/tsc_hk)
+
+[Instagram — @thesoftwarecompanyofhongkong](https://instagram.com/thesoftwarecompanyofhongkong)
+
+[Email — hello@tsc.hk](mailto:hello@tsc.hk)
+
+site built with crepuscularity
