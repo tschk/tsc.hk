@@ -49,6 +49,20 @@ bun run typecheck
 bun test
 ```
 
+## Benchmarks
+
+Comparison of the live production site (before migration, crepuscularity-web on
+GitHub Pages + Cloudflare) against the local moonshine server (`bun run start`,
+port 4011). Each metric is the average of 10 sequential `curl` requests.
+
+| Metric                          | Before (crepuscularity-web, live) | After (moonshine, local) |
+|---------------------------------|-----------------------------------|--------------------------|
+| Avg response time               | 84.8ms                            | 2.7ms                    |
+| TTFB                            | 77.7ms                            | 1.6ms                    |
+| HTML size                       | 23.5KB                            | 14.4KB                   |
+| External requests               | 33                                | 26                       |
+| Stack                           | Rust WASM + UnoCSS                | Bun + React + Crepus IR  |
+
 ## Moonshine
 
 Moonshine is a ground-up, Bun-first web framework built from a hyperminimal signal kernel. Start with signals; add only the routing, rendering, server, compiler, and deployment layers your project needs.
