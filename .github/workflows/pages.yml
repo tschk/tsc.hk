@@ -14,45 +14,32 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-env:
-  CREPUS_REV: d717755
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: oven-sh/setup-bun@v2
         with:
-          targets: wasm32-unknown-unknown
+          bun-version: 1.3.14
 
-      - name: Install wasm-bindgen-cli
-        run: |
-          VERSION=$(grep -A2 'name = "wasm-bindgen"' runtime/Cargo.lock | grep '^version' | head -1 | sed 's/version = "\(.*\)"/\1/')
-          echo "wasm-bindgen $VERSION"
-          cargo install wasm-bindgen-cli --version "$VERSION" --locked
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
-      - name: Install crepus
-        run: |
-          cargo install --git https://github.com/tschk/crepuscularity --rev "$CREPUS_REV" crepuscularity-cli --no-default-features --locked
-          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun test
 
       - name: Build site
-        run: crepus web build --site .
-
-      - name: Copy agent-readable files
-        run: |
-          cp robots.txt dist/
-          if ! test -f dist/llms-full.txt; then
-            cp llms.txt llms-full.txt agent.md dist/
-          fi
+        run: bun run build
 
       - name: Verify artifacts
         run: |
           test -f dist/index.html
           test -f dist/.nojekyll
-          test -f dist/pkg/runtime_bg.wasm
           test -f dist/vendor/unocss.js
           test -f dist/llms.txt
           test -f dist/llms-full.txt
