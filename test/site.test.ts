@@ -85,3 +85,21 @@ describe("tsc.hk site", () => {
     }
   });
 });
+
+describe("generated View IR", () => {
+  test("is IR_VERSION 7 and carries style.id for #tsc-heading", () => {
+    expect(pageIr.version).toBe(7);
+    expect(JSON.stringify(pageIr)).toContain('"id":"tsc-heading"');
+  });
+
+  test("rendered HTML binds id=tsc-heading", async () => {
+    const server = createBunServer({ fetch, port: 0, staticDir: publicDir });
+    try {
+      const res = await fetch(new Request(`${server.url.origin}/`));
+      const html = await res.text();
+      expect(html).toContain('id="tsc-heading"');
+    } finally {
+      await server.stop(true);
+    }
+  });
+});

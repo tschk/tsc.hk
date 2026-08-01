@@ -6,7 +6,6 @@
       "name": "tsc-hk",
       "dependencies": {
         "@tschk/crepus-moonshine": "^0.3.1",
-        "@tschk/crepuscularity-wasm": "^0.1.0",
         "@tschk/moonshine": "^0.3.1",
         "@tschk/moonshine-adapter-conformance": "^0.3.1",
         "@tschk/moonshine-compiler": "^0.3.1",

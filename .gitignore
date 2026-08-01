@@ -4,3 +4,4 @@ dist/
 node_modules/
 runtime/target/
 runtime/pkg/
+ir-gen/target/

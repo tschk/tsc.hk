@@ -7,13 +7,13 @@
     "dev": "bun run --watch src/server.ts",
     "start": "bun run src/server.ts",
     "build": "bun run src/build.ts",
+    "build:ir": "bash scripts/build-ir.sh",
     "build:runtime": "bash scripts/build-runtime.sh",
     "test": "bun test",
     "typecheck": "bunx tsc --noEmit"
   },
   "dependencies": {
     "@tschk/crepus-moonshine": "^0.3.1",
-    "@tschk/crepuscularity-wasm": "^0.1.0",
     "@tschk/moonshine": "^0.3.1",
     "@tschk/moonshine-adapter-conformance": "^0.3.1",
     "@tschk/moonshine-compiler": "^0.3.1",

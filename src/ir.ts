@@ -1,9 +1,5 @@
-import { join } from "node:path";
-import { parseCrepus, type CrepusIr } from "@tschk/crepus-moonshine";
+import type { CrepusIr } from "@tschk/crepus-moonshine";
+import generated from "./generated/view-ir.json";
 
-const source = await Bun.file(
-  join(import.meta.dir, "..", "index.crepus"),
-).text();
-
-/** Parsed once at startup by the Rust parser (via WASM), not rebuilt per request. */
-export const pageIr: CrepusIr = parseCrepus(source);
+/** Lowered ahead of build by the native Rust parser (`ir-gen`), not at runtime. */
+export const pageIr: CrepusIr = generated as unknown as CrepusIr;

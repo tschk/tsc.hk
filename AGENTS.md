@@ -21,9 +21,12 @@ The server listens on `process.env.PORT` or 4000.
 ```
 tsc-hk/
   package.json          # deps + scripts
+  ir-gen/               # Rust binary: index.crepus -> src/generated/view-ir.json
   tsconfig.json         # strict, ESNext, jsx: react-jsx
   src/
-    ir.ts               # page content as a CrepusIr document
+    ir.ts               # re-exports the generated View IR as a CrepusIr document
+    generated/
+      view-ir.json      # View IR emitted by ir-gen (native crepuscularity, IR_VERSION 7)
     head.ts             # HTML head metadata (title, meta, fonts)
     renderer.ts         # crepusRenderer wrapper that injects the HTML head
     server.ts           # createBunServer + createRequestHandler + renderer
@@ -35,7 +38,8 @@ tsc-hk/
 
 ## Architecture
 
-- `src/ir.ts` exports `pageIr` — a `CrepusIr` document using node kinds: stack, text, link, list, listItem, divider. Inline styles match the dark zinc aesthetic (bg #09090b, text zinc-300, monospace font).
+- `ir-gen/` is a small Rust binary depending on the published `crepuscularity-native` crate. It lowers `index.crepus` through `render_template_to_ir_with_path` and writes `src/generated/view-ir.json` (IR_VERSION 7, `style.id` preserved so `#tsc-heading` binds). Run it with `bun run build:ir`.
+- `src/ir.ts` exports `pageIr` — the generated View IR typed as `CrepusIr`. No parsing happens at runtime; the `.crepus` source is lowered ahead of build by native Rust, not by the WASM parser.
 - `src/head.ts` exports `headHtml()` — returns the HTML head metadata string (title, description, meta tags, Google Font link for Chivo Mono).
 - `src/renderer.ts` exports `renderer` — wraps `crepusRenderer` (from `@tschk/crepus-moonshine`) and injects `headHtml()` into the rendered document. Shared by the server and the static build.
 - `src/server.ts` wires `createBunServer` (from `@tschk/moonshine-deploy-bun`) with `createRequestHandler` (from `@tschk/moonshine-server`) and `renderer`. A single route `/` with mode "static" serves the IR document. Static files are served from `public/`.
@@ -43,11 +47,12 @@ tsc-hk/
 
 ## Dependencies
 
-Moonshine packages are consumed from npm under the `@tschk` scope (`^0.3.1`), with `@tschk/crepuscularity-wasm` at `^0.1.0`. No `overrides` are needed: every published package already pins its `@tschk` dependencies to the same ranges.
+Moonshine packages are consumed from npm under the `@tschk` scope (`^0.3.1`). No `overrides` are needed: every published package already pins its `@tschk` dependencies to the same ranges. The `.crepus` parser is the native `crepuscularity-native` crate from crates.io, consumed through `ir-gen/`, not the WASM npm parser.
 
 ## Quality gates
 
 ```bash
+bun run build:ir
 bun run typecheck
 bun test
 bun run build

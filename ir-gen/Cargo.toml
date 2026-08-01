@@ -1,0 +1,16 @@
+[package]
+name = "tsc_hk_ir_gen"
+version = "0.1.0"
+edition = "2021"
+license = "ISC"
+
+[[bin]]
+name = "ir-gen"
+path = "src/main.rs"
+
+[dependencies]
+crepuscularity-native = "0.6.0"
+crepuscularity-core = "0.5.0"
+serde_json = "1"
+
+[workspace]
