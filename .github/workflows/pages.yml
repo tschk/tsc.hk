@@ -20,6 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-bindgen-cli
+        run: |
+          VERSION=$(grep -A2 'name = "wasm-bindgen"' runtime/Cargo.lock | grep '^version' | head -1 | sed 's/version = "\(.*\)"/\1/')
+          echo "wasm-bindgen $VERSION"
+          cargo install wasm-bindgen-cli --version "$VERSION" --locked
+
+      - name: Build runtime WASM
+        run: bash scripts/build-runtime.sh
+
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.14
