@@ -58,6 +58,8 @@ jobs:
           test -f dist/llms-full.txt
           test -f dist/agent.md
           test -f dist/robots.txt
+          test -f dist/pkg/tsc_hk_runtime.js
+          test -f dist/pkg/tsc_hk_runtime_bg.wasm
           echo "✓ all artifacts present"
 
       - uses: actions/upload-pages-artifact@v3

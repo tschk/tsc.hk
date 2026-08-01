@@ -15,5 +15,6 @@ export function headHtml(): string {
     "<style>body{font-family:'Chivo Mono',ui-monospace,monospace;margin:0}[data-crepus-root]{opacity:0}[data-crepus-root].ready{opacity:1}</style>",
     '<script src="/vendor/unocss.js"></script>',
     '<script>window.addEventListener("load",function(){document.querySelectorAll("[data-crepus-root]").forEach(function(n){n.classList.add("ready")})})</script>',
+    '<script type="module">import init from "/pkg/tsc_hk_runtime.js";init("/pkg/tsc_hk_runtime_bg.wasm");</script>',
   ].join("\n  ");
 }

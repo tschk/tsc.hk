@@ -27,6 +27,9 @@ async function main(): Promise<void> {
   const html = await renderer.prerender(ctx);
   await mkdir(outDir, { recursive: true });
   await cp(join(root, "public"), outDir, { recursive: true });
+  await cp(join(root, "runtime", "pkg"), join(outDir, "pkg"), {
+    recursive: true,
+  });
   await writeFile(join(outDir, "index.html"), html);
   await writeFile(join(outDir, ".nojekyll"), "");
   console.log(`wrote ${outDir}`);

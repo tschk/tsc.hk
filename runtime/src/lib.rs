@@ -464,7 +464,7 @@ fn suffix_animate(el: &web_sys::Element, gen: Rc<Cell<u32>>) {
 
 fn bind_links(doc: &web_sys::Document) {
     let Some(body) = doc.body() else { return };
-    let Ok(links) = body.query_selector_all("a.proj, a.con") else {
+    let Ok(links) = body.query_selector_all("a[href]") else {
         return;
     };
     for i in 0..links.length() {
@@ -489,7 +489,7 @@ fn bind_one_link(link: web_sys::Element) {
         let gen2 = gen.clone();
         let closure = Closure::wrap(Box::new(move || {
             gen2.set(gen2.get().wrapping_add(1));
-            let name_el = match link2.query_selector(".name") {
+            let name_el = match link2.query_selector(".name, span:first-child, div > span:first-child") {
                 Ok(Some(n)) => n,
                 _ => return,
             };
@@ -523,7 +523,7 @@ fn bind_one_link(link: web_sys::Element) {
             gen2.set(gen2.get().wrapping_add(1));
             link2.remove_attribute("data-animating").ok();
             link2.remove_attribute("style").ok();
-            if let Ok(Some(name_el)) = link2.query_selector(".name") {
+            if let Ok(Some(name_el)) = link2.query_selector(".name, span:first-child, div > span:first-child") {
                 clear_timers(&name_el);
                 if let Some(orig) = name_el.get_attribute("data-original") {
                     name_el.set_text_content(Some(&orig));
