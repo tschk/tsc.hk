@@ -1,11 +1,36 @@
-export function headHtml(): string {
+export type HeadMeta = {
+  title: string;
+  description: string;
+  canonical: string;
+};
+
+export const homeHead: HeadMeta = {
+  title: "The Software Company of Hong Kong — tsc.hk",
+  description:
+    "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.",
+  canonical: "https://tsc.hk",
+};
+
+export const telekinesisHead: HeadMeta = {
+  title: "telekinesis — tsc.hk",
+  description:
+    "AI coding agent CLI + TUI. Powered by the rotary (rx4) harness engine and crepuscularity-tui.",
+  canonical: "https://tsc.hk/telekinesis",
+};
+
+export function headForRoute(routeId: string): HeadMeta {
+  if (routeId === "telekinesis") return telekinesisHead;
+  return homeHead;
+}
+
+export function headHtml(meta: HeadMeta = homeHead): string {
   return [
     '<meta charset="utf-8" />',
     '<meta name="viewport" content="width=device-width, initial-scale=1" />',
-    '<title>The Software Company of Hong Kong — tsc.hk</title>',
-    '<meta name="description" content="an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages." />',
+    `<title>${meta.title}</title>`,
+    `<meta name="description" content="${meta.description}" />`,
     '<meta name="robots" content="index,follow" />',
-    '<link rel="canonical" href="https://tsc.hk" />',
+    `<link rel="canonical" href="${meta.canonical}" />`,
     '<meta name="twitter:card" content="summary" />',
     '<meta name="twitter:site" content="@tsc_hk" />',
     '<meta name="twitter:creator" content="@tsc_hk" />',

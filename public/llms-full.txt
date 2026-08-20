@@ -55,6 +55,8 @@ PROJECTS
 
 [rv8 — browser engine combining Servo rendering with V8 JavaScript](https://github.com/tschk/rv8)
 
+[telekinesis — AI coding agent CLI + TUI on the rotary harness. minimal, fast, typed event boundary.](https://tsc.hk/telekinesis)
+
 CONTACT
 
 [GitHub — https://github.com/tschk](https://github.com/tschk)

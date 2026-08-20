@@ -280,8 +280,12 @@ pub fn start() {
 fn poll_bind(delay_ms: i32, remaining: u32) {
     let callback = Closure::<dyn FnMut()>::wrap(Box::new(move || {
         let doc = document();
-        if doc.get_element_by_id("tsc-heading").is_some() {
+        let heading = doc.get_element_by_id("tsc-heading");
+        let root = doc.query_selector("[data-crepus-root]").ok().flatten();
+        if heading.is_some() {
             bind_heading(&doc);
+            bind_links(&doc);
+        } else if root.is_some() {
             bind_links(&doc);
         } else if remaining > 0 {
             poll_bind(100, remaining - 1);

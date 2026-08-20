@@ -41,7 +41,10 @@ jobs:
           test -f src/generated/view-ir.json
           grep -q '"version": 7' src/generated/view-ir.json
           grep -q '"id": "tsc-heading"' src/generated/view-ir.json
-          echo "✓ IR version 7 with #tsc-heading"
+          test -f src/generated/telekinesis-ir.json
+          grep -q '"version": 7' src/generated/telekinesis-ir.json
+          grep -q '"id": "tk-heading"' src/generated/telekinesis-ir.json
+          echo "✓ IR version 7 with #tsc-heading and #tk-heading"
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -62,6 +65,9 @@ jobs:
       - name: Verify artifacts
         run: |
           test -f dist/index.html
+          test -f dist/telekinesis/index.html
+          grep -q telekinesis dist/index.html
+          grep -q 'id="tk-heading"' dist/telekinesis/index.html
           test -f dist/.nojekyll
           test -f dist/vendor/unocss.js
           test -f dist/llms.txt

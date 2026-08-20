@@ -95,6 +95,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "rotary"
             span desc
               " — pure Rust agent harness engine for hosts, tools, permissions, sessions, and control planes"
+        a proj href="https://tsc.hk/telekinesis"
+          div
+            span name
+              "telekinesis"
+            span desc
+              " — AI coding agent CLI + TUI on the rotary harness. minimal, fast, typed event boundary."
         a proj href="https://github.com/tschk/apollo"
           div
             span name
