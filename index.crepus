@@ -95,7 +95,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "rotary"
             span desc
               " — pure Rust agent harness engine for hosts, tools, permissions, sessions, and control planes"
-        a proj href="https://tsc.hk/telekinesis"
+        a proj href="https://telekinesis.tsc.hk"
           div
             span name
               "telekinesis"
