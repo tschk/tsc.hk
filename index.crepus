@@ -41,6 +41,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "soliloquy"
             span desc
               " — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos"
+        a proj href="https://github.com/tschk/alpenglowed"
+          div ml-4
+            span name
+              "alpenglowed"
+            span desc
+              " — raycast-style keyboard-centric desktop shell for alpenglow"
         a proj href="https://inauguration.tsc.hk"
           div
             span name
@@ -71,6 +77,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "eqswift"
             span desc
               " — two lines to ffi rust to swift automagically"
+        a proj href="https://github.com/tschk/eqts"
+          div ml-4
+            span name
+              "eqts"
+            span desc
+              " — one rust api for typescript across node, bun, deno, and webassembly"
         a proj href="https://github.com/tschk/rv8"
           div
             span name
@@ -107,6 +119,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "praefectus"
             span desc
               " — provider-neutral, verified computer-use execution for rust"
+        a proj href="https://github.com/tschk/darash"
+          div
+            span name
+              "darash"
+            span desc
+              " — provider-neutral async search client + crate for agents"
         a proj href="https://github.com/tschk/wax"
           div
             span name

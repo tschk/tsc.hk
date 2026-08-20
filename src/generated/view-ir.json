@@ -417,6 +417,67 @@
                     },
                     {
                       "kind": "link",
+                      "href": "https://github.com/tschk/alpenglowed",
+                      "style": {
+                        "classes": [
+                          "no-underline",
+                          "transition-all",
+                          "duration-200",
+                          "ease-in-out",
+                          "block",
+                          "group",
+                          "text-zinc-300",
+                          "hover:text-zinc-100",
+                          "decoration-zinc-700",
+                          "underline-offset-4",
+                          "visited:text-zinc-300"
+                        ],
+                        "underline": false,
+                        "foregroundColor": "#d4d4d8"
+                      },
+                      "children": [
+                        {
+                          "kind": "stack",
+                          "axis": "column",
+                          "style": {
+                            "classes": [
+                              "ml-4"
+                            ],
+                            "marginLeft": 16.0
+                          },
+                          "children": [
+                            {
+                              "kind": "text",
+                              "content": "alpenglowed",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-100",
+                                  "group-hover:text-white",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#f4f4f5"
+                              }
+                            },
+                            {
+                              "kind": "text",
+                              "content": " — raycast-style keyboard-centric desktop shell for alpenglow",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-500",
+                                  "group-hover:text-zinc-400",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#71717b"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "link",
                       "href": "https://inauguration.tsc.hk",
                       "style": {
                         "classes": [
@@ -688,6 +749,67 @@
                             {
                               "kind": "text",
                               "content": " — two lines to ffi rust to swift automagically",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-500",
+                                  "group-hover:text-zinc-400",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#71717b"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "link",
+                      "href": "https://github.com/tschk/eqts",
+                      "style": {
+                        "classes": [
+                          "no-underline",
+                          "transition-all",
+                          "duration-200",
+                          "ease-in-out",
+                          "block",
+                          "group",
+                          "text-zinc-300",
+                          "hover:text-zinc-100",
+                          "decoration-zinc-700",
+                          "underline-offset-4",
+                          "visited:text-zinc-300"
+                        ],
+                        "underline": false,
+                        "foregroundColor": "#d4d4d8"
+                      },
+                      "children": [
+                        {
+                          "kind": "stack",
+                          "axis": "column",
+                          "style": {
+                            "classes": [
+                              "ml-4"
+                            ],
+                            "marginLeft": 16.0
+                          },
+                          "children": [
+                            {
+                              "kind": "text",
+                              "content": "eqts",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-100",
+                                  "group-hover:text-white",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#f4f4f5"
+                              }
+                            },
+                            {
+                              "kind": "text",
+                              "content": " — one rust api for typescript across node, bun, deno, and webassembly",
                               "style": {
                                 "classes": [
                                   "text-zinc-500",
@@ -1018,6 +1140,61 @@
                             {
                               "kind": "text",
                               "content": " — provider-neutral, verified computer-use execution for rust",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-500",
+                                  "group-hover:text-zinc-400",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#71717b"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "link",
+                      "href": "https://github.com/tschk/darash",
+                      "style": {
+                        "classes": [
+                          "no-underline",
+                          "transition-all",
+                          "duration-200",
+                          "ease-in-out",
+                          "block",
+                          "group",
+                          "text-zinc-300",
+                          "hover:text-zinc-100",
+                          "decoration-zinc-700",
+                          "underline-offset-4",
+                          "visited:text-zinc-300"
+                        ],
+                        "underline": false,
+                        "foregroundColor": "#d4d4d8"
+                      },
+                      "children": [
+                        {
+                          "kind": "stack",
+                          "axis": "column",
+                          "children": [
+                            {
+                              "kind": "text",
+                              "content": "darash",
+                              "style": {
+                                "classes": [
+                                  "text-zinc-100",
+                                  "group-hover:text-white",
+                                  "transition-colors",
+                                  "duration-200"
+                                ],
+                                "foregroundColor": "#f4f4f5"
+                              }
+                            },
+                            {
+                              "kind": "text",
+                              "content": " — provider-neutral async search client + crate for agents",
                               "style": {
                                 "classes": [
                                   "text-zinc-500",
