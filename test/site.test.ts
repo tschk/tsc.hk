@@ -15,7 +15,7 @@ describe("tsc.hk site", () => {
       expect(html).toContain("PROJECTS");
       expect(html).toContain("crepuscularity");
       expect(html).toContain("telekinesis");
-      expect(html).toContain("https://tsc.hk/telekinesis");
+      expect(html).toContain("https://telekinesis.tsc.hk");
       expect(html).toContain(
         "AI coding agent CLI + TUI on the rotary harness. minimal, fast, typed event boundary.",
       );
