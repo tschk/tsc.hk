@@ -29,6 +29,17 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
           "XAI_API_KEY=... tk"
     div
       div text-zinc-100 font-medium mt-4
+        "CLOUD"
+      div flex flex-col gap-1 mt-2
+        a con href="https://cloud.tk.tsc.hk"
+          span name
+            "cloud portal"
+          span desc
+            " — https://cloud.tk.tsc.hk"
+        div text-zinc-500
+          "control plane for cloud workspaces (tk-cloud)"
+    div
+      div text-zinc-100 font-medium mt-4
         "SOURCE"
       div flex flex-col gap-1 mt-2
         a con href="https://github.com/semitechnological/telekinesis"
