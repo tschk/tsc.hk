@@ -78,6 +78,9 @@ describe("telekinesis page", () => {
       expect(html).toContain("cd ui/tui &amp;&amp; cargo build --release");
       expect(html).toContain("ui/tui/target/release/tk");
       expect(html).toContain("tk login grok");
+      expect(html).toContain("CLOUD");
+      expect(html).toContain("https://cloud.tk.tsc.hk");
+      expect(html).toContain("cloud portal");
       expect(html).toContain("XAI_API_KEY=... tk");
       expect(html).toContain("https://github.com/semitechnological/telekinesis");
       expect(html).toContain("https://github.com/tschk/rotary");
