@@ -47,7 +47,7 @@ tsc-hk/
 - `src/head.ts` exports `headHtml()` — returns the HTML head metadata string (title, description, meta tags, Google Font link for Chivo Mono), selected per route.
 - `src/renderer.ts` exports `renderer` — wraps `crepusRenderer` (from `@tschk/crepus-moonshine`) and injects `headHtml()` into the rendered document. Shared by the server and the static build.
 - `src/app.ts` wires `createRequestHandler` (from `@tschk/moonshine-server`) with static routes `/` and `/telekinesis`. `src/server.ts` wraps that handler with `createBunServer` (from `@tschk/moonshine-deploy-bun`). Static files are served from `public/`.
-- `src/build.ts` prerenders `/` to `dist/index.html` and `/telekinesis` to `dist/telekinesis/index.html`, copies `public/` into `dist/`, and writes `dist/.nojekyll`. This is what the Pages workflow deploys. This repo does not attach `telekinesis.tsc.hk`; that needs a Cloudflare DNS CNAME plus a redirect or rewrite to `https://tsc.hk/telekinesis`.
+- `src/build.ts` prerenders `/` to `dist/index.html` and `/telekinesis` to `dist/telekinesis/index.html`, copies `public/` into `dist/`, and writes `dist/.nojekyll`. This is what the Pages workflow deploys. Frontpage hosts are Workers on the Undivisible CF account, not this Pages repo: `telekinesis.tsc.hk` and `tk.tsc.hk` → Worker `telekinesis`; `cloud.tk.tsc.hk` → Worker `tk-cloud` (not `cloud.tsc.hk`) (`tschk/tk-cloud`). `cloud.tk.tsc.hk` needs Total TLS/ACM (Universal SSL only covers `*.tsc.hk`).
 
 ## Dependencies
 
