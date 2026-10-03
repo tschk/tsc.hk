@@ -70,6 +70,14 @@ jobs:
           grep -q 'id="tk-heading"' dist/telekinesis/index.html
           test -f dist/.nojekyll
           test -f dist/vendor/unocss.js
+          test -f dist/site.css
+          test -f dist/404.html
+          test -f dist/sitemap.xml
+          grep -q 'https://tsc.hk/telekinesis/' dist/sitemap.xml
+          grep -q 'Sitemap: https://tsc.hk/sitemap.xml' dist/robots.txt
+          grep -q '<html lang="en">' dist/index.html
+          grep -q '<h1' dist/index.html
+          grep -q '<main' dist/index.html
           test -f dist/llms.txt
           test -f dist/llms-full.txt
           test -f dist/agent.md
