@@ -16,6 +16,8 @@ describe("tsc.hk site", () => {
       expect(html).toContain("crepuscularity");
       expect(html).toContain("telekinesis");
       expect(html).toContain("https://telekinesis.tsc.hk");
+      expect(html).toContain('href="/telekinesis/"');
+      expect(html).toContain("telekinesis build and run guide");
       expect(html).toContain(
         "AI coding agent CLI + TUI on the rotary harness. minimal, fast, typed event boundary.",
       );
@@ -24,6 +26,12 @@ describe("tsc.hk site", () => {
       expect(html).toContain('class="min-h-screen');
       expect(html).not.toContain("style=");
       expect(html).toContain("The Software Company of Hong Kong — tsc.hk");
+      expect(html).toContain('<html lang="en">');
+      expect(html).toContain('<main data-crepus-root="true"');
+      expect(html.match(/<h1\b/g)).toHaveLength(1);
+      expect(html.match(/<h2\b/g)).toHaveLength(2);
+      expect(html).not.toContain("opacity:0");
+      expect(html).toContain('href="/site.css"');
     } finally {
       await server.stop(true);
     }
@@ -61,10 +69,10 @@ describe("generated View IR", () => {
 });
 
 describe("telekinesis page", () => {
-  test("GET /telekinesis returns 200 with documented facts", async () => {
+  test("GET /telekinesis/ returns 200 with documented facts", async () => {
     const server = createBunServer({ fetch, port: 0, staticDir: publicDir });
     try {
-      const res = await fetch(new Request(`${server.url.origin}/telekinesis`));
+      const res = await fetch(new Request(`${server.url.origin}/telekinesis/`));
       expect(res.status).toBe(200);
       expect(res.headers.get("content-type")).toContain("text/html");
       const html = await res.text();
@@ -82,12 +90,20 @@ describe("telekinesis page", () => {
       expect(html).toContain("https://cloud.tk.tsc.hk");
       expect(html).toContain("cloud portal");
       expect(html).toContain("XAI_API_KEY=... tk");
-      expect(html).toContain("https://github.com/semitechnological/telekinesis");
+      expect(html).toContain(
+        "https://github.com/semitechnological/telekinesis",
+      );
       expect(html).toContain("https://github.com/tschk/rotary");
       expect(html).toContain("MPL-2.0");
       expect(html).toContain("telekinesis — tsc.hk");
       expect(html).toContain('id="tk-heading"');
       expect(html).not.toContain("style=");
+      expect(html).toContain('href="/"');
+      expect(html).toContain(
+        'rel="canonical" href="https://tsc.hk/telekinesis/"',
+      );
+      expect(html.match(/<h1\b/g)).toHaveLength(1);
+      expect(html.match(/<h2\b/g)).toHaveLength(4);
     } finally {
       await server.stop(true);
     }

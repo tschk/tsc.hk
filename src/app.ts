@@ -3,6 +3,7 @@ import { createRequestHandler } from "@tschk/moonshine-server";
 import type { RouteArtifact } from "@tschk/moonshine-framework";
 import { pageIr, telekinesisIr } from "./ir";
 import { renderer } from "./renderer";
+import { withSiteRouting } from "./http";
 
 export const publicDir = join(import.meta.dir, "..", "public");
 
@@ -28,16 +29,19 @@ export const telekinesisRoute: RouteArtifact = {
 
 export const routes = [homeRoute, telekinesisRoute];
 
-export const fetch = createRequestHandler({
-  routes,
-  modules: {
-    [homeRoute.id]: {
-      loader: () => pageIr,
+export const fetch = withSiteRouting(
+  createRequestHandler({
+    routes,
+    modules: {
+      [homeRoute.id]: {
+        loader: () => pageIr,
+      },
+      [telekinesisRoute.id]: {
+        loader: () => telekinesisIr,
+      },
     },
-    [telekinesisRoute.id]: {
-      loader: () => telekinesisIr,
-    },
-  },
-  renderer,
-  staticDir: publicDir,
-});
+    renderer,
+    staticDir: publicDir,
+  }),
+  publicDir,
+);
