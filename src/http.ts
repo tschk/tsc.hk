@@ -3,7 +3,10 @@ import { join } from "node:path";
 type Handler = (request: Request) => Response | Promise<Response>;
 
 /** Match the static host's directory URLs without removing existing entry URLs. */
-export function withSiteRouting(handler: Handler, publicDir: string): Handler {
+export function withSiteRouting(
+  handler: Handler,
+  publicDir: string,
+): (request: Request) => Promise<Response> {
   return async (request) => {
     const url = new URL(request.url);
     const isRead = request.method === "GET" || request.method === "HEAD";
