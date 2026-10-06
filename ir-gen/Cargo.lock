@@ -47,9 +47,9 @@ dependencies = [
 
 [[package]]
 name = "crepuscularity-native"
-version = "0.6.0"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2aa3e2a618fa765380ce1ff3da746533f010db047578965f78d38d13526ab7d0"
+checksum = "77c014ca754152b6deed047fe8230ebabbaec61076e205f4ccd2f89b734f3360"
 dependencies = [
  "crepuscularity-core",
  "serde",

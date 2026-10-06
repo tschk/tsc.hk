@@ -32,7 +32,7 @@ async function main(): Promise<void> {
   await prerender(homeRoute, "https://tsc.hk/", join(outDir, "index.html"));
   await prerender(
     telekinesisRoute,
-    "https://tsc.hk/telekinesis",
+    "https://tsc.hk/telekinesis/",
     join(outDir, "telekinesis", "index.html"),
   );
   await writeFile(join(outDir, ".nojekyll"), "");

@@ -9,7 +9,7 @@ name = "ir-gen"
 path = "src/main.rs"
 
 [dependencies]
-crepuscularity-native = "0.6.0"
+crepuscularity-native = "0.6.5"
 crepuscularity-core = "0.5.0"
 serde_json = "1"
 

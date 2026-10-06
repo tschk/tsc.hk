@@ -991,6 +991,44 @@
                     },
                     {
                       "kind": "link",
+                      "href": "/telekinesis/",
+                      "style": {
+                        "classes": [
+                          "no-underline",
+                          "transition-all",
+                          "duration-200",
+                          "ease-in-out",
+                          "block",
+                          "group",
+                          "text-zinc-300",
+                          "hover:text-zinc-100",
+                          "decoration-zinc-700",
+                          "underline-offset-4",
+                          "visited:text-zinc-300",
+                          "ml-4"
+                        ],
+                        "marginLeft": 16.0,
+                        "underline": false,
+                        "foregroundColor": "#d4d4d8"
+                      },
+                      "children": [
+                        {
+                          "kind": "text",
+                          "content": "telekinesis build and run guide",
+                          "style": {
+                            "classes": [
+                              "text-zinc-100",
+                              "group-hover:text-white",
+                              "transition-colors",
+                              "duration-200"
+                            ],
+                            "foregroundColor": "#f4f4f5"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "link",
                       "href": "https://github.com/tschk/apollo",
                       "style": {
                         "classes": [
@@ -1211,7 +1249,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/darash",
+                      "href": "https://darash.tsc.hk",
                       "style": {
                         "classes": [
                           "no-underline",
