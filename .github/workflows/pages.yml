@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -86,16 +84,63 @@ jobs:
           test -f dist/pkg/tsc_hk_runtime_bg.wasm
           echo "✓ all artifacts present"
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Record deployed revision
+        run: printf '%s\n' "$GITHUB_SHA" > dist/deployed-revision.txt
+
+      - uses: actions/upload-artifact@v4
         with:
+          name: site
           path: dist
+          include-hidden-files: true
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      WRANGLER_SEND_METRICS: "false"
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: cloudflare-pages
+      url: https://tsc.hk
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+      - name: Check deployment credential
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [[ -z "$CLOUDFLARE_API_TOKEN" ]]; then
+            echo "::error::Set CLOUDFLARE_API_TOKEN with Pages Edit access to the production account."
+            exit 1
+          fi
+      - name: Deploy to the Pages project serving tsc.hk
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: fc62a6e6528bec6d3d81c3bf8967ceeb
+          wranglerVersion: "4.101.0"
+          command: pages deploy dist --project-name tschk-hk --branch master --commit-hash ${{ github.sha }}
+      - name: Verify the public domain serves this revision
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          for attempt in {1..30}; do
+            revision="$(curl --fail --silent --show-error --max-time 15 "https://tsc.hk/deployed-revision.txt?sha=$EXPECTED_SHA" || true)"
+            if [[ "$revision" == "$EXPECTED_SHA" ]]; then break; fi
+            echo "Waiting for public revision ($attempt/30)"
+            sleep 10
+          done
+          test "$revision" = "$EXPECTED_SHA"
+          curl --fail --silent --show-error --max-time 30 "https://tsc.hk/?sha=$EXPECTED_SHA" > home.html
+          grep -q '<main' home.html
+          grep -q 'href="https://github.com/plyght/wax"' home.html
+          if grep -q 'href="https://github.com/tschk/subspace"' home.html; then
+            echo "::error::Public homepage still links to the private subspace repository."
+            exit 1
+          fi
+          curl --fail --silent --show-error --max-time 30 "https://tsc.hk/telekinesis/?sha=$EXPECTED_SHA" > telekinesis.html
+          grep -q 'id="tk-heading"' telekinesis.html
+          echo "Verified https://tsc.hk serves $EXPECTED_SHA" >> "$GITHUB_STEP_SUMMARY"
