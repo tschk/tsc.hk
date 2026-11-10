@@ -6,33 +6,36 @@
   <meta name="theme-color" content="#121416">
   <meta name="description" content="Lyceus is an experimental transformer family for research into supervised learning and model growth.">
   <title>Lyceus</title>
-  <link rel="stylesheet" href="style.css?v=lyceus-4">
+  <link rel="stylesheet" href="style.css?v=lyceus-5">
 </head>
 <body>
   <main>
     <div class="intro">
-      <p>Lyceus is an experimental transformer family exploring how models can learn from feedback, adapt to a person or domain, and change their own weights and capacity over time.</p>
+      <p>Lyceus is an independently initialized transformer family exploring how models can learn from feedback, adapt to a person or domain, and change their weights and capacity over time.</p>
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
     <section aria-labelledby="mechanism-title">
       <div class="section-title"><h1 id="mechanism-title">How it is intended to work</h1><span>Research prototype</span></div>
-      <p>Personal and domain state are distinct from reusable model competence. A host harness is intended to gather observations, use search and approved tools, and turn feedback into candidate changes. Checks decide which changes to keep; retrieval alone does not change the model.</p>
+      <p>The model holds representations and weights; personal and domain state are intended to remain distinct from reusable competence. Its host controls permissions and coordinates observations, tools, evaluation and checkpoints. Retrieval supplies context; learning changes the model.</p>
       <figure class="mechanism">
         <figcaption>Proposed learning loop</figcaption>
-        <div class="flow" role="group" aria-label="The host harness gathers approved feedback and evidence. The model proposes state, weight or capacity changes. Independent checks evaluate candidates before checkpoint promotion or rollback.">
-          <div class="flow-input"><span>Host harness</span><small>approved observations, search, tools and evidence</small></div>
-          <div class="flow-arrow" aria-hidden="true">↓</div>
-          <div class="flow-domains"><div><span>Personal and domain state</span><small>history, context and associations</small></div><div><span>Model competence</span><small>representations, weights and capacity</small></div></div>
-          <div class="flow-arrow" aria-hidden="true">↓</div>
-          <div class="flow-process"><div>Candidate update <span>or growth</span></div><b aria-hidden="true">→</b><div>Independent checks <span>including retention</span></div><b aria-hidden="true">→</b><div>Checkpoint <span>promotion or rollback</span></div></div>
+        <div class="loop">
+          <div class="step"><strong>Host harness</strong><span>Approved observations, feedback and tools</span></div>
+          <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
+          <div class="step"><strong>Model and runtime</strong><span>Personal / domain state and reusable competence; candidate weight edits or capacity growth</span></div>
+          <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
+          <div class="step"><strong>Host checks</strong><span>Independent evaluation and retention tests</span></div>
+          <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
+          <div class="step"><strong>Checkpoint</strong><span>Keep and reload an accepted change, or roll back</span></div>
         </div>
       </figure>
+      <p class="detail">Scripted synthetic updates have been tested; persistent learning, reliable retention and autonomous adaptation remain research objectives.</p>
     </section>
 
     <section aria-labelledby="models-title">
       <div class="section-title"><h2 id="models-title">Model sizes</h2></div>
-      <p>Small research prototypes have been trained and have demonstrated controlled learning and growth. A configurable family and larger models are under investigation; autonomous adaptation and public release remain goals.</p>
+      <p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
   </main>
