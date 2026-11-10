@@ -1,6 +1,6 @@
 # tsc.hk
 
-Static site for The Software Company of Hong Kong, built with `crepuscularity-moonshine` (Crepus IR renderer) on the Moonshine framework.
+Static site for Software Corporation (Hong Kong), built with `crepuscularity-moonshine` (Crepus IR renderer) on the Moonshine framework.
 
 ## Quick Start
 

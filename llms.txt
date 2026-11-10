@@ -1,4 +1,4 @@
-# The Software Company of Hong Kong
+# Software Corporation (Hong Kong)
 
 > Independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.
 

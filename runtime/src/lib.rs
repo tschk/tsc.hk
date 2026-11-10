@@ -12,7 +12,7 @@ const GLYPHS: &[char] = &[
     '\u{2606}', '\u{2660}', '\u{2663}', '\u{2665}', '\u{2666}',
 ];
 
-const FULL: &str = "the software company of hong kong";
+const FULL: &str = "software corporation (hong kong)";
 const SHORT: &str = "tsc.hk";
 const SUFFIX: &str = " \u{2014} copied!";
 
@@ -105,7 +105,7 @@ mod tests {
 
     #[test]
     fn heading_transition_reduces_length_before_resolving_target() {
-        let from = "the software company of hong kong";
+        let from = "software corporation (hong kong)";
         let frame = transition_frame(from, "tsc.hk", 8, 24, glyph);
 
         assert!(frame.chars().count() < from.chars().count());
@@ -115,14 +115,14 @@ mod tests {
 
     #[test]
     fn heading_transition_uses_unicode_before_end_text() {
-        let frame = transition_frame("the software company of hong kong", "tsc.hk", 10, 24, glyph);
+        let frame = transition_frame("software corporation (hong kong)", "tsc.hk", 10, 24, glyph);
 
         assert!(frame.contains('◇'));
     }
 
     #[test]
     fn heading_transition_finishes_exactly_on_target() {
-        let frame = transition_frame("the software company of hong kong", "tsc.hk", 24, 24, glyph);
+        let frame = transition_frame("software corporation (hong kong)", "tsc.hk", 24, 24, glyph);
 
         assert_eq!(frame, "tsc.hk");
     }

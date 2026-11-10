@@ -1,4 +1,4 @@
-# The Software Company of Hong Kong — agent guide
+# Software Corporation (Hong Kong) — agent guide
 
 > Use direct static files. Do not scrape the HTML shell unless no Markdown file answers the task.
 
@@ -10,4 +10,3 @@
 
 - https://tsc.hk/llms.txt — compact index
 - https://tsc.hk/llms-full.txt — full bundle
-

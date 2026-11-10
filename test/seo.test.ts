@@ -32,14 +32,14 @@ describe("server-rendered document semantics", () => {
 
   test("preserves content, classes and runtime hooks while adding native landmarks", async () => {
     const html = await siteDocument(
-      '<!DOCTYPE html><!DOCTYPE html><html><head></head><body><div data-crepus-root="true"><div id="tsc-heading" class="text-lg"><span>the software company of hong kong</span></div><div class="text-zinc-100 font-medium mt-4"><span>PROJECTS</span></div><a href="/telekinesis/">telekinesis guide</a></div></body></html>',
+      '<!DOCTYPE html><!DOCTYPE html><html><head></head><body><div data-crepus-root="true"><div id="tsc-heading" class="text-lg"><span>software corporation (hong kong)</span></div><div class="text-zinc-100 font-medium mt-4"><span>PROJECTS</span></div><a href="/telekinesis/">telekinesis guide</a></div></body></html>',
       "home",
     );
     expect(html.match(/<!DOCTYPE html>/gi)).toHaveLength(1);
     expect(html).toContain('<html lang="en">');
     expect(html).toContain('<main data-crepus-root="true">');
     expect(html).toContain(
-      '<h1 id="tsc-heading" class="text-lg"><span>the software company of hong kong</span></h1>',
+      '<h1 id="tsc-heading" class="text-lg"><span>software corporation (hong kong)</span></h1>',
     );
     expect(html).toContain(
       '<h2 class="text-zinc-100 font-medium mt-4"><span>PROJECTS</span></h2>',

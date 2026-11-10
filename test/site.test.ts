@@ -11,7 +11,7 @@ describe("tsc.hk site", () => {
       expect(res.status).toBe(200);
       expect(res.headers.get("content-type")).toContain("text/html");
       const html = await res.text();
-      expect(html).toContain("the software company of hong kong");
+      expect(html).toContain("software corporation (hong kong)");
       expect(html).toContain("PROJECTS");
       expect(html).toContain("crepuscularity");
       expect(html).toContain("telekinesis");
@@ -25,7 +25,7 @@ describe("tsc.hk site", () => {
       expect(html).toContain("site built with crepuscularity + moonshine");
       expect(html).toContain('class="min-h-screen');
       expect(html).not.toContain("style=");
-      expect(html).toContain("The Software Company of Hong Kong — tsc.hk");
+      expect(html).toContain("Software Corporation (Hong Kong) — tsc.hk");
       expect(html).toContain('<html lang="en">');
       expect(html).toContain('<main data-crepus-root="true"');
       expect(html.match(/<h1\b/g)).toHaveLength(1);
@@ -43,7 +43,7 @@ describe("tsc.hk site", () => {
       const res = await fetch(new Request(`${server.url.origin}/llms.txt`));
       expect(res.status).toBe(200);
       const text = await res.text();
-      expect(text).toContain("The Software Company of Hong Kong");
+      expect(text).toContain("Software Corporation (Hong Kong)");
     } finally {
       await server.stop(true);
     }

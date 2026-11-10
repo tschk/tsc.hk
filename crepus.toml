@@ -4,11 +4,11 @@ id = "site"
 site = "."
 out = "dist"
 entry = "index.crepus"
-name = "The Software Company of Hong Kong"
+name = "Software Corporation (Hong Kong)"
 description = "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
 
 [targets.seo]
-title = "The Software Company of Hong Kong — tsc.hk"
+title = "Software Corporation (Hong Kong) — tsc.hk"
 description = "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."
 robots = "index,follow"
 twitter_card = "summary"
@@ -20,5 +20,5 @@ twitter_creator = "@tsc_hk"
 [targets.llms]
 enabled = true
 base_url = "https://tsc.hk"
-title = "The Software Company of Hong Kong"
+title = "Software Corporation (Hong Kong)"
 description = "Independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages."

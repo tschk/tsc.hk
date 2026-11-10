@@ -5,7 +5,7 @@ export type HeadMeta = {
 };
 
 export const homeHead: HeadMeta = {
-  title: "The Software Company of Hong Kong — tsc.hk",
+  title: "Software Corporation (Hong Kong) — tsc.hk",
   description:
     "an independent R&D lab building systems software, runtimes, developer tools, application platforms, operating systems, browsers, and programming languages.",
   canonical: "https://tsc.hk/",
@@ -46,7 +46,7 @@ function structuredData(meta: HeadMeta): string {
       {
         "@type": "Organization",
         "@id": organization,
-        name: "The Software Company of Hong Kong",
+        name: "Software Corporation (Hong Kong)",
         url: homeHead.canonical,
         sameAs: [
           "https://github.com/tschk",
@@ -57,7 +57,7 @@ function structuredData(meta: HeadMeta): string {
       {
         "@type": "WebSite",
         "@id": website,
-        name: "The Software Company of Hong Kong",
+        name: "Software Corporation (Hong Kong)",
         url: homeHead.canonical,
         publisher: { "@id": organization },
         inLanguage: "en",
@@ -87,7 +87,7 @@ export function headHtml(meta: HeadMeta = homeHead): string {
     '<meta name="robots" content="index,follow" />',
     `<link rel="canonical" href="${canonical}" />`,
     '<meta property="og:type" content="website" />',
-    '<meta property="og:site_name" content="The Software Company of Hong Kong" />',
+    '<meta property="og:site_name" content="Software Corporation (Hong Kong)" />',
     `<meta property="og:title" content="${title}" />`,
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:url" content="${canonical}" />`,
