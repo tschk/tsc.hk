@@ -3,67 +3,59 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#121310">
-  <meta name="description" content="Lyceus is an experimental small transformer and a research direction for supervised model change.">
-  <title>Lyceus — a study in change</title>
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="Lyceus is an experimental C++ transformer exploring supervised model change.">
+  <title>Lyceus / Research system</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="site-header wrap">
-    <a class="brand" href="#top" aria-label="Lyceus home"><span class="brand-mark" aria-hidden="true">✳</span> LYCEUS<span class="brand-period">.</span></a>
-    <nav aria-label="Main navigation"><a href="#premise">The premise</a><a href="#architecture">Architecture</a><a href="#process">The process</a></nav>
-    <a class="header-link" href="#status">Research notes <span aria-hidden="true">↗</span></a>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="header wrap">
+    <a href="#top" class="wordmark" aria-label="Lyceus home"><span class="mark" aria-hidden="true">[<b>λ</b>]</span> LYCEUS <span class="wordmark-sub">/ RESEARCH SYSTEM</span></a>
+    <nav aria-label="Main navigation"><a href="#architecture">01 Architecture</a><a href="#lifecycle">02 Lifecycle</a><a href="#evidence">03 Evidence</a></nav>
+    <span class="header-status"><span class="status-dot" aria-hidden="true"></span> EXPERIMENTAL</span>
   </header>
-
-  <main id="top">
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="dot"></span> AN EXPERIMENT IN MACHINE LEARNING <span class="eyebrow-number">/ 001</span></p>
-        <h1 id="hero-title">A model is<br>never <em>finished.</em></h1>
-        <p class="hero-intro">What if learning didn’t end at training? Lyceus is a small, experimental transformer exploring how a model might change under supervision.</p>
-        <a class="text-link" href="#premise">Explore the idea <span aria-hidden="true">↘</span></a>
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <div class="hero-main">
+        <div class="path"><span>~/lyceus</span> <span class="slash">/</span> README <span class="path-end">[ research note 001 ]</span></div>
+        <p class="prompt"><span aria-hidden="true">&gt;</span> research brief / overview</p>
+        <h1>A model exploring<br>how to <span>keep learning.</span></h1>
+        <p class="lead">Lyceus is an experimental transformer built from scratch. It explores what it would take for a model to change over time—carefully, under supervision, and with a way back.</p>
+        <div class="hero-links"><a class="primary" href="#architecture">Explore the architecture <span aria-hidden="true">↘</span></a><a href="#evidence">Read the evidence <span aria-hidden="true">↓</span></a></div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <canvas id="field"></canvas>
-        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
-        <div class="art-cross cross-one">+</div><div class="art-cross cross-two">+</div>
-        <div class="art-label art-label-top">FIG. 01 <span> / </span> A SYSTEM IN MOTION</div>
-        <div class="art-label art-label-bottom">LATENT SPACE STUDY <span> · </span> LY—001</div>
+      <aside class="spec" aria-label="Model summary">
+        <div class="panel-title"><span>MODEL CARD</span><span>01 / 03</span></div>
+        <div class="spec-body"><div class="spec-logo" aria-hidden="true">L<span>Y</span>_</div><p class="spec-label">LYCEUS / BASE MODEL</p><dl><div><dt>Parameters</dt><dd>~5.77M</dd></div><div><dt>Implementation</dt><dd>C++ / LibTorch</dd></div><div><dt>Origin</dt><dd>From scratch</dd></div><div><dt>State</dt><dd><span class="badge">Research</span></dd></div></dl></div>
+        <div class="panel-foot">NOT A DEPLOYED ASSISTANT <span>↗</span></div>
+      </aside>
+    </section>
+
+    <div class="ticker"><div class="wrap"><span>LYCEUS <b>/</b> RESEARCH NOTES</span><span>SMALL MODEL <b>·</b> OPEN QUESTIONS <b>·</b> NO PRODUCT CLAIMS</span><span>EST. 001</span></div></div>
+
+    <section class="section wrap" id="architecture">
+      <div class="section-head"><div><p class="section-number">01 <span>/ ARCHITECTURE</span></p><h2>Two domains.<br><span>Different ownership.</span></h2></div><p>Personal context and reusable competence should not be treated as the same kind of state. This is the intended design, not a proven privacy boundary.</p></div>
+      <div class="diagram-title"><span>FIG 01 <b>/</b> OWNERSHIP MODEL</span><span>CONCEPTUAL · NOT TO SCALE</span></div>
+      <div class="domains" role="group" aria-label="Proposed personal state and model competence ownership domains">
+        <article class="domain"><div class="domain-label"><span>01 / PERSONAL</span><span>USER-SPECIFIC</span></div><h3>Personal state</h3><p>History and profile belong to the individual. Associative memory and categorized connections are proposed ways to organize context.</p><div class="tags"><span>history</span><span>profile</span><span>associations</span></div></article>
+        <div class="bridge" aria-hidden="true"><span>+</span></div>
+        <article class="domain"><div class="domain-label"><span>02 / SHARED</span><span>REUSABLE</span></div><h3>Model competence</h3><p>Reusable capability lives in the model. Editable weights and growth are being explored as supervised changes, not proven general learning.</p><div class="tags"><span>weights</span><span>competence</span><span>growth</span></div></article>
       </div>
-      <div class="hero-foot"><span>AN OPEN QUESTION, NOT A FINISHED ANSWER</span><span>SCROLL TO EXPLORE ↓</span></div>
+      <div class="note"><span>NOTE / 01</span><p>Transformer and source changes are intended to be less frequent, eligible only above a configurable model-size threshold and subject to independent tests. The gate is under development—not proof that a change is correct.</p></div>
     </section>
 
-    <section class="intro section wrap" id="premise">
-      <div class="section-index"><span>01 / THE PREMISE</span><span class="index-line"></span></div>
-      <div class="intro-body"><p class="kicker">LEARNING AS A PRACTICE</p><h2>Less like a product.<br><em>More like a question.</em></h2><div class="intro-columns"><p>Most models are treated as fixed objects: train, deploy, repeat. Lyceus asks what a more deliberate relationship with change could look like.</p><p>The project starts with an independently built C++ transformer and looks toward a supervised loop for proposing, testing, and—only when appropriate—keeping changes.</p></div></div>
-    </section>
-
-    <section class="facts wrap" aria-label="Project at a glance">
-      <div><span class="fact-label">THE MODEL</span><strong>~5.77<span>M</span></strong><p>parameters, approximately</p></div>
-      <div><span class="fact-label">THE FOUNDATION</span><strong>C<span>++</span></strong><p>independently built transformer</p></div>
-      <div><span class="fact-label">THE STAGE</span><strong>Early<span> / research</span></strong><p>not a capable assistant</p></div>
-    </section>
-
-    <section class="architecture section wrap" id="architecture">
-      <div class="section-index"><span>02 / THE ARCHITECTURE</span><span class="index-line"></span></div>
-      <div class="section-heading"><div><p class="kicker">TWO DOMAINS, DIFFERENT OWNERS</p><h2>Change has<br><em>boundaries.</em></h2></div><p>The proposed system separates personal history and profile from reusable model competence. These are research goals, not a demonstrated privacy boundary.</p></div>
-      <div class="domain-diagram" role="group" aria-label="Two proposed ownership domains">
-        <article class="domain"><div class="domain-top"><span>DOMAIN 01</span><span aria-hidden="true">↗</span></div><div class="domain-symbol symbol-memory" aria-hidden="true"><i></i><i></i><i></i><i></i></div><h3>Personal state</h3><p>History and profile belong to the individual. Integrated associative memory and categorized connections are proposed ways to organize context.</p><div class="domain-bottom">HISTORY <span> / </span> PROFILE <span> / </span> MEMORY</div></article>
-        <div class="domain-connector" aria-hidden="true"><span>+</span></div>
-        <article class="domain"><div class="domain-top"><span>DOMAIN 02</span><span aria-hidden="true">↗</span></div><div class="domain-symbol symbol-code" aria-hidden="true"><span>⌘</span></div><h3>Model competence</h3><p>Reusable capability lives in the model. Weight edits and growth are being explored as supervised candidate changes, not proven general learning.</p><div class="domain-bottom">WEIGHTS <span> / </span> COMPETENCE <span> / </span> GROWTH</div></article>
-      </div>
-      <p class="diagram-caption"><span>FIG. 02</span> CONCEPTUAL OWNERSHIP DOMAINS <span class="caption-end">NOT AN IMPLEMENTATION CLAIM</span></p>
-      <p>Transformer and source changes are intended to be less frequent, eligible only above a configurable model-size threshold and subject to independent tests. That gate is under development, not a guarantee of correctness.</p>
-    </section>
-
-    <section class="process section" id="process"><div class="wrap"><div class="section-index"><span>03 / THE PROCESS</span><span class="index-line"></span></div><div class="section-heading"><div><p class="kicker">A PROPOSED LIFECYCLE</p><h2>Change, with<br><em>the way back intact.</em></h2></div><p>A candidate is not a conclusion. The intended loop makes evaluation and the ability to return to a checkpoint part of the process.</p></div>
-      <ol class="steps"><li><span>01</span><h3>Observe</h3><p>Gather a signal worth examining.</p></li><li><span>02</span><h3>Propose</h3><p>Describe a possible change.</p></li><li><span>03</span><h3>Candidate</h3><p>Prepare a supervised update.</p></li><li><span>04</span><h3>Evaluate</h3><p>Test before accepting a change.</p></li><li><span>05</span><h3>Persist</h3><p>Keep an accepted checkpoint.</p></li><li><span>06</span><h3>Reload</h3><p>Return to a checkpoint when needed.</p></li></ol>
-      <div class="rollback"><span aria-hidden="true">↶</span><div><strong>Rollback is part of the design.</strong><p>Independent evaluation, persistent checkpoints, restart and rollback are goals; the current prototype does not establish a secure or fully recoverable lifecycle.</p></div><span class="rollback-tag">PROPOSED / NOT PROVEN</span></div>
+    <section class="section section-alt" id="lifecycle"><div class="wrap">
+      <div class="section-head"><div><p class="section-number">02 <span>/ CHANGE LIFECYCLE</span></p><h2>Propose. Test.<br><span>Keep the way back.</span></h2></div><p>A candidate is not a conclusion. The intended lifecycle makes evaluation, persistence and recovery part of model change.</p></div>
+      <div class="diagram-title"><span>FIG 02 <b>/</b> SUPERVISED UPDATE LOOP</span><span>PROPOSED DESIGN</span></div>
+      <ol class="steps"><li><span>01</span><h3>Observe</h3><p>Gather a signal.</p></li><li><span>02</span><h3>Propose</h3><p>Describe a change.</p></li><li><span>03</span><h3>Candidate</h3><p>Update or grow.</p></li><li><span>04</span><h3>Evaluate</h3><p>Test independently.</p></li><li><span>05</span><h3>Persist</h3><p>Save a checkpoint.</p></li><li><span>06</span><h3>Reload</h3><p>Restart or roll back.</p></li></ol>
+      <div class="rollback"><span class="rollback-icon" aria-hidden="true">↶</span><div><strong>Recovery is a design goal, not a guarantee.</strong><p>Independent evaluation, persistent checkpoints, restart and rollback remain work in progress. The prototype does not establish a secure or fully recoverable lifecycle.</p></div><span class="rollback-label">[ PLANNED ]</span></div>
     </div></section>
 
-    <section class="status section wrap" id="status"><div class="section-index"><span>04 / WHERE WE ARE</span><span class="index-line"></span></div><div class="status-content"><p class="kicker">A NOTE ON THE WORK</p><h2>Curiosity, with<br><em>clear edges.</em></h2><div class="status-grid"><div><span class="status-number">01 / DEMONSTRATED</span><h3>A small beginning.</h3><p>A from-scratch C++/LibTorch transformer has been trained on public text. Scheduled growth was tested but did not improve exposed-development loss against its control in one seed. A host-scripted synthetic update changed a restricted token answer and reloaded a candidate; it does not prove general learning.</p></div><div><span class="status-number">02 / RESEARCH DIRECTION</span><h3>Much still to explore.</h3><p>The model is not a coherent assistant. Memory and online growth integration remain ongoing; the prototype is not autonomous, secure, privacy-preserving, or source-self-modifying. Its evaluator is not OS-sealed and feedback is not externally authenticated.</p></div></div></div></section>
+    <section class="section wrap" id="evidence">
+      <div class="section-head"><div><p class="section-number">03 <span>/ RESEARCH STATUS</span></p><h2>Evidence over<br><span>assumptions.</span></h2></div><p>A small research model is not a capable assistant. Here is the boundary between what has been tested and what remains to be built.</p></div>
+      <div class="evidence-grid"><article><div class="evidence-top"><span>01 / OBSERVED</span><span>[ TESTED ]</span></div><h3>Small-scale experiments</h3><p>A from-scratch C++/LibTorch transformer has been trained on public text. Scheduled growth did not improve exposed-development loss against its control in one seed.</p><p>A host-scripted synthetic update changed a restricted token answer and reloaded a candidate. This does not prove general learning.</p></article><article><div class="evidence-top"><span>02 / IN PROGRESS</span><span>[ RESEARCH ]</span></div><h3>Integration &amp; safeguards</h3><p>The model is not a coherent assistant. Memory and online growth integration remain ongoing; the prototype is not autonomous, secure, privacy-preserving, or source-self-modifying.</p><p>Its evaluator is not OS-sealed and feedback is not externally authenticated.</p></article></div>
+    </section>
   </main>
-  <footer class="footer"><div class="wrap footer-inner"><div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✳</span> LYCEUS<span class="brand-period">.</span></a><p>An experiment in learning and change.</p></div><a href="#top">BACK TO TOP ↑</a><span>IN PROGRESS / ALWAYS</span></div></footer>
+  <footer class="footer"><div class="wrap footer-inner"><a href="#top" class="wordmark"><span class="mark" aria-hidden="true">[<b>λ</b>]</span> LYCEUS</a><span>EXPERIMENTAL MODEL RESEARCH / TSC.HK</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 </body>
 </html>
