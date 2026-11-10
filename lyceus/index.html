@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#121416">
   <meta name="description" content="Lyceus is an experimental transformer family for research into supervised learning and model growth.">
   <title>Lyceus</title>
-  <link rel="stylesheet" href="style.css?v=lyceus-5">
+  <link rel="stylesheet" href="style.css?v=lyceus-6">
 </head>
 <body>
   <main>
@@ -15,14 +15,8 @@
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
-    <section aria-labelledby="memory-title">
-      <div class="section-title"><h1 id="memory-title">Memory beyond the conversation</h1></div>
-      <p>Personal memory could live in model-associated state, rather than relying only on chat history or search results pasted into each request. A user-controlled profile could travel between compatible model generations, making a personal experience easier to carry forward.</p>
-      <p class="explanation">A profile is information a person or host chooses to provide. Learned memory is different: changes to model-associated state or weights through experience. Research prototypes accept optional personal and domain state supplied by a host; reliable learned memory and profile portability remain research goals.</p>
-    </section>
-
     <section aria-labelledby="mechanism-title">
-      <div class="section-title"><h2 id="mechanism-title">How it is intended to work</h2><span>Research prototype</span></div>
+      <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>Research prototype</span></div>
       <p>The model holds representations and weights; personal and domain state are intended to remain distinct from reusable competence. Its host controls permissions and coordinates observations, tools, evaluation and checkpoints. Retrieval supplies context; learning changes the model.</p>
       <figure class="mechanism">
         <figcaption>Proposed learning loop</figcaption>
@@ -39,9 +33,16 @@
       <p class="detail">Scripted synthetic updates have been tested; persistent learning, reliable retention and autonomous adaptation remain research objectives.</p>
     </section>
 
-    <section aria-labelledby="models-title">
-      <div class="section-title"><h2 id="models-title">Model sizes</h2></div>
-      <p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p>
+    <section aria-labelledby="topics-title">
+      <div class="section-title"><h2 id="topics-title">Areas of research</h2></div>
+      <div class="topics">
+        <article><h3>Memory</h3><p>Memory in model-associated state could carry learning beyond a single conversation. Prototypes accept optional host-supplied personal and domain state; reliable learned memory remains under investigation.</p></article>
+        <article><h3>Adaptation</h3><p>Feedback can inform candidate updates to weights or state. Scripted synthetic experiments exercise updates; reliable retention and autonomous adaptation are not yet demonstrated.</p></article>
+        <article><h3>Growth</h3><p>Experiments explore adding model capacity as well as changing existing parameters. Useful growth that preserves earlier learning remains research.</p></article>
+        <article><h3>Profiles</h3><p>A profile is information a person or host chooses to provide, distinct from learned memory. Carrying a profile between compatible model generations is an open research direction.</p></article>
+        <article><h3>Model family</h3><p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p></article>
+        <article><h3>Harness</h3><p>A separate host is intended to manage permissions, tools and evidence, and assess candidate changes before promoting or rolling back checkpoints.</p></article>
+      </div>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
   </main>

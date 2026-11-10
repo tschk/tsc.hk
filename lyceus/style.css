@@ -5,3 +5,4 @@
 .section-title h1{font-size:16px;letter-spacing:normal;line-height:1.4}
 .loop{border:1px solid var(--line);padding:20px 24px;background:#191d1d}.step{display:grid;grid-template-columns:190px minmax(0,1fr);gap:12px;align-items:baseline}.step strong{font-weight:600;color:var(--text)}.step span{color:var(--muted);font-size:12px}.connector{display:block;width:20px;height:30px;margin-left:3px;fill:none;stroke:var(--accent);stroke-width:1.3}.detail{color:var(--muted)}
 @media(max-width:600px){.loop{padding:18px}.step{grid-template-columns:1fr;gap:2px}.connector{height:26px}}
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.topics article{border:1px solid var(--line);padding:18px}.topics h3{margin:0 0 8px;font-size:14px;font-weight:600}.topics p{font-size:12px;line-height:1.8}@media(max-width:600px){.topics{grid-template-columns:1fr}.topics article{padding:16px}}
