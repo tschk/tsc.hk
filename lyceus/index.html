@@ -6,20 +6,18 @@
   <meta name="theme-color" content="#121416">
   <meta name="description" content="Lyceus is an experimental transformer family for research into supervised learning and model growth.">
   <title>Lyceus</title>
-  <link rel="stylesheet" href="style.css?v=lyceus-3">
+  <link rel="stylesheet" href="style.css?v=lyceus-4">
 </head>
 <body>
   <main>
     <div class="intro">
-      <h1>Lyceus<span aria-hidden="true">.</span></h1>
-      <p>Lyceus is a family of experimental transformers built from scratch in C++ and LibTorch. The research asks how a model can learn from feedback, adapt to a person or domain, and change its own weights and capacity over time.</p>
+      <p>Lyceus is an experimental transformer family exploring how models can learn from feedback, adapt to a person or domain, and change their own weights and capacity over time.</p>
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
     <section aria-labelledby="mechanism-title">
-      <div class="section-title"><h2 id="mechanism-title">How it is intended to work</h2><span>Design in progress</span></div>
-      <p>The model holds representations and weights, with personal and domain state kept distinct from reusable competence. A host harness is intended to collect approved observations, use Darash search and scoped local or remote tools, and verify evidence. The host owns tool permissions; the model remains independently embeddable.</p>
-      <p class="explanation">The harness would turn learning signals into candidate updates or growth, run independent retention checks, and promote a checkpoint or restore an earlier one. Retrieval alone does not change the model. Source and transformer changes are intended to be rarer, gated by size and independent tests.</p>
+      <div class="section-title"><h1 id="mechanism-title">How it is intended to work</h1><span>Research prototype</span></div>
+      <p>Personal and domain state are distinct from reusable model competence. A host harness is intended to gather observations, use search and approved tools, and turn feedback into candidate changes. Checks decide which changes to keep; retrieval alone does not change the model.</p>
       <figure class="mechanism">
         <figcaption>Proposed learning loop</figcaption>
         <div class="flow" role="group" aria-label="The host harness gathers approved feedback and evidence. The model proposes state, weight or capacity changes. Independent checks evaluate candidates before checkpoint promotion or rollback.">
@@ -30,19 +28,11 @@
           <div class="flow-process"><div>Candidate update <span>or growth</span></div><b aria-hidden="true">→</b><div>Independent checks <span>including retention</span></div><b aria-hidden="true">→</b><div>Checkpoint <span>promotion or rollback</span></div></div>
         </div>
       </figure>
-      <p class="detail"><strong>Current status.</strong> A host-scripted synthetic test updates a copied model and reloads an accepted checkpoint after restart. Both update variants passed a small local gate; the checks are not independently protected. Search, scoped execution, a Cloudflare backend and protected evaluation are planned integrations.</p>
     </section>
 
     <section aria-labelledby="models-title">
-      <div class="section-title"><h2 id="models-title">Model sizes</h2><span>Research checkpoints</span></div>
-      <div class="models" role="list">
-        <div role="listitem"><strong>~1.8M</strong><span>Earlier byte model</span><small>Trained prototype</small></div>
-        <div role="listitem"><strong>5.77M</strong><span>Subword model</span><small>Trained prototype</small></div>
-        <div role="listitem"><strong>5.78M</strong><span>Subword model with added residual capacity</span><small>Scheduled growth experiment</small></div>
-        <div role="listitem"><strong>13.2M</strong><span>Larger subword model</span><small>Trained prototype</small></div>
-        <div role="listitem"><strong>Other sizes</strong><span>Configurable family and further models</span><small>Research planned</small></div>
-      </div>
-      <p class="detail">These are research checkpoints, not released products. Generation is still incoherent. Usable personal or domain learning, protected evaluation, private storage and source modification have not been demonstrated.</p>
+      <div class="section-title"><h2 id="models-title">Model sizes</h2></div>
+      <p>Small research prototypes have been trained and have demonstrated controlled learning and growth. A configurable family and larger models are under investigation; autonomous adaptation and public release remain goals.</p>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
   </main>
