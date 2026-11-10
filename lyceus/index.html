@@ -15,8 +15,14 @@
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
+    <section aria-labelledby="memory-title">
+      <div class="section-title"><h1 id="memory-title">Memory beyond the conversation</h1></div>
+      <p>The goal is a model that can carry what it learns within its own state, rather than relying only on chat history or search results pasted into each request. Over time, a user-controlled profile could travel between compatible model generations, making a personal experience easier to carry forward.</p>
+      <p class="explanation">A profile is information a person or host chooses to provide. Learned memory is different: changes to model-associated state or weights through experience. Research prototypes accept optional personal and domain state supplied by a host; reliable learned memory and profile portability remain research goals.</p>
+    </section>
+
     <section aria-labelledby="mechanism-title">
-      <div class="section-title"><h1 id="mechanism-title">How it is intended to work</h1><span>Research prototype</span></div>
+      <div class="section-title"><h2 id="mechanism-title">How it is intended to work</h2><span>Research prototype</span></div>
       <p>The model holds representations and weights; personal and domain state are intended to remain distinct from reusable competence. Its host controls permissions and coordinates observations, tools, evaluation and checkpoints. Retrieval supplies context; learning changes the model.</p>
       <figure class="mechanism">
         <figcaption>Proposed learning loop</figcaption>
