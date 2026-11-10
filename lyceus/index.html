@@ -3,59 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101112">
-  <meta name="description" content="Lyceus is an experimental C++ transformer exploring supervised model change.">
-  <title>Lyceus / Research system</title>
-  <link rel="stylesheet" href="style.css?v=terminal-1">
+  <meta name="theme-color" content="#121416">
+  <meta name="description" content="Lyceus is an experimental transformer family for research into supervised learning and model growth.">
+  <title>Lyceus</title>
+  <link rel="stylesheet" href="style.css?v=lyceus-3">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="header wrap">
-    <a href="#top" class="wordmark" aria-label="Lyceus home"><span class="mark" aria-hidden="true">[<b>λ</b>]</span> LYCEUS <span class="wordmark-sub">/ RESEARCH SYSTEM</span></a>
-    <nav aria-label="Main navigation"><a href="#architecture">01 Architecture</a><a href="#lifecycle">02 Lifecycle</a><a href="#evidence">03 Evidence</a></nav>
-    <span class="header-status"><span class="status-dot" aria-hidden="true"></span> EXPERIMENTAL</span>
-  </header>
-  <main id="main">
-    <section class="hero wrap" id="top">
-      <div class="hero-main">
-        <div class="path"><span>~/lyceus</span> <span class="slash">/</span> README <span class="path-end">[ research note 001 ]</span></div>
-        <p class="prompt"><span aria-hidden="true">&gt;</span> research brief / overview</p>
-        <h1>A model exploring<br>how to <span>keep learning.</span></h1>
-        <p class="lead">Lyceus is an experimental transformer built from scratch. It explores what it would take for a model to change over time—carefully, under supervision, and with a way back.</p>
-        <div class="hero-links"><a class="primary" href="#architecture">Explore the architecture <span aria-hidden="true">↘</span></a><a href="#evidence">Read the evidence <span aria-hidden="true">↓</span></a></div>
+  <main>
+    <div class="intro">
+      <h1>Lyceus<span aria-hidden="true">.</span></h1>
+      <p>Lyceus is a family of experimental transformers built from scratch in C++ and LibTorch. The research asks how a model can learn from feedback, adapt to a person or domain, and change its own weights and capacity over time.</p>
+      <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
+    </div>
+
+    <section aria-labelledby="mechanism-title">
+      <div class="section-title"><h2 id="mechanism-title">How it is intended to work</h2><span>Design in progress</span></div>
+      <p>The model holds representations and weights, with personal and domain state kept distinct from reusable competence. A host harness is intended to collect approved observations, use Darash search and scoped local or remote tools, and verify evidence. The host owns tool permissions; the model remains independently embeddable.</p>
+      <p class="explanation">The harness would turn learning signals into candidate updates or growth, run independent retention checks, and promote a checkpoint or restore an earlier one. Retrieval alone does not change the model. Source and transformer changes are intended to be rarer, gated by size and independent tests.</p>
+      <figure class="mechanism">
+        <figcaption>Proposed learning loop</figcaption>
+        <div class="flow" role="group" aria-label="The host harness gathers approved feedback and evidence. The model proposes state, weight or capacity changes. Independent checks evaluate candidates before checkpoint promotion or rollback.">
+          <div class="flow-input"><span>Host harness</span><small>approved observations, search, tools and evidence</small></div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-domains"><div><span>Personal and domain state</span><small>history, context and associations</small></div><div><span>Model competence</span><small>representations, weights and capacity</small></div></div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-process"><div>Candidate update <span>or growth</span></div><b aria-hidden="true">→</b><div>Independent checks <span>including retention</span></div><b aria-hidden="true">→</b><div>Checkpoint <span>promotion or rollback</span></div></div>
+        </div>
+      </figure>
+      <p class="detail"><strong>Current status.</strong> A host-scripted synthetic test updates a copied model and reloads an accepted checkpoint after restart. Both update variants passed a small local gate; the checks are not independently protected. Search, scoped execution, a Cloudflare backend and protected evaluation are planned integrations.</p>
+    </section>
+
+    <section aria-labelledby="models-title">
+      <div class="section-title"><h2 id="models-title">Model sizes</h2><span>Research checkpoints</span></div>
+      <div class="models" role="list">
+        <div role="listitem"><strong>~1.8M</strong><span>Earlier byte model</span><small>Trained prototype</small></div>
+        <div role="listitem"><strong>5.77M</strong><span>Subword model</span><small>Trained prototype</small></div>
+        <div role="listitem"><strong>5.78M</strong><span>Subword model with added residual capacity</span><small>Scheduled growth experiment</small></div>
+        <div role="listitem"><strong>Other sizes</strong><span>Configurable family and larger models</span><small>Research planned</small></div>
       </div>
-      <aside class="spec" aria-label="Model summary">
-        <div class="panel-title"><span>MODEL CARD</span><span>01 / 03</span></div>
-        <div class="spec-body"><div class="spec-logo" aria-hidden="true">L<span>Y</span>_</div><p class="spec-label">LYCEUS / BASE MODEL</p><dl><div><dt>Parameters</dt><dd>~5.77M</dd></div><div><dt>Implementation</dt><dd>C++ / LibTorch</dd></div><div><dt>Origin</dt><dd>From scratch</dd></div><div><dt>State</dt><dd><span class="badge">Research</span></dd></div></dl></div>
-        <div class="panel-foot">NOT A DEPLOYED ASSISTANT <span>↗</span></div>
-      </aside>
+      <p class="detail">These are research checkpoints, not released products. Generation is still incoherent. Usable personal or domain learning, protected evaluation, private storage and source modification have not been demonstrated.</p>
     </section>
-
-    <div class="ticker"><div class="wrap"><span>LYCEUS <b>/</b> RESEARCH NOTES</span><span>SMALL MODEL <b>·</b> OPEN QUESTIONS <b>·</b> NO PRODUCT CLAIMS</span><span>EST. 001</span></div></div>
-
-    <section class="section wrap" id="architecture">
-      <div class="section-head"><div><p class="section-number">01 <span>/ ARCHITECTURE</span></p><h2>Two domains.<br><span>Different ownership.</span></h2></div><p>Personal context and reusable competence should not be treated as the same kind of state. This is the intended design, not a proven privacy boundary.</p></div>
-      <div class="diagram-title"><span>FIG 01 <b>/</b> OWNERSHIP MODEL</span><span>CONCEPTUAL · NOT TO SCALE</span></div>
-      <div class="domains" role="group" aria-label="Proposed personal state and model competence ownership domains">
-        <article class="domain"><div class="domain-label"><span>01 / PERSONAL</span><span>USER-SPECIFIC</span></div><h3>Personal state</h3><p>History and profile belong to the individual. Associative memory and categorized connections are proposed ways to organize context.</p><div class="tags"><span>history</span><span>profile</span><span>associations</span></div></article>
-        <div class="bridge" aria-hidden="true"><span>+</span></div>
-        <article class="domain"><div class="domain-label"><span>02 / SHARED</span><span>REUSABLE</span></div><h3>Model competence</h3><p>Reusable capability lives in the model. Editable weights and growth are being explored as supervised changes, not proven general learning.</p><div class="tags"><span>weights</span><span>competence</span><span>growth</span></div></article>
-      </div>
-      <div class="note"><span>NOTE / 01</span><p>Transformer and source changes are intended to be less frequent, eligible only above a configurable model-size threshold and subject to independent tests. The gate is under development—not proof that a change is correct.</p></div>
-    </section>
-
-    <section class="section section-alt" id="lifecycle"><div class="wrap">
-      <div class="section-head"><div><p class="section-number">02 <span>/ CHANGE LIFECYCLE</span></p><h2>Propose. Test.<br><span>Keep the way back.</span></h2></div><p>A candidate is not a conclusion. The intended lifecycle makes evaluation, persistence and recovery part of model change.</p></div>
-      <div class="diagram-title"><span>FIG 02 <b>/</b> SUPERVISED UPDATE LOOP</span><span>PROPOSED DESIGN</span></div>
-      <ol class="steps"><li><span>01</span><h3>Observe</h3><p>Gather a signal.</p></li><li><span>02</span><h3>Propose</h3><p>Describe a change.</p></li><li><span>03</span><h3>Candidate</h3><p>Update or grow.</p></li><li><span>04</span><h3>Evaluate</h3><p>Test independently.</p></li><li><span>05</span><h3>Persist</h3><p>Save a checkpoint.</p></li><li><span>06</span><h3>Reload</h3><p>Restart or roll back.</p></li></ol>
-      <div class="rollback"><span class="rollback-icon" aria-hidden="true">↶</span><div><strong>Recovery is a design goal, not a guarantee.</strong><p>Independent evaluation, persistent checkpoints, restart and rollback remain work in progress. The prototype does not establish a secure or fully recoverable lifecycle.</p></div><span class="rollback-label">[ PLANNED ]</span></div>
-    </div></section>
-
-    <section class="section wrap" id="evidence">
-      <div class="section-head"><div><p class="section-number">03 <span>/ RESEARCH STATUS</span></p><h2>Evidence over<br><span>assumptions.</span></h2></div><p>A small research model is not a capable assistant. Here is the boundary between what has been tested and what remains to be built.</p></div>
-      <div class="evidence-grid"><article><div class="evidence-top"><span>01 / OBSERVED</span><span>[ TESTED ]</span></div><h3>Small-scale experiments</h3><p>A from-scratch C++/LibTorch transformer has been trained on public text. Scheduled growth did not improve exposed-development loss against its control in one seed.</p><p>A host-scripted synthetic update changed a restricted token answer and reloaded a candidate. This does not prove general learning.</p></article><article><div class="evidence-top"><span>02 / IN PROGRESS</span><span>[ RESEARCH ]</span></div><h3>Integration &amp; safeguards</h3><p>The model is not a coherent assistant. Memory and online growth integration remain ongoing; the prototype is not autonomous, secure, privacy-preserving, or source-self-modifying.</p><p>Its evaluator is not OS-sealed and feedback is not externally authenticated.</p></article></div>
-    </section>
+    <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
   </main>
-  <footer class="footer"><div class="wrap footer-inner"><a href="#top" class="wordmark"><span class="mark" aria-hidden="true">[<b>λ</b>]</span> LYCEUS</a><span>EXPERIMENTAL MODEL RESEARCH / TSC.HK</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 </body>
 </html>
