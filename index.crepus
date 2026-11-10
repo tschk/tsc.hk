@@ -146,8 +146,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "nexnet"
             span desc
               " — local-first peer-to-peer social chat with wallet identity and encrypted messaging"
-        div text-zinc-500
-          "lyceus — research into adaptive and growing model families"
+        a proj href="https://lyceus.tsc.hk"
+          div
+            span name
+              "lyceus"
+            span desc
+              " — research into adaptive and growing model families"
         div text-zinc-500
           "sdkkit — generate libraries across languages from a single SDK contract"
         div text-zinc-500
