@@ -77,6 +77,12 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "eqts"
             span desc
               " — one rust api for typescript across node, bun, deno, and webassembly"
+        a proj href="https://github.com/tschk/rig"
+          div ml-4
+            span name
+              "rig"
+            span desc
+              " — cross-language native dependency manager built on equilibrium"
         a proj href="https://github.com/tschk/rv8"
           div
             span name
@@ -140,6 +146,14 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "nexnet"
             span desc
               " — local-first peer-to-peer social chat with wallet identity and encrypted messaging"
+        div text-zinc-500
+          "lyceus — research into adaptive and growing model families"
+        div text-zinc-500
+          "sdkkit — generate libraries across languages from a single SDK contract"
+        div text-zinc-500
+          "subspace — statically composed capability-safe embedded operating system"
+        div text-zinc-500
+          "tk-cloud — control plane for telekinesis cloud workspaces"
     div
       div text-zinc-100 font-medium mt-4
         "CONTACT"
