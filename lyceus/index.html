@@ -11,26 +11,25 @@
 <body>
   <main>
     <div class="intro">
-      <p>Lyceus is a scratch-trained native model research project for personal agents. Its current direction combines text generation, persistent decision state and efficient sequence processing in one coordinated system.</p>
+      <p>Lyceus is a scratch-trained native model family for domain-specific tasks and personal agents. Its design combines text generation, persistent decision state and efficient sequence processing in one coordinated system.</p>
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
     <section aria-labelledby="mechanism-title">
-      <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>Research prototype</span></div>
-      <p>The proposed text-only design brings text diffusion and a decision component together inside one agent. Across refinement rounds, the decision state carries information forward and helps decide what to reveal, revisit or continue. Personal state has a separate lifetime; the host retains control of permissions, evaluation and checkpoints.</p>
+      <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>System design</span></div>
+      <p>The text-only design brings text diffusion and a decision component together inside one agent. Across refinement rounds, decision state carries information forward to guide what to reveal, revisit or continue. Personal and domain state have separate lifetimes; the host controls permissions, evaluation and checkpoints.</p>
       <figure class="mechanism">
-        <figcaption>Proposed generation cycle · one agent</figcaption>
+        <figcaption>Generation cycle · one agent</figcaption>
         <div class="loop">
           <div class="step"><strong>Text and context</strong><span>Input and partially revealed text enter a refinement round</span></div>
           <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
-          <div class="step"><strong>Text denoiser</strong><span>Refines text using a proposed subquadratic sequence mixer</span></div>
+          <div class="step"><strong>Text denoiser</strong><span>Refines text with subquadratic sequence processing</span></div>
           <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 2v22m-5-5 5 5 5-5M5 7l5-5 5 5"/></svg>
           <div class="step"><strong>Decision state</strong><span>Exchanges summaries with the denoiser; proposes reveal, revisit or continue</span></div>
           <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
           <div class="step"><strong>Next round or output</strong><span>Carry decision state into the next refinement round, or finish the text</span></div>
         </div>
       </figure>
-      <p class="detail">The coupling and learned decisions are proposed, not yet trained. Generation state is distinct from durable personal knowledge.</p>
     </section>
 
     <section aria-labelledby="topics-title">
@@ -39,8 +38,8 @@
         <article><h3>Memory</h3><p>Personal and domain state are intended to carry learning beyond a single conversation, separate from shared model competence and temporary generation state.</p></article>
         <article><h3>Adaptation</h3><p>Feedback could inform controlled changes to model-associated state or weights, with checks for whether corrections persist without disturbing other knowledge.</p></article>
         <article><h3>Growth</h3><p>The design explores model-proposed changes to parameters and capacity, and, at larger sizes, architecture or source changes for independent review. Current growth experiments are host-scheduled.</p></article>
-        <article><h3>Profiles</h3><p>A research interface accepts host-selected personal and domain state for individual input rows while reusing the same loaded model. This synthetic prototype is distinct from learned memory; it is not a multi-user service or a guarantee of concurrent isolation.</p></article>
-        <article><h3>Model family</h3><p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p></article>
+        <article><h3>Profiles</h3><p>The design separates personal and domain state from shared model weights. Host-selected state can be supplied per input row without loading a separate model for each person or task.</p></article>
+        <article><h3>Model family</h3><p>Configurable model sizes support research into both domain-specific work and personal agents, from small local models to larger specialized systems.</p></article>
         <article><h3>Harness</h3><p>A separate host is intended to manage permissions, tools and evidence, and assess candidate changes before promoting or rolling back checkpoints.</p></article>
       </div>
     </section>
