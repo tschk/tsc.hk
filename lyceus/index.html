@@ -17,7 +17,7 @@
 
     <section aria-labelledby="mechanism-title">
       <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>Research prototype</span></div>
-      <p>The proposed text-only design brings a text denoiser and a decision component together inside one agent. Across refinement rounds, the decision state carries information forward and helps decide what to reveal, revisit or continue. Personal state has a separate lifetime; the host retains control of permissions, evaluation and checkpoints.</p>
+      <p>The proposed text-only design brings text diffusion and a decision component together inside one agent. Across refinement rounds, the decision state carries information forward and helps decide what to reveal, revisit or continue. Personal state has a separate lifetime; the host retains control of permissions, evaluation and checkpoints.</p>
       <figure class="mechanism">
         <figcaption>Proposed generation cycle · one agent</figcaption>
         <div class="loop">
@@ -36,20 +36,12 @@
     <section aria-labelledby="topics-title">
       <div class="section-title"><h2 id="topics-title">Areas of research</h2></div>
       <div class="topics">
-        <article><h3>Memory</h3><p>Memory in model-associated state could carry learning beyond a single conversation. Prototypes accept optional host-supplied personal and domain state; reliable learned memory remains under investigation.</p></article>
-        <article><h3>Adaptation</h3><p>Feedback can inform candidate updates to weights or state. Scripted synthetic experiments exercise updates; reliable retention and autonomous adaptation are not yet demonstrated.</p></article>
-        <article><h3>Growth</h3><p>Research explores models directing changes to their own parameters and capacity, and, at larger sizes, proposing transformer architecture or source changes for independent review. Growth is currently host-scheduled; model-directed structural and source changes are not demonstrated.</p></article>
+        <article><h3>Memory</h3><p>Personal and domain state are intended to carry learning beyond a single conversation, separate from shared model competence and temporary generation state.</p></article>
+        <article><h3>Adaptation</h3><p>Feedback could inform controlled changes to model-associated state or weights, with checks for whether corrections persist without disturbing other knowledge.</p></article>
+        <article><h3>Growth</h3><p>The design explores model-proposed changes to parameters and capacity, and, at larger sizes, architecture or source changes for independent review. Current growth experiments are host-scheduled.</p></article>
         <article><h3>Profiles</h3><p>A research interface accepts host-selected personal and domain state for individual input rows while reusing the same loaded model. This synthetic prototype is distinct from learned memory; it is not a multi-user service or a guarantee of concurrent isolation.</p></article>
         <article><h3>Model family</h3><p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p></article>
         <article><h3>Harness</h3><p>A separate host is intended to manage permissions, tools and evidence, and assess candidate changes before promoting or rolling back checkpoints.</p></article>
-      </div>
-    </section>
-    <section aria-labelledby="research-title">
-      <div class="section-title"><h2 id="research-title">Research in progress</h2></div>
-      <div class="topics">
-        <article><h3>Tested</h3><p>Native text and decision experiments, synthetic state updates and scheduled growth have been exercised separately. An FFT convolution operator passed CPU and MPS output and gradient checks—not a whole-model performance test.</p></article>
-        <article><h3>Investigating</h3><p>Text diffusion, decision-state coupling and subquadratic sequence processing are being studied together. Corrected source text and bounded larger-model resource screens inform the next comparison.</p></article>
-        <article><h3>Still open</h3><p>Language samples remain incoherent. Reliable personal corrections, retained knowledge, controlled adaptation and useful model-directed growth are not established.</p></article>
       </div>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
