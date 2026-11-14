@@ -11,26 +11,26 @@
 <body>
   <main>
     <div class="intro">
-      <p>Lyceus is a research project developing an independently initialized transformer family for personal agents. It explores learning from feedback, adaptation to people and domains, model memory, and growth in weights and capacity.</p>
+      <p>Lyceus is a scratch-trained native model research project for personal agents. Its current direction combines text generation, persistent decision state and efficient sequence processing in one coordinated system.</p>
       <p class="context">A research project by <a href="https://tsc.hk/">The Software Company of Hong Kong</a>.</p>
     </div>
 
     <section aria-labelledby="mechanism-title">
       <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>Research prototype</span></div>
-      <p>The model holds representations and weights; personal and domain state are intended to remain distinct from reusable competence. Its host controls permissions and coordinates observations, tools, evaluation and checkpoints. Retrieval supplies context; learning changes the model.</p>
+      <p>The proposed text-only design brings a text denoiser and a decision component together inside one agent. Across refinement rounds, the decision state carries information forward and helps decide what to reveal, revisit or continue. Personal state has a separate lifetime; the host retains control of permissions, evaluation and checkpoints.</p>
       <figure class="mechanism">
-        <figcaption>Proposed learning loop</figcaption>
+        <figcaption>Proposed generation cycle · one agent</figcaption>
         <div class="loop">
-          <div class="step"><strong>Host harness</strong><span>Approved observations, feedback and tools</span></div>
+          <div class="step"><strong>Text and context</strong><span>Input and partially revealed text enter a refinement round</span></div>
           <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
-          <div class="step"><strong>Model and runtime</strong><span>Personal / domain state and reusable competence; candidate weight edits or capacity growth</span></div>
+          <div class="step"><strong>Text denoiser</strong><span>Refines text using a proposed subquadratic sequence mixer</span></div>
+          <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 2v22m-5-5 5 5 5-5M5 7l5-5 5 5"/></svg>
+          <div class="step"><strong>Decision state</strong><span>Exchanges summaries with the denoiser; proposes reveal, revisit or continue</span></div>
           <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
-          <div class="step"><strong>Host checks</strong><span>Independent evaluation and retention tests</span></div>
-          <svg class="connector" viewBox="0 0 20 30" aria-hidden="true"><path d="M10 0v24m-5-5 5 5 5-5"/></svg>
-          <div class="step"><strong>Checkpoint</strong><span>Keep and reload an accepted change, or roll back</span></div>
+          <div class="step"><strong>Next round or output</strong><span>Carry decision state into the next refinement round, or finish the text</span></div>
         </div>
       </figure>
-      <p class="detail">Scripted synthetic updates have been tested; persistent learning, reliable retention and autonomous adaptation remain research objectives.</p>
+      <p class="detail">The coupling and learned decisions are proposed, not yet trained. Generation state is distinct from durable personal knowledge.</p>
     </section>
 
     <section aria-labelledby="topics-title">
@@ -42,6 +42,14 @@
         <article><h3>Profiles</h3><p>A research interface accepts host-selected personal and domain state for individual input rows while reusing the same loaded model. This synthetic prototype is distinct from learned memory; it is not a multi-user service or a guarantee of concurrent isolation.</p></article>
         <article><h3>Model family</h3><p>Small prototypes and a roughly 102-million-parameter prototype have completed training experiments. A configurable family and larger models are under investigation, not released products.</p></article>
         <article><h3>Harness</h3><p>A separate host is intended to manage permissions, tools and evidence, and assess candidate changes before promoting or rolling back checkpoints.</p></article>
+      </div>
+    </section>
+    <section aria-labelledby="research-title">
+      <div class="section-title"><h2 id="research-title">Research in progress</h2></div>
+      <div class="topics">
+        <article><h3>Tested</h3><p>Native text and decision experiments, synthetic state updates and scheduled growth have been exercised separately. An FFT convolution operator passed CPU and MPS output and gradient checks—not a whole-model performance test.</p></article>
+        <article><h3>Investigating</h3><p>Text diffusion, decision-state coupling and subquadratic sequence processing are being studied together. Corrected source text and bounded larger-model resource screens inform the next comparison.</p></article>
+        <article><h3>Still open</h3><p>Language samples remain incoherent. Reliable personal corrections, retained knowledge, controlled adaptation and useful model-directed growth are not established.</p></article>
       </div>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
