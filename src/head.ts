@@ -49,7 +49,7 @@ function structuredData(meta: HeadMeta): string {
         name: "Software Corporation (Hong Kong)",
         url: homeHead.canonical,
         sameAs: [
-          "https://github.com/tschk",
+          "https://github.com/softwarecorporation",
           "https://x.com/tsc_hk",
           "https://instagram.com/thesoftwarecompanyofhongkong",
         ],

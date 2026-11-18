@@ -179,7 +179,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/aurorality",
+                      "href": "https://github.com/softwarecorporation/aurorality",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -356,7 +356,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/soliloquy",
+                      "href": "https://github.com/softwarecorporation/soliloquy",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -417,7 +417,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/alpenglowed",
+                      "href": "https://github.com/softwarecorporation/alpenglowed",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -588,7 +588,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/equilibrium",
+                      "href": "https://github.com/softwarecorporation/equilibrium",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -643,7 +643,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/eqswift",
+                      "href": "https://github.com/softwarecorporation/eqswift",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -704,7 +704,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/eqts",
+                      "href": "https://github.com/softwarecorporation/eqts",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -765,7 +765,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/rig",
+                      "href": "https://github.com/softwarecorporation/rig",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -826,7 +826,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/rv8",
+                      "href": "https://github.com/softwarecorporation/rv8",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -881,7 +881,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/rotary",
+                      "href": "https://github.com/softwarecorporation/rotary",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1029,7 +1029,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/apollo",
+                      "href": "https://github.com/softwarecorporation/apollo",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1084,7 +1084,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/moonshine",
+                      "href": "https://github.com/softwarecorporation/moonshine",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1139,7 +1139,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/zkr",
+                      "href": "https://github.com/softwarecorporation/zkr",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1194,7 +1194,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/praefectus",
+                      "href": "https://github.com/softwarecorporation/praefectus",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1560,7 +1560,7 @@
                   "children": [
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk",
+                      "href": "https://github.com/softwarecorporation",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -1593,7 +1593,7 @@
                         },
                         {
                           "kind": "text",
-                          "content": " — https://github.com/tschk",
+                          "content": " — https://github.com/softwarecorporation",
                           "style": {
                             "classes": [
                               "text-zinc-500",

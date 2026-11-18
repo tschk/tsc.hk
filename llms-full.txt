@@ -37,27 +37,27 @@ PROJECTS
 
 [crepuscularity — write react + rust for hardware accelerated mobile and desktop apps, websites and webextensions, terminal ui and embedded appliances](https://crepuscularity.tsc.hk)
 
-[aurorality — compile crepuscularity to swiftui](https://github.com/tschk/aurorality)
+[aurorality — compile crepuscularity to swiftui](https://github.com/softwarecorporation/aurorality)
 
 [crepuscularity + aurora lite — drop crepuscularity into any electron app or website to get the same ui but native with the same javascript/typescript backend](https://crepuscularity.tsc.hk/docs/lite.html)
 
-[alpenglow — Linux operating system that boots in under a second and is smaller than an average picture](https://github.com/tschk/alpenglow)
+[alpenglow — Linux operating system that boots in under a second and is smaller than an average picture](https://github.com/softwarecorporation/alpenglow)
 
-[soliloquy — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos](https://github.com/tschk/soliloquy)
+[soliloquy — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos](https://github.com/softwarecorporation/soliloquy)
 
-[inauguration — capability-aware compiler pipeline for deterministic execution and agent-native software](https://github.com/tschk/inauguration)
+[inauguration — capability-aware compiler pipeline for deterministic execution and agent-native software](https://github.com/softwarecorporation/inauguration)
 
-[space — component-based compiler-centric ground-up non-posix operating system](https://github.com/tschk/space)
+[space — component-based compiler-centric ground-up non-posix operating system](https://github.com/softwarecorporation/space)
 
-[equilibrium — cross c compiling language interoperability with one call automagically](https://github.com/tschk/equilibrium)
+[equilibrium — cross c compiling language interoperability with one call automagically](https://github.com/softwarecorporation/equilibrium)
 
-[eqswift — two lines to ffi rust to swift automagically](https://github.com/tschk/eqswift)
+[eqswift — two lines to ffi rust to swift automagically](https://github.com/softwarecorporation/eqswift)
 
-[rv8 — browser engine combining Servo rendering with V8 JavaScript](https://github.com/tschk/rv8)
+[rv8 — browser engine combining Servo rendering with V8 JavaScript](https://github.com/softwarecorporation/rv8)
 
 CONTACT
 
-[GitHub — https://github.com/tschk](https://github.com/tschk)
+[GitHub — https://github.com/softwarecorporation](https://github.com/softwarecorporation)
 
 [X — @tsc_hk](https://x.com/tsc_hk)
 

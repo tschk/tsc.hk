@@ -463,7 +463,7 @@
                     },
                     {
                       "kind": "link",
-                      "href": "https://github.com/tschk/rotary",
+                      "href": "https://github.com/softwarecorporation/rotary",
                       "style": {
                         "classes": [
                           "no-underline",
@@ -496,7 +496,7 @@
                         },
                         {
                           "kind": "text",
-                          "content": " — https://github.com/tschk/rotary",
+                          "content": " — https://github.com/softwarecorporation/rotary",
                           "style": {
                             "classes": [
                               "text-zinc-500",

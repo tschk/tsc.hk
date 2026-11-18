@@ -93,7 +93,7 @@ describe("telekinesis page", () => {
       expect(html).toContain(
         "https://github.com/semitechnological/telekinesis",
       );
-      expect(html).toContain("https://github.com/tschk/rotary");
+      expect(html).toContain("https://github.com/softwarecorporation/rotary");
       expect(html).toContain("MPL-2.0");
       expect(html).toContain("telekinesis — tsc.hk");
       expect(html).toContain('id="tk-heading"');

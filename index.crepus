@@ -17,7 +17,7 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "crepuscularity"
             span desc
               " — write react + rust for hardware accelerated mobile and desktop apps, websites and webextensions, terminal ui and embedded appliances"
-        a proj href="https://github.com/tschk/aurorality"
+        a proj href="https://github.com/softwarecorporation/aurorality"
           div ml-4
             span name
               "aurorality"
@@ -35,13 +35,13 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "alpenglow"
             span desc
               " — Linux operating system that boots in under a second and is smaller than an average picture"
-        a proj href="https://github.com/tschk/soliloquy"
+        a proj href="https://github.com/softwarecorporation/soliloquy"
           div ml-4
             span name
               "soliloquy"
             span desc
               " — the immutable web-native ultraminimal os built on top of alpenglow. spiritual successor to chromeos"
-        a proj href="https://github.com/tschk/alpenglowed"
+        a proj href="https://github.com/softwarecorporation/alpenglowed"
           div ml-4
             span name
               "alpenglowed"
@@ -59,37 +59,37 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
               "space"
             span desc
               " — component-based compiler-centric ground-up non-posix operating system"
-        a proj href="https://github.com/tschk/equilibrium"
+        a proj href="https://github.com/softwarecorporation/equilibrium"
           div
             span name
               "equilibrium"
             span desc
               " — cross c compiling language interoperability with one call automagically"
-        a proj href="https://github.com/tschk/eqswift"
+        a proj href="https://github.com/softwarecorporation/eqswift"
           div ml-4
             span name
               "eqswift"
             span desc
               " — two lines to ffi rust to swift automagically"
-        a proj href="https://github.com/tschk/eqts"
+        a proj href="https://github.com/softwarecorporation/eqts"
           div ml-4
             span name
               "eqts"
             span desc
               " — one rust api for typescript across node, bun, deno, and webassembly"
-        a proj href="https://github.com/tschk/rig"
+        a proj href="https://github.com/softwarecorporation/rig"
           div ml-4
             span name
               "rig"
             span desc
               " — cross-language native dependency manager built on equilibrium"
-        a proj href="https://github.com/tschk/rv8"
+        a proj href="https://github.com/softwarecorporation/rv8"
           div
             span name
               "rv8"
             span desc
               " — browser engine combining Servo rendering with V8 JavaScript"
-        a proj href="https://github.com/tschk/rotary"
+        a proj href="https://github.com/softwarecorporation/rotary"
           div
             span name
               "rotary"
@@ -104,25 +104,25 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
         a proj ml-4 href="/telekinesis/"
           span name
             "telekinesis build and run guide"
-        a proj href="https://github.com/tschk/apollo"
+        a proj href="https://github.com/softwarecorporation/apollo"
           div
             span name
               "apollo"
             span desc
               " — local-first rust ai agent runtime. ~14mb binary, 10+ messaging channels, 20+ llm providers, autonomous coding mode, tool guardrails, plugin system"
-        a proj href="https://github.com/tschk/moonshine"
+        a proj href="https://github.com/softwarecorporation/moonshine"
           div
             span name
               "moonshine"
             span desc
               " — ground-up Bun-first web framework with a signal-only kernel and opt-in compiler, routing, rendering, server, and deployment layers. renders .crepus templates through the real rust parser compiled to wasm"
-        a proj href="https://github.com/tschk/zkr"
+        a proj href="https://github.com/softwarecorporation/zkr"
           div
             span name
               "zkr"
             span desc
               " — evidence-backed temporal memory engine for personal agents"
-        a proj href="https://github.com/tschk/praefectus"
+        a proj href="https://github.com/softwarecorporation/praefectus"
           div
             span name
               "praefectus"
@@ -162,11 +162,11 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
       div text-zinc-100 font-medium mt-4
         "CONTACT"
       div flex flex-col gap-1 mt-2
-        a con href="https://github.com/tschk"
+        a con href="https://github.com/softwarecorporation"
           span name
             "GitHub"
           span desc
-            " — https://github.com/tschk"
+            " — https://github.com/softwarecorporation"
         a con href="https://x.com/tsc_hk"
           span name
             "X"

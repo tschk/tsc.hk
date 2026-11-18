@@ -47,11 +47,11 @@ div min-h-screen bg-zinc-950 text-zinc-300 p-6 sm:p-12 text-sm leading-relaxed
             "GitHub"
           span desc
             " — https://github.com/semitechnological/telekinesis"
-        a con href="https://github.com/tschk/rotary"
+        a con href="https://github.com/softwarecorporation/rotary"
           span name
             "rotary"
           span desc
-            " — https://github.com/tschk/rotary"
+            " — https://github.com/softwarecorporation/rotary"
         a con href="/"
           span name
             "tsc.hk"
