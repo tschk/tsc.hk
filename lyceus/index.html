@@ -17,7 +17,7 @@
 
     <section aria-labelledby="mechanism-title">
       <div class="section-title"><h1 id="mechanism-title">How the parts fit together</h1><span>System design</span></div>
-      <p>The text-only design brings text diffusion and a decision component together inside one agent. Across refinement rounds, decision state carries information forward to guide what to reveal, revisit or continue. Personal and domain state have separate lifetimes; the host controls permissions, evaluation and checkpoints.</p>
+      <p>The text-only design brings text diffusion and a decision component together inside one agent. Across refinement rounds, decision state carries information forward to guide what to reveal, revisit or continue. A modular native runtime loads shared model blocks on demand, while still executing every layer each round; local personal and domain profiles remain separate from shared weights. The host controls permissions, evaluation and checkpoints.</p>
       <figure class="mechanism">
         <figcaption>Generation cycle · one agent</figcaption>
         <div class="loop">
@@ -35,13 +35,14 @@
     <section aria-labelledby="topics-title">
       <div class="section-title"><h2 id="topics-title">Areas of research</h2></div>
       <div class="topics">
-        <article><h3>Memory</h3><p>Personal and domain state are intended to carry learning beyond a single conversation, separate from shared model competence and temporary generation state.</p></article>
-        <article><h3>Adaptation</h3><p>Feedback could inform controlled changes to model-associated state or weights, with checks for whether corrections persist without disturbing other knowledge.</p></article>
+        <article><h3>Memory</h3><p>Personal and domain state are intended to carry learning beyond a single conversation. Contextual encoding can distinguish changes in word order that a simple byte average loses; reliable learned recall remains unproven.</p></article>
+        <article><h3>Adaptation</h3><p>Opt-in prototypes let a host grant authority to correct or retire a selected local profile entry. Retirement excludes that entry from profile reads; it does not erase shared weights. Learning corrections from context while preserving unrelated knowledge remains an open challenge.</p></article>
         <article><h3>Growth</h3><p>The design explores model-proposed changes to parameters and capacity, and, at larger sizes, architecture or source changes for independent review. Current growth experiments are host-scheduled.</p></article>
-        <article><h3>Profiles</h3><p>The design separates personal and domain state from shared model weights. Host-selected state can be supplied per input row without loading a separate model for each person or task.</p></article>
+        <article><h3>Profiles</h3><p>Controlled prototypes reuse local profiles across model sizes with an aligned codec and projections. Host-selected state can be supplied without loading separate weights for each person or task; compatibility is not universal.</p></article>
         <article><h3>Model family</h3><p>Configurable model sizes support research into both domain-specific work and personal agents, from small local models to larger specialized systems.</p></article>
         <article><h3>Harness</h3><p>A separate host is intended to manage permissions, tools and evidence, and assess candidate changes before promoting or rolling back checkpoints.</p></article>
       </div>
+      <p class="explanation detail">Mechanism checks are not proof of integrated competence. A recent visible-evidence test did not generalize, and coherent language and reliable correction with retention remain unestablished.</p>
     </section>
     <footer><span>Lyceus</span><a href="https://tsc.hk/">tsc.hk</a></footer>
   </main>
