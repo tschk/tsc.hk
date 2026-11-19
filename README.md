@@ -58,12 +58,19 @@ handler redirects the old directory entry URLs and returns a real 404 for
 missing pages. `public/404.html` is also copied into the static build, preventing
 Cloudflare Pages from treating unknown paths as homepage SPA routes.
 
-The repository contains a GitHub Pages workflow, but the apex domain is also
-attached to the **tschk-hk** Cloudflare Pages project (`tschk-hk.pages.dev`) in
-the existing Undivisible account, with no Git provider attached (verified
-2026-10-03). A green GitHub Pages deployment alone does not verify the live
-apex release. Confirm the target and use the reviewed `dist/` artifact when
-publishing; verify the live status codes and sitemap afterward.
+## Deployment
+
+Pushes to `master` build and test the site, then upload the same `dist/`
+artifact to the **tschk-hk** Cloudflare Pages project (`tschk-hk.pages.dev`),
+which serves `tsc.hk`. GitHub Pages is not the production target.
+
+The `cloudflare-pages` GitHub environment needs a `CLOUDFLARE_API_TOKEN`
+secret with Pages Edit access to account `fc62a6e6528bec6d3d81c3bf8967ceeb`.
+A missing credential fails deployment rather than skipping it. The workflow
+checks `https://tsc.hk/deployed-revision.txt` against the merged commit and
+smoke-tests the public homepage and `/telekinesis/` before reporting success.
+The Actions run summary records the verified revision. Cloudflare Pages keeps
+previous production deployments available for rollback.
 
 ## Quality Gates
 
